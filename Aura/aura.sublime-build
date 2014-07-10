@@ -1,0 +1,4 @@
+{
+    "cmd": ["force", "pushAura", "$file" ],
+    "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)"
+}
