@@ -1,4 +1,4 @@
 {
-    "cmd": ["force", "pushAura", "$file" ],
+    "cmd": ["force", "pushAura", "-e=$file" ],
     "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)"
 }
