@@ -8,7 +8,7 @@ class AuraSave(sublime_plugin.EventListener):
     #let's see if project wants to be autobuilt.
     should_build = view.settings().get('build_on_save')
     filename = view.file_name()
-    if os.path.exists(os.path.dirname(filename)+'/.manifest'):
+    if os.path.basename(os.path.dirname(os.path.dirname(filename))) == "aurabundles":
       print os.path.dirname(filename)
 
       command = '-f=' + filename
