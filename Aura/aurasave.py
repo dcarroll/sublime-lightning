@@ -11,7 +11,7 @@ class AuraSave(sublime_plugin.EventListener):
     if os.path.exists(os.path.dirname(filename)+'/.manifest'):
       print os.path.dirname(filename)
 
-      command = '-e=' + filename
+      command = '-f=' + filename
       view.window().run_command('exec',{ 'cmd':["force", "pushAura", command] })
       print 'Command should have executed'
     else:
