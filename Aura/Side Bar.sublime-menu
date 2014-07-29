@@ -1,0 +1,13 @@
+[
+	{ "caption": "-", "aurastart": "aura_commands" },
+	{ "caption": "Delete Aura Defintion", "command": "aura_delete", "args": {"files": []} },
+	{ "caption": "Delete Aura Bundle", "command": "aura_delete_bundle", "args": {"dirs": []} },
+	{ "caption": "New Aura App", "command": "aura_new_app", "args": {"dirs": []} },
+	{ "caption": "New Aura Component", "command": "aura_new_component", "args": {"dirs": []} },
+	{ "caption": "New Aura Event", "command": "aura_new_event", "args": {"dirs": []} },
+	{ "caption": "New Aura Style", "command": "aura_new_style", "args": {"dirs": []} },
+	{ "caption": "New Aura Helper", "command": "aura_new_helper", "args": {"dirs": []} },
+	{ "caption": "New Aura Model", "command": "aura_new_model", "args": {"dirs": []} },
+	{ "caption": "New Aura Controller", "command": "aura_new_controller", "args": {"dirs": []} },
+	{ "caption": "-", "auraend": "aura_commands" }
+]
