@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, os, subprocess, aurasave
+import sublime, sublime_plugin, os, subprocess
  
 class Helper(sublime_plugin.WindowCommand):
   def foo(self):
@@ -10,42 +10,42 @@ class Helper(sublime_plugin.WindowCommand):
   def file_op_is_visible(self, dirs):
     return self.parent_dir_is_aurabundles(dirs[0])
   
-  def dir_is_aurabundles(self, dir):
-    return os.path.basename(dir) == "aurabundles"
+  def dir_is_aurabundles(self, working_dir):
+    return os.path.basename(working_dir) == "aurabundles"
 
-  def parent_dir_is_aurabundles(self, dir):
-    return os.path.basename(os.path.dirname(dir)) == "aurabundles"
+  def parent_dir_is_aurabundles(self, working_dir):
+    return os.path.basename(os.path.dirname(working_dir)) == "aurabundles"
 
-  def is_bundle_type(self, dir, type):
-    files = os.listdir(dir[0])
+  def is_bundle_type(self, working_dir, comp_type):
+    files = os.listdir(working_dir[0])
     for filename in files:
       fname, fext = os.path.splitext(filename)
-      if (fext == "." + type):
+      if (fext == "." + comp_type):
         return True
     return False
 
-  def has_this_file(self, dir, filename):
-    return os.path.exists(os.path.join(dir, filename))
+  def has_this_file(self, working_dir, filename):
+    return os.path.exists(os.path.join(working_dir, filename))
 
   def make_bundle_file(self, file_name, extension, snippet, dirs):
-    print(file_name)
-    print(extension)
-    dir = dirs[0]
-    print(dir)
-    os.chdir(dir)
+    #print(file_name)
+    #print(extension)
+    working_dir = dirs[0]
+    #print(working_dir)
+    os.chdir(working_dir)
     if extension == "cmp" or extension == "app" or extension == "evt":
       fn, ex = os.path.splitext(file_name)
-      os.mkdir(os.path.join(dir, file_name))
+      os.mkdir(os.path.join(working_dir, file_name))
       os.chdir(fn)
-      dir = os.getcwd()
+      working_dir = os.getcwd()
 
-    app = open(file_name+"."+extension, "wb")
+    app = open(file_name + "." + extension, "wb")
     if int(sublime.version()) >= 3000:
       app.write(bytes(snippet, 'UTF-8'))
     else: # To support Sublime Text 2
       app.write(bytes(snippet))
     app.close()
-    filename = os.path.join(dir, file_name + "." + extension)
+    filename = os.path.join(working_dir, file_name + "." + extension)
     self.window.open_file(filename)
     command = '-f=' + filename
     self.window.run_command('exec',{ 'cmd':["force", "pushAura", command] })
@@ -97,9 +97,9 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
     self.dirs = dirs
     name = os.path.basename(dirs[0]) + "Controller"
     aurasave.Helper(self.window).make_bundle_file(name, "js",
-      "({\n" +
-      "\tmyAction: function(component, event, helper) {\n" +
-      "\t}\n" +
+      "({\n"
+      "\tmyAction: function(component, event, helper) {\n"
+      "\t}\n"
       "})", self.dirs)
 
   def is_visible(self, dirs):
@@ -118,9 +118,9 @@ class LightningNewHelperCommand(sublime_plugin.WindowCommand):
     self.dirs = dirs
     name = os.path.basename(dirs[0]) + "Helper"
     aurasave.Helper(self.window).make_bundle_file(name, "js",
-      "({\n" +
-      "\thelperMethod: function() {\n" +
-      "\n\t}\n" +
+      "({\n"
+      "\thelperMethod: function() {\n"
+      "\n\t}\n"
       "})", self.dirs)
 
   def is_visible(self, dirs):
@@ -137,8 +137,8 @@ class LightningNewModelCommand(sublime_plugin.WindowCommand):
     self.dirs = dirs
     name = os.path.basename(dirs[0]) + "Model"
     aurasave.Helper(self.window).make_bundle_file(name, "js",
-      '{\n' +
-      '\t"example": "example value"\n' +
+      '{\n'
+      '\t"example": "example value"\n'
       "}", self.dirs)
 
   def is_visible(self, dirs):
@@ -155,18 +155,18 @@ class LightningNewStyleCommand(sublime_plugin.WindowCommand):
     self.dirs = dirs
     name = os.path.basename(dirs[0]) + "Style"
     aurasave.Helper(self.window).make_bundle_file(name, "css",
-      '.THIS.container {' +
-      '\twidth: 100%;\n' +
-      '\tpadding: 10px 0px;\n' +
-      '\tmargin: 0px;\n' +
-      '}\n\n' + 
-      '.THIS .center {\n' +
-      '\tmargin: 0px auto;\n' +
-      '}\n\n' +
-      '.THIS .content {\n' +
-      '\tmax-width: 768px;\n' +
-      '\tfont-size: 12px;\n' +
-      '\tcolor: #3c3d3e;\n' +
+      '.THIS.container {'
+      '\twidth: 100%;\n'
+      '\tpadding: 10px 0px;\n'
+      '\tmargin: 0px;\n'
+      '}\n\n'
+      '.THIS .center {\n'
+      '\tmargin: 0px auto;\n'
+      '}\n\n'
+      '.THIS .content {\n'
+      '\tmax-width: 768px;\n'
+      '\tfont-size: 12px;\n'
+      '\tcolor: #3c3d3e;\n'
       '}', self.dirs)
 
   def is_visible(self, dirs):
@@ -182,7 +182,7 @@ class LightningDeleteCommand(sublime_plugin.WindowCommand):
   def run(self, files):
     #print(files)
     for f in files:
-      print(f)
+      #print(f)
       command = "delete -f=" + f
       #subprocess.call(["force", "aura", "-f", f])
       self.window.run_command('exec',{ 'cmd':["force", "aura", command] })
