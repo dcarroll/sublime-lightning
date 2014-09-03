@@ -1,5 +1,0 @@
-[[
-    { 
-        "keys": ["ctrl+shift+c"], "command": "exec", "args": { "cmd": ["force"]} 
-    }
-]]
