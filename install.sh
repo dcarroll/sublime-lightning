@@ -3,13 +3,21 @@
 SUBLIME_DIR=~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
 SUBLIME2_DIR=~/Library/Application\ Support/Sublime\ Text\ 2/Packages/
 
-mkdir -p "$SUBLIME2_DIR"
-mkdir -p "$SUBLIME_DIR"
+mkdir -p "$SUBLIME2_DIR/Lightning"
+mkdir -p "$SUBLIME_DIR/Lightning"
 
-cp -r "./Aura" "$SUBLIME2_DIR/"
-cp -r "./Aura" "$SUBLIME_DIR/"
+cp -r "HTML.sublime-settings" "$SUBLIME2_DIR/Lightning"
+cp -r "lightning.sublime-build" "$SUBLIME2_DIR/Lightning"
+cp -r "lightning.sublime-keymap" "$SUBLIME2_DIR/Lightning"
+cp -r "lightningsave.py" "$SUBLIME2_DIR/Lightning"
+cp -r Side\ Bar.sublime-menu "$SUBLIME2_DIR/Lightning"
+cp -r "README.md" "$SUBLIME2_DIR/Lightning"
 
-cat ./Aura/aura.sublime-build | sed "s#"'${path}'"#$PATH#"  > "$SUBLIME2_DIR/Aura/aura.sublime-build"
-cat ./Aura/aura.sublime-build | sed "s#"'${path}'"#$PATH#"  > "$SUBLIME_DIR/Aura/aura.sublime-build"
+cp -r "HTML.sublime-settings" "$SUBLIME_DIR/Lightning"
+cp -r "lightning.sublime-build" "$SUBLIME_DIR/Lightning"
+cp -r "lightning.sublime-keymap" "$SUBLIME_DIR/Lightning"
+cp -r "lightningsave.py" "$SUBLIME_DIR/Lightning"
+cp -r Side\ Bar.sublime-menu "$SUBLIME_DIR/Lightning"
+cp -r "README.md" "$SUBLIME_DIR/Lightning"
 
-echo "Aura Sublime Plugin install finished"
+echo "Lightning Sublime Plugin install finished"

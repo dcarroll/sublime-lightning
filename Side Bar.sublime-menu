@@ -1,0 +1,13 @@
+[
+	{ "caption": "-", "lightningstart": "lightning_commands" },
+	{ "caption": "Delete Lightning Defintion", "command": "lightning_delete", "args": {"files": []} },
+	{ "caption": "Delete Lightning Bundle", "command": "lightning_delete_bundle", "args": {"dirs": []} },
+	{ "caption": "New Lightning App", "command": "lightning_new_app", "args": {"dirs": []} },
+	{ "caption": "New Lightning Component", "command": "lightning_new_component", "args": {"dirs": []} },
+	{ "caption": "New Lightning Event", "command": "lightning_new_event", "args": {"dirs": []} },
+	{ "caption": "New Lightning Style", "command": "lightning_new_style", "args": {"dirs": []} },
+	{ "caption": "New Lightning Helper", "command": "lightning_new_helper", "args": {"dirs": []} },
+	{ "caption": "New Lightning Model", "command": "lightning_new_model", "args": {"dirs": []} },
+	{ "caption": "New Lightning Controller", "command": "lightning_new_controller", "args": {"dirs": []} },
+	{ "caption": "-", "lightningend": "lightning_commands" }
+]

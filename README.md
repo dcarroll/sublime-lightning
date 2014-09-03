@@ -1,4 +1,4 @@
-sublime-aura
+sublime-lightning
 ============
 
-Sublime Plugin for Aura
+Sublime Plugin for Lightning
