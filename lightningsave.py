@@ -8,16 +8,16 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def bundle_op_is_visible(self, dirs):
-        return self.dir_is_aurabundles(dirs[0])
+        return self.dir_is_aura(dirs[0])
 
     def file_op_is_visible(self, dirs):
-        return self.parent_dir_is_aurabundles(dirs[0])
+        return self.parent_dir_is_aura(dirs[0])
 
-    def dir_is_aurabundles(self, working_dir):
-        return os.path.basename(working_dir) == "aurabundles"
+    def dir_is_aura(self, working_dir):
+        return os.path.basename(working_dir) == "aura"
 
-    def parent_dir_is_aurabundles(self, working_dir):
-        return os.path.basename(os.path.dirname(working_dir)) == "aurabundles"
+    def parent_dir_is_aura(self, working_dir):
+        return os.path.basename(os.path.dirname(working_dir)) == "aura"
 
     def is_bundle_type(self, working_dir, comp_type):
         files = os.listdir(working_dir[0])
@@ -248,11 +248,11 @@ class LightningDeleteCommand(sublime_plugin.WindowCommand):
     def is_visible(self, files):
         for f in files:
             p = os.path.dirname(f)
-            if os.path.basename(p) == "aurabundles":
+            if os.path.basename(p) == "aura":
                 return True
         else:
             p = os.path.dirname(p)
-            if os.path.basename(p) == "aurabundles":
+            if os.path.basename(p) == "aura":
                 return True
             else:
                 return False
@@ -270,11 +270,11 @@ class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
     def is_visible(self, dirs):
         for d in dirs:
             p = os.path.dirname(d)
-            if os.path.basename(p) == "aurabundles":
+            if os.path.basename(p) == "aura":
                 return 1 == 1
             else:
                 p = os.path.dirname(p)
-                if os.path.basename(p) == "aurabundles":
+                if os.path.basename(p) == "aura":
                     return 1 == 1
                 else:
                     return 1 == 2
@@ -286,7 +286,7 @@ class LightningSave(sublime_plugin.EventListener):
         filename = view.file_name()
         if os.path.basename(
             os.path.dirname(
-                os.path.dirname(filename))) == "aurabundles":
+                os.path.dirname(filename))) == "aura":
             command = '-f=' + filename
             view.window().run_command(
                 'exec',
