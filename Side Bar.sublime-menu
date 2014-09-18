@@ -1,5 +1,6 @@
 [
 	{ "caption": "-", "lightningstart": "lightning_commands" },
+	{ "caption": "Salesforce Login", "command": "login", "args":{} },
 	{ "caption": "Delete Lightning Defintion", "command": "lightning_delete", "args": {"files": []} },
 	{ "caption": "Delete Lightning Bundle", "command": "lightning_delete_bundle", "args": {"dirs": []} },
 	{ "caption": "New Lightning App", "command": "lightning_new_app", "args": {"dirs": []} },

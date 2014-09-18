@@ -8,7 +8,10 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def bundle_op_is_visible(self, dirs):
-        return self.dir_is_aura(dirs[0])
+        if len(dirs) == 0:
+            return False
+        else:
+            return self.dir_is_aura(dirs[0])
 
     def file_op_is_visible(self, dirs):
         return self.parent_dir_is_aura(dirs[0])
@@ -29,6 +32,13 @@ class Helper(sublime_plugin.WindowCommand):
 
     def has_this_file(self, working_dir, filename):
         return os.path.exists(os.path.join(working_dir, filename))
+
+    def do_login(self, username, password):
+        cmd = '-u=' + username + ' -p=' + password
+        self.window.run_command(
+            'exec',
+            {'cmd': ["force", "login", "-u", username, "-p", password]})
+        return
 
     def make_bundle_file(self, file_name, extension, snippet, dirs):
         #print(file_name)
@@ -56,6 +66,32 @@ class Helper(sublime_plugin.WindowCommand):
                 {'cmd': ["force", "pushAura", cmd]})
 
         return app
+
+
+class LoginCommand(sublime_plugin.WindowCommand):
+    def run(self):
+        self.window.show_input_panel(
+            "Username: ",
+            "",
+            self.get_password,
+            None,
+            None)
+        pass
+
+    def get_password(self, username):
+        self.username = username
+        self.window.show_input_panel(
+            "Password: ",
+            "",
+            self.do_login,
+            None,
+            None)
+        pass
+
+    def do_login(self, password):
+        print("Username: " + self.username + ", Password: " + password)
+        Helper(self.window).do_login(self.username, password)
+        return
 
 
 class LightningNewAppCommand(sublime_plugin.WindowCommand):
@@ -164,6 +200,9 @@ class LightningNewHelperCommand(sublime_plugin.WindowCommand):
 
     def is_visible(self, dirs):
         helper = Helper(self.window)
+        if len(dirs) == 0:
+            return False
+
         hasFile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Helper.js")
@@ -188,6 +227,9 @@ class LightningNewModelCommand(sublime_plugin.WindowCommand):
 
     def is_visible(self, dirs):
         helper = Helper(self.window)
+        if len(dirs) == 0:
+            return False
+
         hasFile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Model.js")
@@ -222,6 +264,9 @@ class LightningNewStyleCommand(sublime_plugin.WindowCommand):
 
     def is_visible(self, dirs):
         helper = Helper(self.window)
+        if len(dirs) == 0:
+            return False
+
         hasFile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Style.css")
@@ -250,13 +295,13 @@ class LightningDeleteCommand(sublime_plugin.WindowCommand):
             p = os.path.dirname(f)
             if os.path.basename(p) == "aura":
                 return True
-        else:
-            p = os.path.dirname(p)
-            if os.path.basename(p) == "aura":
-                return True
             else:
-                return False
-
+                p = os.path.dirname(p)
+                if os.path.basename(p) == "aura":
+                    return True
+                else:
+                    return False
+        return False
 
 class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
@@ -278,7 +323,7 @@ class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
                     return 1 == 1
                 else:
                     return 1 == 2
-
+        return False
 
 class LightningSave(sublime_plugin.EventListener):
 
