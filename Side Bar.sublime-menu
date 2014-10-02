@@ -10,5 +10,7 @@
 	{ "caption": "New Lightning Helper", "command": "lightning_new_helper", "args": {"dirs": []} },
 	{ "caption": "New Lightning Model", "command": "lightning_new_model", "args": {"dirs": []} },
 	{ "caption": "New Lightning Controller", "command": "lightning_new_controller", "args": {"dirs": []} },
+	{ "caption": "New Lightning Renderer", "command": "lightning_new_renderer", "args": {"dirs": []} },
+	{ "caption": "New Lightning Documenation", "command": "lightning_new_documentation", "args": {"dirs": []} },
 	{ "caption": "-", "lightningend": "lightning_commands" }
 ]

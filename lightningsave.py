@@ -34,7 +34,6 @@ class Helper(sublime_plugin.WindowCommand):
         return os.path.exists(os.path.join(working_dir, filename))
 
     def do_login(self, username, password):
-        cmd = '-u=' + username + ' -p=' + password
         self.window.run_command(
             'exec',
             {'cmd': ["force", "login", "-u", username, "-p", password]})
@@ -185,6 +184,33 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
             isValidBundle and not hasFile
 
 
+class LightningNewRendererCommand(sublime_plugin.WindowCommand):
+    def run(self, dirs):
+        self.dirs = dirs
+        name = os.path.basename(dirs[0]) + "Renderer"
+        Helper(self.window).make_bundle_file(
+            name,
+            "js",
+            "({\n"
+            "\trender: function(component, helper) {\n"
+            "\t}\n"
+            "})",
+            self.dirs)
+
+    def is_visible(self, dirs):
+        helper = Helper(self.window)
+        if len(dirs) == 0:
+            return False
+        hasFile = helper.has_this_file(
+            dirs[0],
+            os.path.basename(dirs[0]) + "Renderer.js")
+        isValidBundle = helper.is_bundle_type(dirs, "app") or \
+            helper.is_bundle_type(dirs, "cmp")
+
+        return Helper(self.window).file_op_is_visible(dirs) and \
+            isValidBundle and not hasFile
+
+
 class LightningNewHelperCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         self.dirs = dirs
@@ -206,6 +232,37 @@ class LightningNewHelperCommand(sublime_plugin.WindowCommand):
         hasFile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Helper.js")
+        isValidBundle = helper.is_bundle_type(dirs, "app") or \
+            helper.is_bundle_type(dirs, "cmp")
+
+        return Helper(self.window).file_op_is_visible(dirs) and \
+            isValidBundle and not hasFile
+
+
+class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
+    def run(self, dirs):
+        self.dirs = dirs
+        name = os.path.basename(dirs[0]) + "Documentation"
+        Helper(self.window).make_bundle_file(
+            name,
+            "js",
+            '<aura:documentation>\n'
+            '\t<aura:description>Documentation</aura:description>\n'
+            '\t<aura:example name="ExampleName" '
+            'ref="exampleComponentName" label="Label">\n'
+            '\t\tExample Description\n'
+            '\t</aura:example>\n'
+            '</aura:documentation>',
+            self.dirs)
+
+    def is_visible(self, dirs):
+        helper = Helper(self.window)
+        if len(dirs) == 0:
+            return False
+
+        hasFile = helper.has_this_file(
+            dirs[0],
+            os.path.basename(dirs[0]) + "Documentation.js")
         isValidBundle = helper.is_bundle_type(dirs, "app") or \
             helper.is_bundle_type(dirs, "cmp")
 
@@ -303,6 +360,7 @@ class LightningDeleteCommand(sublime_plugin.WindowCommand):
                     return False
         return False
 
+
 class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         for d in dirs:
@@ -324,6 +382,7 @@ class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
                 else:
                     return 1 == 2
         return False
+
 
 class LightningSave(sublime_plugin.EventListener):
 
