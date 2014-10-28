@@ -92,6 +92,9 @@ class LoginCommand(sublime_plugin.WindowCommand):
         Helper(self.window).do_login(self.username, password)
         return
 
+    def is_visible(self):
+        return True
+
 
 class LightningNewAppCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
