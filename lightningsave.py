@@ -92,13 +92,14 @@ class Helper(sublime_plugin.WindowCommand):
             app.write(bytes(snippet, 'UTF-8'))
         else:  # To support Sublime Text 2
             app.write(bytes(snippet))
-            app.close()
-            filename = os.path.join(working_dir, file_name + "." + extension)
-            self.window.open_file(filename)
-            cmd = '-f=' + filename
-            self.window.run_command(
-                'exec',
-                {'cmd': ["force", "pushAura", cmd]})
+
+        app.close()
+        filename = os.path.join(working_dir, file_name + "." + extension)
+        self.window.open_file(filename)
+        cmd = '-f=' + filename
+        self.window.run_command(
+            'exec',
+            {'cmd': ["force", "pushAura", cmd]})
 
         return app
 
