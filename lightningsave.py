@@ -1,7 +1,8 @@
 import sublime
 import sublime_plugin
 import os
-
+import subprocess
+import json
 
 class Helper(sublime_plugin.WindowCommand):
     def foo(self):
@@ -39,11 +40,46 @@ class Helper(sublime_plugin.WindowCommand):
             {'cmd': ["force", "login", "-u", username, "-p", password]})
         return
 
+    def do_aura_query(self):
+        return
+
+    def do_fetch(self, bundle, adir):
+        os.chdir(adir)
+        if (bundle == 'all'):
+            self.window.run_command(
+                'exec',
+                {'cmd': ["force", "fetch", "-t", "aura", "-d", adir],
+                'working_dir': adir})
+        else:
+            self.window.run_command(
+                'exec',
+                {'cmd': ["force", "fetch", "-t", "aura", "-m", bundle, "-d", adir],
+                'working_dir': adir})
+
+        return
+
+    def open_selected_bundle(self, index):
+        if (index == 0):
+            self.do_fetch("all", self.window.folders()[0])
+        else:
+            self.do_fetch(self.messages[index][2], self.window.folders()[0])
+        return
+
+    def show_bundle_list(self):
+        self.messages = []
+        p = subprocess.Popen(["force", "query", "Select Id, DeveloperName, MasterLabel, Description From AuraDefinitionBundle", "--format:json"], stdout=subprocess.PIPE)
+        result = p.communicate()[0]
+        m = json.loads(result.decode("utf-8)"))
+        self.messages.append(["All Bundles", "*", "Every Bundle", "All the lightning bundles in your org!"])
+        for mm in m:
+            x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"], mm["Description"]]
+            self.messages.append(x)
+
+        self.window = sublime.active_window()
+        self.window.show_quick_panel(self.messages, self.open_selected_bundle, sublime.MONOSPACE_FONT)
+
     def make_bundle_file(self, file_name, extension, snippet, dirs):
-        #print(file_name)
-        #print(extension)
         working_dir = dirs[0]
-        #print(working_dir)
         os.chdir(working_dir)
         if extension == "cmp" or extension == "app" or extension == "evt":
             fn, ex = os.path.splitext(file_name)
@@ -88,8 +124,28 @@ class LoginCommand(sublime_plugin.WindowCommand):
         pass
 
     def do_login(self, password):
-        print("Username: " + self.username + ", Password: " + password)
         Helper(self.window).do_login(self.username, password)
+        return
+
+    def is_visible(self):
+        return True
+
+
+class FetchCommand(sublime_plugin.WindowCommand):
+    def run(self):
+        #self.window.show_input_panel(
+        #    "Bundle name: ",
+        #    "all",
+        #    self.do_fetch,
+        #    None,
+        #    None)
+        #pass
+        Helper(self.window).show_bundle_list()
+
+    def do_fetch(self, bundle):
+        self.dirs = self.window.folders()
+        adir = self.dirs[0]
+        Helper(self.window).show_bundle_list()
         return
 
     def is_visible(self):
@@ -340,11 +396,8 @@ class LightningNewStyleCommand(sublime_plugin.WindowCommand):
 
 class LightningDeleteCommand(sublime_plugin.WindowCommand):
     def run(self, files):
-        #print(files)
         for f in files:
-            #print(f)
             command = "delete -f=" + f
-            #subprocess.call(["force", "aura", "-f", f])
             self.window.run_command(
                 'exec',
                 {'cmd': ["force", "aura", command]})
