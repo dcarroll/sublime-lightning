@@ -69,15 +69,18 @@ class Helper(sublime_plugin.WindowCommand):
         self.messages = []
         p = subprocess.Popen(["force", "query", "Select Id, DeveloperName, MasterLabel, Description From AuraDefinitionBundle", "--format:json"], stdout=subprocess.PIPE)
         result = p.communicate()[0]
-        m = json.loads(result.decode("utf-8)"))
-        self.messages.append(["All Bundles", "*", "Every Bundle", "All the lightning bundles in your org!"])
-        for mm in m:
-            x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"], mm["Description"]]
-            self.messages.append(x)
+        try:
+            m = json.loads(result.decode("utf-8)"))
+            self.messages.append(["All Bundles", "*", "Every Bundle", "All the lightning bundles in your org!"])
+            for mm in m:
+                x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"], mm["Description"]]
+                self.messages.append(x)
 
-        self.window = sublime.active_window()
-        self.window.show_quick_panel(self.messages, self.open_selected_bundle, sublime.MONOSPACE_FONT)
-
+            self.window = sublime.active_window()
+            self.window.show_quick_panel(self.messages, self.open_selected_bundle, sublime.MONOSPACE_FONT)
+        except:
+            return
+            
     def make_bundle_file(self, file_name, extension, snippet, dirs):
         working_dir = dirs[0]
         os.chdir(working_dir)
