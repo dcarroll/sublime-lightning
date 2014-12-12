@@ -53,7 +53,7 @@ class Helper(sublime_plugin.WindowCommand):
         else:
             self.window.run_command(
                 'exec',
-                {'cmd': ["force", "fetch", "-t", "aura", "-m", bundle, "-d", adir],
+                {'cmd': ["force", "fetch", "-t", "aura", "-n", bundle, "-d", adir],
                 'working_dir': adir})
 
         return
@@ -80,7 +80,7 @@ class Helper(sublime_plugin.WindowCommand):
             self.window.show_quick_panel(self.messages, self.open_selected_bundle, sublime.MONOSPACE_FONT)
         except:
             return
-            
+
     def make_bundle_file(self, file_name, extension, snippet, dirs):
         working_dir = dirs[0]
         os.chdir(working_dir)
