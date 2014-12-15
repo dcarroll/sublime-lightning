@@ -279,17 +279,18 @@ class LightningNewSVGCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
-        helper = Helper(self.window)
-        if len(dirs) == 0:
-            return False
-        hasFile = helper.has_this_file(
-            dirs[0],
-            os.path.basename(dirs[0]) + ".svg")
-        isValidBundle = helper.is_bundle_type(dirs, "app") or \
-            helper.is_bundle_type(dirs, "cmp")
+        return True
+    #   helper = Helper(self.window)
+    #    if len(dirs) == 0:
+    #        return False
+    #    hasFile = helper.has_this_file(
+    #        dirs[0],
+    #        os.path.basename(dirs[0]) + ".svg")
+    #    isValidBundle = helper.is_bundle_type(dirs, "app") or \
+    #        helper.is_bundle_type(dirs, "cmp")
 
-        return Helper(self.window).file_op_is_visible(dirs) and \
-            isValidBundle and not hasFile
+    #    return Helper(self.window).file_op_is_visible(dirs) and \
+    #        isValidBundle and not hasFile
 
 
 class LightningNewRendererCommand(sublime_plugin.WindowCommand):
