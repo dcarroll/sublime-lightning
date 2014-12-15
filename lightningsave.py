@@ -4,6 +4,7 @@ import os
 import subprocess
 import json
 
+
 class Helper(sublime_plugin.WindowCommand):
     def foo(self):
         return
@@ -49,12 +50,12 @@ class Helper(sublime_plugin.WindowCommand):
             self.window.run_command(
                 'exec',
                 {'cmd': ["force", "fetch", "-t", "aura", "-d", adir],
-                'working_dir': adir})
+                 'working_dir': adir})
         else:
             self.window.run_command(
                 'exec',
-                {'cmd': ["force", "fetch", "-t", "aura", "-n", bundle, "-d", adir],
-                'working_dir': adir})
+                {'cmd': ["force", "fetch", "-t", "aura", "-n", bundle, "-d",
+                         adir], 'working_dir': adir})
 
         return
 
@@ -67,17 +68,24 @@ class Helper(sublime_plugin.WindowCommand):
 
     def show_bundle_list(self):
         self.messages = []
-        p = subprocess.Popen(["force", "query", "Select Id, DeveloperName, MasterLabel, Description From AuraDefinitionBundle", "--format:json"], stdout=subprocess.PIPE)
+        p = subprocess.Popen(["force", "query", "Select Id, DeveloperName, "
+                              "MasterLabel, Description From "
+                              "AuraDefinitionBundle",
+                              "--format:json"], stdout=subprocess.PIPE)
         result = p.communicate()[0]
         try:
             m = json.loads(result.decode("utf-8)"))
-            self.messages.append(["All Bundles", "*", "Every Bundle", "All the lightning bundles in your org!"])
+            self.messages.append(["All Bundles", "*", "Every Bundle",
+                                  "All the lightning bundles in your org!"])
             for mm in m:
-                x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"], mm["Description"]]
+                x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"],
+                     mm["Description"]]
                 self.messages.append(x)
 
             self.window = sublime.active_window()
-            self.window.show_quick_panel(self.messages, self.open_selected_bundle, sublime.MONOSPACE_FONT)
+            self.window.show_quick_panel(self.messages,
+                                         self.open_selected_bundle,
+                                         sublime.MONOSPACE_FONT)
         except:
             return
 
@@ -148,7 +156,6 @@ class FetchCommand(sublime_plugin.WindowCommand):
 
     def do_fetch(self, bundle):
         self.dirs = self.window.folders()
-        adir = self.dirs[0]
         Helper(self.window).show_bundle_list()
         return
 
