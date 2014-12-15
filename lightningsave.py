@@ -278,7 +278,7 @@ class LightningNewSVGCommand(sublime_plugin.WindowCommand):
             '</svg>',
             self.dirs)
 
-    def is_visible(self, dirs):
+    def is_visible(self):
         return True
     #   helper = Helper(self.window)
     #    if len(dirs) == 0:
