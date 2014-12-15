@@ -12,5 +12,6 @@
 	{ "caption": "New Lightning Style", "command": "lightning_new_style", "args": {"dirs": []} },
 	{ "caption": "New Lightning Documenation", "command": "lightning_new_documentation", "args": {"dirs": []} },
 	{ "caption": "New Lightning Renderer", "command": "lightning_new_renderer", "args": {"dirs": []} },
+	{ "caption": "New Lightning SVG", "command": "lightning_new_svg", "args": {"dirs": []} },
 	{ "caption": "-", "lightningend": "lightning_commands" }
 ]

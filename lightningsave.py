@@ -247,6 +247,44 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
             isValidBundle and not hasFile
 
 
+class LightningNewSVGCommand(sublime_plugin.WindowCommand):
+    def run(self, dirs):
+        self.dirs = dirs
+        name = os.path.basename(dirs[0]) + ".svg"
+        Helper(self.window).make_bundle_file(
+            name,
+            "SVG Name:",
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'
+            '<svg width="120px" height="120px" viewBox="0 0 120 120" '
+            'version="1.1" xmlns="http://www.w3.org/2000/svg" '
+            'xmlns:xlink="http://www.w3.org/1999/xlink">'
+            '<g stroke="none" stroke-width="1" fill="none" '
+            'fill-rule="evenodd">'
+            '<path d="M120,108 C120,114.6 114.6,120 108,120 L12,120 C5.4,120 '
+            '0,114.6 0,108 L0,12 C0,5.4 5.4,0 12,0 L108,0 C114.6,0 120,5.4 '
+            '120,12 L120,108 L120,108 Z" id="Shape" fill="#2A739E"/>'
+            '<path d="M77.7383308,20 L61.1640113,20 L44.7300055,63.2000173 '
+            'L56.0543288,63.2000173 L40,99.623291 L72.7458388,54.5871812 '
+            'L60.907727,54.5871812 L77.7383308,20 Z" id="Path-1" '
+            'fill="#FFFFFF"/>'
+            '</g>'
+            '</svg>',
+            self.dirs)
+
+    def is_visible(self, dirs):
+        helper = Helper(self.window)
+        if len(dirs) == 0:
+            return False
+        hasFile = helper.has_this_file(
+            dirs[0],
+            os.path.basename(dirs[0]) + ".svg")
+        isValidBundle = helper.is_bundle_type(dirs, "app") or \
+            helper.is_bundle_type(dirs, "cmp")
+
+        return Helper(self.window).file_op_is_visible(dirs) and \
+            isValidBundle and not hasFile
+
+
 class LightningNewRendererCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         self.dirs = dirs
