@@ -380,33 +380,6 @@ class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
             isValidBundle and not hasFile
 
 
-#class LightningNewModelCommand(sublime_plugin.WindowCommand):
-#    def run(self, dirs):
-#        self.dirs = dirs
-#        name = os.path.basename(dirs[0]) + "Model"
-#        Helper(self.window).make_bundle_file(
-#            name,
-#            "js",
-#            '{\n'
-#            '\t"example": "example value"\n'
-#            "}",
-#            self.dirs)
-#
-#    def is_visible(self, dirs):
-#        helper = Helper(self.window)
-#        if len(dirs) == 0:
-#            return False
-#
-#        hasFile = helper.has_this_file(
-#            dirs[0],
-#            os.path.basename(dirs[0]) + "Model.js")
-#        isValidBundle = helper.is_bundle_type(dirs, "app") or \
-#            helper.is_bundle_type(dirs, "cmp")
-#
-#        return Helper(self.window).file_op_is_visible(dirs) and \
-#             isValidBundle and not hasFile
-
-
 class LightningNewStyleCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         self.dirs = dirs
