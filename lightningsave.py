@@ -280,7 +280,7 @@ class LightningNewSVGCommand(sublime_plugin.WindowCommand):
 
     def is_visible(self):
         print("Checking visibility...")
-        return True
+        return False
     #   helper = Helper(self.window)
     #    if len(dirs) == 0:
     #        return False
@@ -445,7 +445,7 @@ class LightningDeleteCommand(sublime_plugin.WindowCommand):
 class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         for d in dirs:
-            command = 'delete -f=' + d
+            command = 'delete -p=' + d
             self.window.run_command(
                 'exec',
                 {'cmd': ["force", "aura", command]})
