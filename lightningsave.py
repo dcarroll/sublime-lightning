@@ -421,7 +421,7 @@ class LightningNewStyleCommand(sublime_plugin.WindowCommand):
 class LightningDeleteCommand(sublime_plugin.WindowCommand):
     def run(self, files):
         for f in files:
-            command = "delete -f=" + f
+            command = "delete -p=" + f
             self.window.run_command(
                 'exec',
                 {'cmd': ["force", "aura", command]})
