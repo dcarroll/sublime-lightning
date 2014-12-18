@@ -540,4 +540,10 @@ class LightningSave(sublime_plugin.EventListener):
                     {'cmd': ["force", "push", command]})
         elif Helper.is_static_resource(self, os.path.dirname(filename)):
             print("This is an upacked static resource file.")
+            resource_name = Helper.get_resource_name(filename)
+            command = '-t StaticeResource -f ' + resource_name
+            view.window().run_command(
+                'exec',
+                {'cmd': ["force", "pushAura", command]})
+
         return
