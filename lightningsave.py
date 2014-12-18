@@ -29,6 +29,7 @@ class Helper(sublime_plugin.WindowCommand):
         return os.path.basename(os.path.dirname(working_dir)) == "metadata"
 
     def is_static_resource(self, file):
+        print("Checking if static resource")
         for root, dirs, files in walk_up.walk_up(file):
             print(dirs)
             if "staticresources" in dirs:
