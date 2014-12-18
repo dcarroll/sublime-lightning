@@ -244,6 +244,7 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
+        print("Checking Controller Visibility...")
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
