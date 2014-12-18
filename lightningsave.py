@@ -359,7 +359,7 @@ class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
         name = os.path.basename(dirs[0]) + "Documentation"
         Helper(self.window).make_bundle_file(
             name,
-            "js",
+            "auradoc",
             '<aura:documentation>\n'
             '\t<aura:description>Documentation</aura:description>\n'
             '\t<aura:example name="ExampleName" '
