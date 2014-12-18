@@ -469,7 +469,7 @@ class LightningSave(sublime_plugin.EventListener):
 
     def on_post_save(self, view):
         filename = view.file_name()
-        if Helper.parent_dir_is_aura(os.path.dirname(filename)):
+        if Helper.parent_dir_is_aura(self, os.path.dirname(filename)):
             command = '-f=' + filename
             view.window().run_command(
                 'exec',
