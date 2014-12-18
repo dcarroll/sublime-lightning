@@ -155,7 +155,7 @@ class Helper(sublime_plugin.WindowCommand):
         if new_path == bottom:
             return
 
-        for x in walk_up(new_path):
+        for x in self.walk_up(new_path):
             yield x
 
 
