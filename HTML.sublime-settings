@@ -3,6 +3,7 @@
 	[
 		"cmp",
 		"evt",
-		"app"
+		"app",
+		"auradoc"
 	]
 }
