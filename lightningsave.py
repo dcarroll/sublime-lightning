@@ -131,7 +131,7 @@ class Helper(sublime_plugin.WindowCommand):
         mimic os.walk, but walk 'up'
         instead of down the directory tree
         """
-        bottom = path.realpath(bottom)
+        bottom = os.path.realpath(bottom)
 
         #get files in current dir
         try:
@@ -142,20 +142,20 @@ class Helper(sublime_plugin.WindowCommand):
 
         dirs, nondirs = [], []
         for name in names:
-            if path.isdir(path.join(bottom, name)):
+            if os.path.isdir(os.path.join(bottom, name)):
                 dirs.append(name)
             else:
                 nondirs.append(name)
 
         yield bottom, dirs, nondirs
 
-        new_path = path.realpath(path.join(bottom, '..'))
+        new_path = os.path.realpath(os.path.join(bottom, '..'))
 
         # see if we are at the top
         if new_path == bottom:
             return
 
-        for x in self.walk_up(new_path):
+        for x in Helper.walk_up(new_path):
             yield x
 
 
