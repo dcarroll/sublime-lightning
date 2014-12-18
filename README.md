@@ -27,6 +27,8 @@ Deleting artifacts is accomplished by right-clicking the file and selecting "Del
 
 You can safely right click any file or folder and select the Sublime menu item for deleting file or folder, as what is saved locally is a copy of what is in Salesforce.  You can easily retrieve the Lightning bundle or artifact by re-fetching, right-click and select "Fetch Lightning".
 
+![screenshot-235](https://cloud.githubusercontent.com/assets/116254/5481950/b2d08212-860d-11e4-9e2c-7f294c7b3215.png)
+
 See "how to" video below.
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=A_sUTfeGKxw
