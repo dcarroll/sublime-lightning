@@ -457,7 +457,7 @@ class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
             for root, dirs, files in os.walk(d):
                 for name in files:
                     print("looking for " + name)
-                    v = self.window.find_open_file(name)
+                    v = self.window.find_open_file(os.path.join(root, name))
                     if not (v is None):
                         v.close()
 
