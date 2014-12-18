@@ -261,10 +261,10 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
 class LightningNewSvgCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         self.dirs = dirs
-        name = os.path.basename(dirs[0]) + ".svg"
+        name = os.path.basename(dirs[0])
         Helper(self.window).make_bundle_file(
             name,
-            "SVG Name:",
+            "svg",
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'
             '<svg width="120px" height="120px" viewBox="0 0 120 120" '
             'version="1.1" xmlns="http://www.w3.org/2000/svg" '
