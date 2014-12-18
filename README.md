@@ -10,8 +10,11 @@ Make sure that you have installed the Force CLI into a folder on your path and t
 To install the plugin, you will need to install Package Control.  Installation instructions are here: https://sublime.wbond.net/installation
 
 Once you have both of these installed, create a new folder to be your working folder.
+
 `mkdir mywork`
+
 `cd mywork`
+
 Launch Sublime Text and open the new folder.  If you have not logged in recently from the command line, you can right-click the folder in Sublime's sidebar and click "Salesforce Login". In the bottom tray of Sublime enter your username and hit the enter key, enter your password (the password will be shown in clear text, sorry) and hit the enter key.
 
 At this point, you will not be able to create any Lightning artifacts, unless you have a folder under your work directory named 'metadata/aura'.  You can, however, fetch existing Lightning artifacts by right clicking the work folder and selecting "Fetch Lightning".  This will query your Salesforce instance for all Lightning bundles and display them for you to choose which thing you want to edit.  You can open all lightning bundles at once, scroll to the one you want, or begin typing the name of the Lightning bundle to filter the list and then select the one you want.
