@@ -428,7 +428,8 @@ class LightningDeleteCommand(sublime_plugin.WindowCommand):
             self.window.run_command(
                 'exec',
                 {'cmd': ["force", "aura", command]})
-
+            self.window.find_open_file(f).close()
+            
         return
 
     def is_visible(self, files):
