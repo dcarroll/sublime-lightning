@@ -29,6 +29,12 @@ You can safely right click any file or folder and select the Sublime menu item f
 
 ![screenshot-235](https://cloud.githubusercontent.com/assets/116254/5481950/b2d08212-860d-11e4-9e2c-7f294c7b3215.png)
 
+![screenshot-236](https://cloud.githubusercontent.com/assets/116254/5481951/b730bc1e-860d-11e4-8b8c-7eea2c0303df.png)
+
+![screenshot-237](https://cloud.githubusercontent.com/assets/116254/5481952/b8ea6fa0-860d-11e4-8ce8-11b26c5a1aa1.png)
+
+![screenshot-238](https://cloud.githubusercontent.com/assets/116254/5481953/ba3ae5ce-860d-11e4-8e9e-97d505963f54.png)
+
 See "how to" video below.
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=A_sUTfeGKxw
