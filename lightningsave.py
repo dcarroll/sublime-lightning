@@ -448,6 +448,7 @@ class LightningDeleteCommand(sublime_plugin.WindowCommand):
 
 class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
+        # comment
         for d in dirs:
             command = 'delete -p=' + d
             self.window.run_command(
