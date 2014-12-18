@@ -258,7 +258,7 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
             isValidBundle and not hasFile
 
 
-class LightningNewSVGCommand(sublime_plugin.WindowCommand):
+class LightningNewSvgCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         self.dirs = dirs
         #name = os.path.basename(dirs[0]) + ".svg"
