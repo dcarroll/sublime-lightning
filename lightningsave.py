@@ -454,7 +454,7 @@ class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
             self.window.run_command(
                 'exec',
                 {'cmd': ["force", "aura", command]})
-            for root, dirs, files in os.walk('python/Lib/email'):
+            for root, dirs, files in os.walk(d):
                 for name in files:
                     self.window.find_open_file(name).close()
 
