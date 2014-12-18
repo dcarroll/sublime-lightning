@@ -429,7 +429,7 @@ class LightningDeleteCommand(sublime_plugin.WindowCommand):
                 'exec',
                 {'cmd': ["force", "aura", command]})
             self.window.find_open_file(f).close()
-            
+
         return
 
     def is_visible(self, files):
@@ -453,6 +453,9 @@ class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
             self.window.run_command(
                 'exec',
                 {'cmd': ["force", "aura", command]})
+            for root, dirs, files in os.walk('python/Lib/email'):
+                self.window.find_open_file(name).close() for name in files
+                
         return
 
     def is_visible(self, dirs):
