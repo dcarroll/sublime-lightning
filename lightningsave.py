@@ -281,7 +281,7 @@ class LightningNewSVGCommand(sublime_plugin.WindowCommand):
         #    '</svg>',
         #    self.dirs)
 
-    def is_visible(self):
+    def is_visible(self, dirs):
         print("Checking visibility...")
         return False
     #   helper = Helper(self.window)
@@ -482,11 +482,4 @@ class LightningSave(sublime_plugin.EventListener):
             view.window().run_command(
                 'exec',
                 {'cmd': ["force", "push", command]})
-#        if os.path.basename(
-#            os.path.dirname(
-#                os.path.dirname(filename))) == "aura":
-#            command = '-f=' + filename
-#            view.window().run_command(
-#                'exec',
-#                {'cmd': ["force", "pushAura", command]})
         return
