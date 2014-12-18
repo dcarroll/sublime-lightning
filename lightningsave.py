@@ -278,7 +278,7 @@ class LightningNewSvgCommand(sublime_plugin.WindowCommand):
             'L56.0543288,63.2000173 L40,99.623291 L72.7458388,54.5871812 '
             'L60.907727,54.5871812 L77.7383308,20 Z" id="Path-1" '
             'fill="#FFFFFF"/>\n'
-            '</g>\n'
+            '\t</g>\n'
             '</svg>\n',
             self.dirs)
 
