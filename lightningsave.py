@@ -25,7 +25,7 @@ class Helper(sublime_plugin.WindowCommand):
         return os.path.basename(os.path.dirname(working_dir)) == "aura"
 
     def is_metadata(self, working_dir):
-        return os.path.basename(os.path.dirname(os.path.dirname(working_dir))) == "metadata"
+        return os.path.basename(os.path.dirname(working_dir)) == "metadata"
 
     def is_bundle_type(self, working_dir, comp_type):
         files = os.listdir(working_dir[0])
