@@ -23,7 +23,7 @@ class Helper(sublime_plugin.WindowCommand):
 
     def parent_dir_is_aura(self, working_dir):
         return os.path.basename(os.path.dirname(working_dir)) == "aura"
-            os.path.basename(os.path.dirname(os.path.dirname(filename))) == "aura"
+
     def is_bundle_type(self, working_dir, comp_type):
         files = os.listdir(working_dir[0])
         for filename in files:
