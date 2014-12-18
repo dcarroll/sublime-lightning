@@ -24,6 +24,9 @@ class Helper(sublime_plugin.WindowCommand):
     def parent_dir_is_aura(self, working_dir):
         return os.path.basename(os.path.dirname(working_dir)) == "aura"
 
+    def is_metadata(self, working_dir):
+        return os.path.basename(os.path.dirname(os.path.dirname(working_dir))) == "metadata"
+
     def is_bundle_type(self, working_dir, comp_type):
         files = os.listdir(working_dir[0])
         for filename in files:
@@ -474,7 +477,11 @@ class LightningSave(sublime_plugin.EventListener):
             view.window().run_command(
                 'exec',
                 {'cmd': ["force", "pushAura", command]})
-
+        elif Helper.is_metadata(self, os.path.dirname(filename)):
+            command = '-f=' + filename
+            view.window().run_command(
+                'exec',
+                {'cmd': ["force", "push", command]})
 #        if os.path.basename(
 #            os.path.dirname(
 #                os.path.dirname(filename))) == "aura":
