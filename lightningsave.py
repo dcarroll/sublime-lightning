@@ -30,6 +30,7 @@ class Helper(sublime_plugin.WindowCommand):
 
     def is_static_resource(self, file):
         for root, dirs, files in walk_up.walk_up(file):
+            print(dirs)
             if "staticresources" in dirs:
                 return True
 
