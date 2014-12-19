@@ -548,9 +548,10 @@ class LightningSave(sublime_plugin.EventListener):
             print("This is an upacked static resource file.")
             resource_name = Helper.get_resource_name(filename)
             print("Pushing " + resource_name + " to SFDC")
-            command = '-t=StaticResource -n=' + resource_name
+            command = '-t=StaticResource'
+            command2 = '-n=' + resource_name
             view.window().run_command(
                 'exec',
-                {'cmd': ["force", "push", command]})
+                {'cmd': ["force", "push", command, command2]})
 
         return
