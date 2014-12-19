@@ -38,6 +38,7 @@ class Helper(sublime_plugin.WindowCommand):
 
     def get_resource_name(file):
         for root, dirs, files in Helper.walk_up(file):
+            print("Root: " + root)
             if "staticresources" in dirs:
                 return root
 
