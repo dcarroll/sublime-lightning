@@ -39,8 +39,8 @@ class Helper(sublime_plugin.WindowCommand):
     def get_resource_name(file):
         for root, dirs, files in Helper.walk_up(os.path.dirname(file)):
             print("Root: " + root)
-            if "staticresources" in dirs:
-                return root
+            if os.path.basename(os.path.dirname(root)) == "staticresources":
+                return os.path.basename(root)
 
     def is_bundle_type(self, working_dir, comp_type):
         files = os.listdir(working_dir[0])
