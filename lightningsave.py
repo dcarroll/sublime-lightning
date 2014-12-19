@@ -551,6 +551,6 @@ class LightningSave(sublime_plugin.EventListener):
             command = '-t StaticeResource -n ' + resource_name
             view.window().run_command(
                 'exec',
-                {'cmd': ["force", "pushAura", command]})
+                {'cmd': ["force", "push", command]})
 
         return
