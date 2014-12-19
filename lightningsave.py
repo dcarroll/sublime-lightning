@@ -36,6 +36,11 @@ class Helper(sublime_plugin.WindowCommand):
 
         return False
 
+    def get_resource_name(file):
+        for root, dirs, files in Helper.walk_up(file):
+            if "staticresources" in dirs:
+                return root
+
     def is_bundle_type(self, working_dir, comp_type):
         files = os.listdir(working_dir[0])
         for filename in files:
@@ -541,6 +546,7 @@ class LightningSave(sublime_plugin.EventListener):
         elif Helper.is_static_resource(self, os.path.dirname(filename)):
             print("This is an upacked static resource file.")
             resource_name = Helper.get_resource_name(filename)
+            print("Pushing " + resource_name + " to SFDC")
             command = '-t StaticeResource -f ' + resource_name
             view.window().run_command(
                 'exec',
