@@ -86,6 +86,15 @@ class Helper(sublime_plugin.WindowCommand):
         data=json.loads(out.decode("utf-8"))
         return data["instanceUrl"]
 
+    def get_namespace(self):
+        p = subprocess.Popen(['force', 'active', '-j'],
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+        out = p.communicate()[0]
+        print(out)
+        data=json.loads(out.decode("utf-8"))
+        return data["namespace"]
+
     def get_app_name(self, adir):
         os.chdir(adir)
         return os.path.basename(adir)
@@ -300,8 +309,13 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         self.dirs = dirs
         appName = Helper.get_app_name(self, dirs[0])
-        url = Helper.get_instance_url(self);
-        url = url + "/c/" + appName + ".app"
+        url = Helper.get_instance_url(self)
+        namespace = Helper.get_namespace(self)
+        if len(namespace) == 0:
+            url = url + "/c/" + appName + ".app"
+        else
+            url = url + "/" + namespace + "/" + appName + ".app"
+
         Helper.open_url(self, url)
 
     def is_visible(self, dirs):
