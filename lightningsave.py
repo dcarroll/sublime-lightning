@@ -81,9 +81,9 @@ class Helper(sublime_plugin.WindowCommand):
         p = subprocess.Popen(['force', 'active', '-j'],
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
-        out, err = p.communicate()
+        out, err = p.communicate()[0]
         print(out)
-        data=json.load(out)
+        data=json.load(out.decode("utf-8"))
         return data["instanceUrl"]
 
     def get_app_name(self, adir):
