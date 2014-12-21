@@ -77,12 +77,30 @@ class Helper(sublime_plugin.WindowCommand):
 
         return
 
+    def get_instance_url(self):
+        p = subprocess.Popen(['force', 'active', '-j'],
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+        out, err = p.communicate()
+        data=json.load(out.decode("utf-8"))
+        return data["instanceUrl"]
+
+    def get_app_name(self, adir):
+        os.chdir(adir)
+        return os.path.basename(adir)
+
     def open_selected_bundle(self, index):
         if (index == 0):
             self.do_fetch("all", self.window.folders()[0])
         else:
             self.do_fetch(self.messages[index][2], self.window.folders()[0])
         return
+
+    def open_url(self, url):
+        self.window.run_command(
+            'exec',
+            {'cmd': ["open", url]}
+        )
 
     def show_bundle_list(self):
         self.messages = []
@@ -92,7 +110,7 @@ class Helper(sublime_plugin.WindowCommand):
                               "--format:json"], stdout=subprocess.PIPE)
         result = p.communicate()[0]
         try:
-            m = json.loads(result.decode("utf-8)"))
+            m = json.loads(result.decode("utf-8"))
             self.messages.append(["All Bundles", "*", "Every Bundle",
                                   "All the lightning bundles in your org!"])
             for mm in m:
@@ -275,6 +293,25 @@ class LightningNewEventCommand(sublime_plugin.WindowCommand):
 
     def is_visible(self, dirs):
         return Helper(self.window).bundle_op_is_visible(dirs)
+
+
+class LightningPreviewCommand(sublime_plugin.WindowCommand):
+    def run(self, dirs):
+        self.dirs = dirs
+        appName = Helper.get_app_name(dirs[0])
+        url = Helper.get_instance_url();
+        url = url + "/c/" + appName + ".app"
+        Helper.open_url(url)
+
+    def is_visible(self, dirs):
+        print("Checking Controller Visibility...")
+        helper = Helper(self.window)
+        if len(dirs) == 0:
+            return False
+        isValidBundle = helper.is_bundle_type(dirs, "app")
+
+        return Helper(self.window).file_op_is_visible(dirs) and \
+            isValidBundle
 
 
 class LightningNewControllerCommand(sublime_plugin.WindowCommand):

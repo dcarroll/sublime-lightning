@@ -15,6 +15,7 @@
 		{ "caption": "Add Documenation", "command": "lightning_new_documentation", "args": {"dirs": []} },
 		{ "caption": "Add Renderer", "command": "lightning_new_renderer", "args": {"dirs": []} },
 		{ "caption": "Add SVG", "command": "lightning_new_svg", "args": {"dirs": []} },
+		{ "caption": "Preview", "command": "lightning_preview", "args": {"dirs": []} },
 	]},
 	{ "caption": "-", "lightningend": "lightning_commands" }
 ]
