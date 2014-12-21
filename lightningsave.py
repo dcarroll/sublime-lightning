@@ -82,6 +82,7 @@ class Helper(sublime_plugin.WindowCommand):
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         out, err = p.communicate()
+        print(out)
         data=json.load(out.decode("utf-8"))
         return data["instanceUrl"]
 
