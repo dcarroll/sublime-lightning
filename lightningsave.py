@@ -298,7 +298,7 @@ class LightningNewEventCommand(sublime_plugin.WindowCommand):
 class LightningPreviewCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         self.dirs = dirs
-        appName = Helper.get_app_name(dirs[0])
+        appName = Helper.get_app_name(self, dirs[0])
         url = Helper.get_instance_url();
         url = url + "/c/" + appName + ".app"
         Helper.open_url(url)
