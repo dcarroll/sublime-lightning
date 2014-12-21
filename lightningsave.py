@@ -299,9 +299,9 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         self.dirs = dirs
         appName = Helper.get_app_name(self, dirs[0])
-        url = Helper.get_instance_url();
+        url = Helper.get_instance_url(self);
         url = url + "/c/" + appName + ".app"
-        Helper.open_url(url)
+        Helper.open_url(self, url)
 
     def is_visible(self, dirs):
         print("Checking Controller Visibility...")
