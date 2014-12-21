@@ -313,7 +313,7 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
         namespace = Helper.get_namespace(self)
         if len(namespace) == 0:
             url = url + "/c/" + appName + ".app"
-        else
+        else:
             url = url + "/" + namespace + "/" + appName + ".app"
 
         Helper.open_url(self, url)
