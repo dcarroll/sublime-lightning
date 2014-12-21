@@ -83,7 +83,7 @@ class Helper(sublime_plugin.WindowCommand):
                              stderr=subprocess.PIPE)
         out = p.communicate()[0]
         print(out)
-        data=json.load(out.decode("utf-8"))
+        data=json.loads(out.decode("utf-8"))
         return data["instanceUrl"]
 
     def get_app_name(self, adir):
