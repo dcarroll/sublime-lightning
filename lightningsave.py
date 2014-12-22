@@ -28,9 +28,7 @@ class Helper(sublime_plugin.WindowCommand):
         return os.path.basename(os.path.dirname(working_dir)) == "metadata"
 
     def is_static_resource(self, file):
-        print("Checking if static resource")
         for root, dirs, files in Helper.walk_up(file):
-            print(dirs)
             if "staticresources" in dirs:
                 return True
 
@@ -38,7 +36,6 @@ class Helper(sublime_plugin.WindowCommand):
 
     def get_resource_name(file):
         for root, dirs, files in Helper.walk_up(os.path.dirname(file)):
-            print("Root: " + root)
             if os.path.basename(os.path.dirname(root)) == "staticresources":
                 return os.path.basename(root)
 
@@ -82,7 +79,6 @@ class Helper(sublime_plugin.WindowCommand):
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         out = p.communicate()[0]
-        print(out)
         data=json.loads(out.decode("utf-8"))
         return data["instanceUrl"]
 
@@ -91,7 +87,6 @@ class Helper(sublime_plugin.WindowCommand):
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         out = p.communicate()[0]
-        print(out)
         data=json.loads(out.decode("utf-8"))
         return data["namespace"]
 
@@ -319,7 +314,6 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
         Helper.open_url(self, url)
 
     def is_visible(self, dirs):
-        print("Checking Controller Visibility...")
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -343,7 +337,6 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
-        print("Checking Controller Visibility...")
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -384,7 +377,6 @@ class LightningNewSvgCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
-        print("Checking SVG Visibility...")
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -557,7 +549,6 @@ class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
                 {'cmd': ["force", "aura", command]})
             for root, dirs, files in os.walk(d):
                 for name in files:
-                    print("looking for " + name)
                     v = self.window.find_open_file(os.path.join(root, name))
                     if not (v is None):
                         v.close()
@@ -590,16 +581,13 @@ class LightningSave(sublime_plugin.EventListener):
         elif Helper.is_metadata(self, os.path.dirname(filename)):
             if Helper.is_static_resource(self, filename):
                 #comment
-                print("SR")
             else:
                 command = '-f=' + filename
                 view.window().run_command(
                     'exec',
                     {'cmd': ["force", "push", command]})
         elif Helper.is_static_resource(self, os.path.dirname(filename)):
-            print("This is an upacked static resource file.")
             resource_name = Helper.get_resource_name(filename)
-            print("Pushing " + resource_name + " to SFDC")
             command = '-t=StaticResource'
             command2 = '-n=' + resource_name
             view.window().run_command(
