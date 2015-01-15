@@ -79,7 +79,7 @@ class Helper(sublime_plugin.WindowCommand):
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         out = p.communicate()[0]
-        data=json.loads(out.decode("utf-8"))
+        data = json.loads(out.decode("utf-8"))
         return data["instanceUrl"]
 
     def get_namespace(self):
@@ -87,7 +87,7 @@ class Helper(sublime_plugin.WindowCommand):
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         out = p.communicate()[0]
-        data=json.loads(out.decode("utf-8"))
+        data = json.loads(out.decode("utf-8"))
         return data["namespace"]
 
     def get_app_name(self, adir):
@@ -581,6 +581,7 @@ class LightningSave(sublime_plugin.EventListener):
         elif Helper.is_metadata(self, os.path.dirname(filename)):
             if Helper.is_static_resource(self, filename):
                 #comment
+                print("is static resource")
             else:
                 command = '-f=' + filename
                 view.window().run_command(
