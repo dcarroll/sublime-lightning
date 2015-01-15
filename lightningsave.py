@@ -148,10 +148,10 @@ class Helper(sublime_plugin.WindowCommand):
         app.close()
         filename = os.path.join(working_dir, file_name + "." + extension)
         self.window.open_file(filename)
-        cmd = 'push -f=' + filename
+        cmd = 'aura -f=' + filename
         self.window.run_command(
             'exec',
-            {'cmd': ["force", "aura", cmd]})
+            {'cmd': ["force", "push", cmd]})
 
         return app
 
