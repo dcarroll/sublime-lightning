@@ -148,10 +148,10 @@ class Helper(sublime_plugin.WindowCommand):
         app.close()
         filename = os.path.join(working_dir, file_name + "." + extension)
         self.window.open_file(filename)
-        cmd = '-f=' + filename
+        cmd = 'push -f=' + filename
         self.window.run_command(
             'exec',
-            {'cmd': ["force", "pushAura", cmd]})
+            {'cmd': ["force", "aura", cmd]})
 
         return app
 
@@ -574,10 +574,10 @@ class LightningSave(sublime_plugin.EventListener):
     def on_post_save(self, view):
         filename = view.file_name()
         if Helper.parent_dir_is_aura(self, os.path.dirname(filename)):
-            command = '-f=' + filename
+            command = 'aura -f=' + filename
             view.window().run_command(
                 'exec',
-                {'cmd': ["force", "pushAura", command]})
+                {'cmd': ["force", "push", command]})
         elif Helper.is_metadata(self, os.path.dirname(filename)):
             if Helper.is_static_resource(self, filename):
                 #comment
