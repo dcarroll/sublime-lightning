@@ -101,11 +101,32 @@ class Helper(sublime_plugin.WindowCommand):
             self.do_fetch(self.messages[index][2], self.window.folders()[0])
         return
 
+    def open_selected_metadata(self, index):
+        self.do_meta_fetch(self.messages[index][1], self.window.folders()[0])
+        return
+
     def open_url(self, url):
         self.window.run_command(
             'exec',
             {'cmd': ["open", url]}
         )
+
+    def show_metadata_type_list(self):
+        self.messages = []
+        p = subprocess.Popen(["force", "describe", "-t", "metadata",
+                              "-j"], stdout=subprocess.PIPE)
+        result = p.communicate()[0]
+        try:
+            m = json.loads(result.decode("utf-8"))
+            for mm in m:
+                self.message.append(mm)
+
+            self.window = sublime.active_window()
+            self.window.show_quick_panel(self.messages,
+                                         self.open_selected_metadata,
+                                         sublime.MONOSPACE_FONT)
+        except:
+            return
 
     def show_bundle_list(self):
         self.messages = []
