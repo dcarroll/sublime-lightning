@@ -137,7 +137,7 @@ class Helper(sublime_plugin.WindowCommand):
             self.window = sublime.active_window()
             print("Got the active window")
             self.window.show_quick_panel(self.messages,
-                                         self.open_selected_metadata,
+                                         self.open_selected_bundle,
                                          sublime.MONOSPACE_FONT)
             print("Done")
 
