@@ -96,6 +96,9 @@ class Helper(sublime_plugin.WindowCommand):
 
     def open_selected_bundle(self, index):
         if (index == 0):
+            return
+
+        if (index == 0):
             self.do_fetch("all", self.window.folders()[0])
         else:
             self.do_fetch(self.messages[index][2], self.window.folders()[0])
