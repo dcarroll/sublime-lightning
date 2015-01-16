@@ -122,6 +122,7 @@ class Helper(sublime_plugin.WindowCommand):
         try:
             m = json.loads(result.decode("utf-8"))
             for mm in m:
+                print(mm)
                 self.message.append(mm['XmlName'])
 
             self.window = sublime.active_window()
