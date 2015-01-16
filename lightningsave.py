@@ -95,6 +95,7 @@ class Helper(sublime_plugin.WindowCommand):
         return os.path.basename(adir)
 
     def open_selected_bundle(self, index):
+        print("INdex: " + index)
         if (index == 0):
             return
 
