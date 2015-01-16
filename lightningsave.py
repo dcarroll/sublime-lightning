@@ -246,12 +246,7 @@ class FetchMetaCommand(sublime_plugin.WindowCommand):
         #    None,
         #    None)
         #pass
-        Helper(self.window).show_bundle_list()
-
-    def do_fetch(self, bundle):
-        self.dirs = self.window.folders()
-        Helper(self.window).show_bundle_list()
-        return
+        Helper(self.window).show_metadata_type_list()
 
     def is_visible(self):
         return True
