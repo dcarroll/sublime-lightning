@@ -131,7 +131,7 @@ class Helper(sublime_plugin.WindowCommand):
                                   "All the lightning bundles in your org!"])
             for mm in m:
                 print(mm)
-                self.message.append(mm['XmlName'])
+                self.message.append([mm['XmlName']])
 
             self.window = sublime.active_window()
             print("Got the active window")
