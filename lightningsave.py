@@ -118,7 +118,7 @@ class Helper(sublime_plugin.WindowCommand):
                               "-j"], stdout=subprocess.PIPE)
         print("Next")
         result = p.communicate()[0]
-        print("Result\n" + result)
+        print("Result\n" + result.decode("utf-8"))
         try:
             m = json.loads(result.decode("utf-8"))
             for mm in m:
