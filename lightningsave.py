@@ -113,9 +113,9 @@ class Helper(sublime_plugin.WindowCommand):
 
     def show_metadata_type_list(self):
         self.messages = []
+        print("In show_metadata_type_list")
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
                               "-j"], stdout=subprocess.PIPE)
-        print("In show_metadata_type_list")
         result = p.communicate()[0]
         try:
             m = json.loads(result.decode("utf-8"))
