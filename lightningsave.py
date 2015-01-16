@@ -131,14 +131,14 @@ class Helper(sublime_plugin.WindowCommand):
                                   "All the lightning bundles in your org!"])
             for mm in m:
                 print(mm)
-                x = [mm['XmlName'], 'Dood']
-                self.message.append(x)
+                #x = [mm['XmlName'], 'Dood']
+                #self.message.append(x)
 
-            self.window = sublime.active_window()
+            #self.window = sublime.active_window()
             print("Got the active window")
-            self.window.show_quick_panel(self.messages,
-                                         self.open_selected_metadata,
-                                         sublime.MONOSPACE_FONT)
+            #self.window.show_quick_panel(self.messages,
+            #                             self.open_selected_metadata,
+            #                             sublime.MONOSPACE_FONT)
             print("Done")
 
         except:
