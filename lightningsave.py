@@ -129,6 +129,8 @@ class Helper(sublime_plugin.WindowCommand):
             self.window.show_quick_panel(self.messages,
                                          self.open_selected_metadata,
                                          sublime.MONOSPACE_FONT)
+            print("Done")
+
         except:
             return
 
