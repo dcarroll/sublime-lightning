@@ -105,6 +105,9 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def open_selected_metadata(self, index):
+        if (index == -1):
+            return
+
         self.do_meta_fetch(self.messages[index][1], self.window.folders()[0])
         return
 
@@ -124,6 +127,8 @@ class Helper(sublime_plugin.WindowCommand):
         print("Result\n" + result.decode("utf-8"))
         try:
             m = json.loads(result.decode("utf-8"))
+            self.messages.append(["All Bundles", "*", "Every Bundle",
+                                  "All the lightning bundles in your org!"])
             for mm in m:
                 print(mm)
                 self.message.append(mm['XmlName'])

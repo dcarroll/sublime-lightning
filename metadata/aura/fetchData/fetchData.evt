@@ -1,6 +1,0 @@
-<aura:event type="COMPONENT" description="Event template" >
-    <aura:attribute name="cmd" required="true" type="String" />
-    <aura:attribute name="agency" type="String" />
-    <aura:attribute name="route" type="String" />
-    <aura:attribute name="stoptag" type="String" />
-</aura:event>
