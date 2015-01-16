@@ -116,6 +116,7 @@ class Helper(sublime_plugin.WindowCommand):
         print("In show_metadata_type_list")
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
                               "-j"], stdout=subprocess.PIPE)
+        print("Next")
         result = p.communicate()[0]
         try:
             m = json.loads(result.decode("utf-8"))
@@ -241,13 +242,6 @@ class LoginCommand(sublime_plugin.WindowCommand):
 class FetchMetaCommand(sublime_plugin.WindowCommand):
     def run(self):
         print("Running FetchMetaCommand")
-        #self.window.show_input_panel(
-        #    "Bundle name: ",
-        #    "all",
-        #    self.do_fetch,
-        #    None,
-        #    None)
-        #pass
         Helper(self.window).show_metadata_type_list()
 
     def is_visible(self):
