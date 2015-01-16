@@ -134,6 +134,7 @@ class Helper(sublime_plugin.WindowCommand):
                 self.message.append(mm['XmlName'])
 
             self.window = sublime.active_window()
+            print("Got the active window")
             self.window.show_quick_panel(self.messages,
                                          self.open_selected_metadata,
                                          sublime.MONOSPACE_FONT)
