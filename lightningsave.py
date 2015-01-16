@@ -119,7 +119,7 @@ class Helper(sublime_plugin.WindowCommand):
         try:
             m = json.loads(result.decode("utf-8"))
             for mm in m:
-                self.message.append(mm)
+                self.message.append(mm['FullName'])
 
             self.window = sublime.active_window()
             self.window.show_quick_panel(self.messages,
