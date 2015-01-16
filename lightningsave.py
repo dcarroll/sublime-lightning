@@ -239,6 +239,7 @@ class LoginCommand(sublime_plugin.WindowCommand):
 
 class FetchMetaCommand(sublime_plugin.WindowCommand):
     def run(self):
+        print("Running FetchMetaCommand")
         #self.window.show_input_panel(
         #    "Bundle name: ",
         #    "all",
