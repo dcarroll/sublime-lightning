@@ -237,6 +237,26 @@ class LoginCommand(sublime_plugin.WindowCommand):
         return True
 
 
+class FetchMetaCommand(sublime_plugin.WindowCommand):
+    def run(self):
+        #self.window.show_input_panel(
+        #    "Bundle name: ",
+        #    "all",
+        #    self.do_fetch,
+        #    None,
+        #    None)
+        #pass
+        Helper(self.window).show_bundle_list()
+
+    def do_fetch(self, bundle):
+        self.dirs = self.window.folders()
+        Helper(self.window).show_bundle_list()
+        return
+
+    def is_visible(self):
+        return True
+
+
 class FetchCommand(sublime_plugin.WindowCommand):
     def run(self):
         #self.window.show_input_panel(

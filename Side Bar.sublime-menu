@@ -4,6 +4,7 @@
 	[
 		{ "caption": "Salesforce Login", "command": "login", "args":{} },
 		{ "caption": "Fetch Lightning", "command": "fetch", "args": {} },
+		{ "caption": "Fetch Metadata", "command": "fetch_meta", "args": {} },
 		{ "caption": "Delete Lightning Defintion", "command": "lightning_delete", "args": {"files": []} },
 		{ "caption": "Delete Lightning Bundle", "command": "lightning_delete_bundle", "args": {"dirs": []} },
 		{ "caption": "Create App", "command": "lightning_new_app", "args": {"dirs": []} },
@@ -16,6 +17,7 @@
 		{ "caption": "Add Renderer", "command": "lightning_new_renderer", "args": {"dirs": []} },
 		{ "caption": "Add SVG", "command": "lightning_new_svg", "args": {"dirs": []} },
 		{ "caption": "Preview", "command": "lightning_preview", "args": {"dirs": []} },
+
 	]},
 	{ "caption": "-", "lightningend": "lightning_commands" }
 ]
