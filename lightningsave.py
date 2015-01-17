@@ -111,6 +111,27 @@ class Helper(sublime_plugin.WindowCommand):
         self.do_meta_fetch(self.messages[index][1], self.window.folders()[0])
         return
 
+    def show_metadata_instance_list(self, metaname):
+        self.messages = []
+        p = subprocess.Popen(["force", "describe", "-t", "metadata",
+                              "-n", metaname, "-j"],
+                             stdout=subprocess.PIPE)
+        result = p.communicate()[0]
+        try:
+            m = json.loads(result.decode("utf-8"))
+            for mm in m:
+                x = [mm['FullName'], "Modified by: " +
+                     mm['LastModifiedByName'],
+                     "Id: " + mm['Id']]
+                self.messages.append(x)
+
+            self.window = sublime.active_window()
+            self.window.show_quick_panel(self.messages,
+                                         self.fetch_selected_metadata,
+                                         sublime.MONOSPACE_FONT)
+        except:
+            return
+
     def open_url(self, url):
         self.window.run_command(
             'exec',
@@ -119,27 +140,20 @@ class Helper(sublime_plugin.WindowCommand):
 
     def show_metadata_type_list(self):
         self.messages = []
-        print("In show_metadata_type_list")
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
                               "-j"], stdout=subprocess.PIPE)
-        print("Next")
         result = p.communicate()[0]
-        print("Result\n" + result.decode("utf-8"))
         try:
             m = json.loads(result.decode("utf-8"))
             for mm in m:
-                print(mm)
                 x = [mm['XmlName'], "In folder: " + mm['DirectoryName'],
                      "Suffix: " + mm['Suffix']]
                 self.messages.append(x)
 
             self.window = sublime.active_window()
-            print("Got the active window")
-            print(self.messages)
             self.window.show_quick_panel(self.messages,
-                                         self.open_selected_bundle,
+                                         self.open_selected_metadata,
                                          sublime.MONOSPACE_FONT)
-            print("Done")
 
         except:
             return
