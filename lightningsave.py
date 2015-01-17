@@ -125,6 +125,7 @@ class Helper(sublime_plugin.WindowCommand):
                      mm['LastModifiedByName'],
                      "Id: " + mm['Id']]
                 self.messages.append(x)
+                print(x)
 
             self.window = sublime.active_window()
             self.window.show_quick_panel(self.messages,
