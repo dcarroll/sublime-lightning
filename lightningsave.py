@@ -131,7 +131,7 @@ class Helper(sublime_plugin.WindowCommand):
                                   "All the lightning bundles in your org!"])
             for mm in m:
                 print(mm)
-                x = [mm['XmlName'], 'Dood']
+                x = [mm['XmlName'], mm['DirectoryName'], 'Dood', 'man']
                 self.messages.append(x)
 
             self.window = sublime.active_window()
