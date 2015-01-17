@@ -115,10 +115,14 @@ class Helper(sublime_plugin.WindowCommand):
         item = self.messages[index][0]
         print("Type: " + self.type)
         print("Item: " + item)
-        p = subprocess.Popen(["force", "fetch", "-t", self.type,
-                              "-n", item],
-                             stdout=subprocess.PIPE)
-        p.communicate()[0]
+        cmd = '-t=' + self.type + ' -n=' + item
+        self.window.run_command(
+            'exec',
+            {'cmd': ["force", "fetch", cmd]})
+        #p = subprocess.Popen(["force", "fetch", "-t", self.type,
+        #                      "-n", item],
+        #                     stdout=subprocess.PIPE)
+        #p.communicate()[0]
         return
 
     def show_metadata_instance_list(self, metaname):
