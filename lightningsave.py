@@ -111,6 +111,9 @@ class Helper(sublime_plugin.WindowCommand):
         self.show_metadata_instance_list(self.messages[index][0])
         return
 
+    def fetch_selected_metadata(self, index):
+        return
+
     def show_metadata_instance_list(self, metaname):
         self.messages = []
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
