@@ -115,10 +115,10 @@ class Helper(sublime_plugin.WindowCommand):
         item = self.messages[index][0]
         print("Type: " + self.type)
         print("Item: " + item)
-        cmd = '-t=' + self.type + ' -n=' + item
+        cmd = '-t=' + self.type
         self.window.run_command(
             'exec',
-            {'cmd': ["force", "fetch", cmd]})
+            {'cmd': ["force", "fetch", cmd, '-n=' + item]})
         #p = subprocess.Popen(["force", "fetch", "-t", self.type,
         #                      "-n", item],
         #                     stdout=subprocess.PIPE)
