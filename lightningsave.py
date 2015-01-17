@@ -131,9 +131,12 @@ class Helper(sublime_plugin.WindowCommand):
                 print(x)
 
             self.window = sublime.active_window()
-            self.window.show_quick_panel(self.messages,
-                                         self.fetch_selected_metadata,
-                                         sublime.MONOSPACE_FONT)
+            sublime.set_timeout(
+                lambda:
+                self.window.show_quick_panel(
+                    self.messages,
+                    self.fetch_selected_metadata,
+                    sublime.MONOSPACE_FONT), 10)
         except:
             return
 
