@@ -127,11 +127,10 @@ class Helper(sublime_plugin.WindowCommand):
         print("Result\n" + result.decode("utf-8"))
         try:
             m = json.loads(result.decode("utf-8"))
-            self.messages.append(["All Bundles", "*", "Every Bundle",
-                                  "All the lightning bundles in your org!"])
             for mm in m:
                 print(mm)
-                x = [mm['XmlName'], mm['DirectoryName'], 'Dood', 'man']
+                x = [mm['XmlName'], "In folder: " + mm['DirectoryName'],
+                     "Suffix: " + mm['Suffix']]
                 self.messages.append(x)
 
             self.window = sublime.active_window()
