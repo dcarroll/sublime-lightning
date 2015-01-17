@@ -108,7 +108,7 @@ class Helper(sublime_plugin.WindowCommand):
         if (index == -1):
             return
 
-        self.do_meta_fetch(self.messages[index][1], self.window.folders()[0])
+        self.show_metadata_instance_list(self.messages[index][0])
         return
 
     def show_metadata_instance_list(self, metaname):
