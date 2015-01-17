@@ -113,6 +113,8 @@ class Helper(sublime_plugin.WindowCommand):
 
     def fetch_selected_metadata(self, index):
         item = self.messages[index][0]
+        print("Type: " + self.type)
+        print("Item: " + item)
         p = subprocess.Popen(["force", "fetch", "-t", self.type,
                               "-n", item],
                              stdout=subprocess.PIPE)
