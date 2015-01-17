@@ -112,9 +112,15 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def fetch_selected_metadata(self, index):
+        item = self.messages[index][0]
+        p = subprocess.Popen(["force", "fetch", "-t", self.type,
+                              "-n", item],
+                             stdout=subprocess.PIPE)
+        p.communicate()[0]
         return
 
     def show_metadata_instance_list(self, metaname):
+        self.type = metaname
         self.messages = []
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
                               "-n", metaname, "-j"],
@@ -126,6 +132,7 @@ class Helper(sublime_plugin.WindowCommand):
             for mm in m:
                 x = [mm['FullName'], "Modified by: " +
                      mm['LastModifiedByName'],
+                     "File name: " + mm['FileName'],
                      "Id: " + mm['Id']]
                 self.messages.append(x)
                 print(x)
