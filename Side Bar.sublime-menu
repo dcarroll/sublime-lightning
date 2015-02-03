@@ -18,8 +18,7 @@
 		{ "caption": "Add Renderer", "command": "lightning_new_renderer", "args": {"dirs": []} },
 		{ "caption": "Add Design Resource", "command": "lightning_new_design", "args": {"dirs": []} },
 		{ "caption": "Add SVG Resource", "command": "lightning_new_svg", "args": {"dirs": []} },
-		{ "caption": "Preview", "command": "lightning_preview", "args": {"dirs": []} },
-
+		{ "caption": "Preview", "command": "lightning_preview", "args": {"dirs": []} }
 	]},
 	{ "caption": "-", "lightningend": "lightning_commands" }
 ]
