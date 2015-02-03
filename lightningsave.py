@@ -34,7 +34,7 @@ class Helper(sublime_plugin.WindowCommand):
 
         return False
 
-    def get_resource_name(file):
+    def get_resource_name(self, file):
         for root, dirs, files in Helper.walk_up(os.path.dirname(file)):
             if os.path.basename(os.path.dirname(root)) == "staticresources":
                 return os.path.basename(root)
@@ -119,10 +119,6 @@ class Helper(sublime_plugin.WindowCommand):
             'exec',
             {'cmd': ["force", "fetch", "-t", self.type, "-n", item],
              'working_dir': self.window.folders()[0]})
-        #p = subprocess.Popen(["force", "fetch", "-t", self.type,
-        #                      "-n", item],
-        #                     stdout=subprocess.PIPE)
-        #p.communicate()[0]
         return
 
     def show_metadata_instance_list(self, metaname):
@@ -159,6 +155,26 @@ class Helper(sublime_plugin.WindowCommand):
         )
 
     def show_metadata_type_list(self):
+        self.messages = []
+        p = subprocess.Popen(["force", "describe", "-t", "metadata",
+                              "-j"], stdout=subprocess.PIPE)
+        result = p.communicate()[0]
+        try:
+            m = json.loads(result.decode("utf-8"))
+            for mm in m:
+                x = [mm['XmlName'], "In folder: " + mm['DirectoryName'],
+                     "Suffix: " + mm['Suffix']]
+                self.messages.append(x)
+
+            self.window = sublime.active_window()
+            self.window.show_quick_panel(self.messages,
+                                         self.open_selected_metadata,
+                                         sublime.MONOSPACE_FONT)
+
+        except:
+            return
+
+    def show_package_list(self):
         self.messages = []
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
                               "-j"], stdout=subprocess.PIPE)
@@ -226,14 +242,14 @@ class Helper(sublime_plugin.WindowCommand):
 
         return app
 
-    def walk_up(bottom):
+    def walk_up(self, bottom):
         """
         mimic os.walk, but walk 'up'
         instead of down the directory tree
         """
         bottom = os.path.realpath(bottom)
 
-        #get files in current dir
+        # get files in current dir
         try:
             names = os.listdir(bottom)
         except Exception as e:
@@ -296,15 +312,24 @@ class FetchMetaCommand(sublime_plugin.WindowCommand):
         return True
 
 
+class FetchPackageCommand(sublime_plugin.WindowCommand):
+    def run(self):
+        print("Running FetchPackageCommand")
+        Helper(self.window).show_package_list()
+
+    def is_visible(self):
+        return True
+
+
 class FetchCommand(sublime_plugin.WindowCommand):
     def run(self):
-        #self.window.show_input_panel(
+        # self.window.show_input_panel(
         #    "Bundle name: ",
         #    "all",
         #    self.do_fetch,
         #    None,
         #    None)
-        #pass
+        # pass
         Helper(self.window).show_bundle_list()
 
     def do_fetch(self, bundle):
@@ -383,13 +408,13 @@ class LightningNewEventCommand(sublime_plugin.WindowCommand):
 class LightningPreviewCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         self.dirs = dirs
-        appName = Helper.get_app_name(self, dirs[0])
+        appname = Helper.get_app_name(self, dirs[0])
         url = Helper.get_instance_url(self)
         namespace = Helper.get_namespace(self)
         if len(namespace) == 0:
-            url = url + "/c/" + appName + ".app"
+            url = url + "/c/" + appname + ".app"
         else:
-            url = url + "/" + namespace + "/" + appName + ".app"
+            url = url + "/" + namespace + "/" + appname + ".app"
 
         Helper.open_url(self, url)
 
@@ -397,10 +422,10 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
-        isValidBundle = helper.is_bundle_type(dirs, "app")
+        isvalidbundle = helper.is_bundle_type(dirs, "app")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
-            isValidBundle
+            isvalidbundle
 
 
 class LightningNewControllerCommand(sublime_plugin.WindowCommand):
@@ -420,14 +445,14 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
-        hasFile = helper.has_this_file(
+        hasfile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Controller.js")
-        isValidBundle = helper.is_bundle_type(dirs, "app") or \
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
             helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
-            isValidBundle and not hasFile
+            isvalidbundle and not hasfile
 
 
 class LightningNewSvgCommand(sublime_plugin.WindowCommand):
@@ -460,14 +485,38 @@ class LightningNewSvgCommand(sublime_plugin.WindowCommand):
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
-        hasFile = helper.has_this_file(
+        hasfile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + ".svg")
-        isValidBundle = helper.is_bundle_type(dirs, "app") or \
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
             helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
-            isValidBundle and not hasFile
+            isvalidbundle and not hasfile
+
+
+class LightningNewDesignCommand(sublime_plugin.WindowCommand):
+    def run(self, dirs):
+        self.dirs = dirs
+        name = os.path.basename(dirs[0])
+        Helper(self.window).make_bundle_file(
+            name,
+            "design",
+            '<design:component>\n'
+            '</design:component>',
+            self.dirs)
+
+    def is_visible(self, dirs):
+        helper = Helper(self.window)
+        if len(dirs) == 0:
+            return False
+        hasfile = helper.has_this_file(
+            dirs[0],
+            os.path.basename(dirs[0]) + ".design")
+        isvalidbundle = helper.is_bundle_type(dirs, "cmp")
+
+        return Helper(self.window).file_op_is_visible(dirs) and \
+            isvalidbundle and not hasfile
 
 
 class LightningNewRendererCommand(sublime_plugin.WindowCommand):
@@ -488,14 +537,14 @@ class LightningNewRendererCommand(sublime_plugin.WindowCommand):
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
-        hasFile = helper.has_this_file(
+        hasfile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Renderer.js")
-        isValidBundle = helper.is_bundle_type(dirs, "app") or \
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
             helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
-            isValidBundle and not hasFile
+            isvalidbundle and not hasfile
 
 
 class LightningNewHelperCommand(sublime_plugin.WindowCommand):
@@ -516,14 +565,14 @@ class LightningNewHelperCommand(sublime_plugin.WindowCommand):
         if len(dirs) == 0:
             return False
 
-        hasFile = helper.has_this_file(
+        hasfile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Helper.js")
-        isValidBundle = helper.is_bundle_type(dirs, "app") or \
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
             helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
-            isValidBundle and not hasFile
+            isvalidbundle and not hasfile
 
 
 class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
@@ -547,14 +596,14 @@ class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
         if len(dirs) == 0:
             return False
 
-        hasFile = helper.has_this_file(
+        hasfile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Documentation.js")
-        isValidBundle = helper.is_bundle_type(dirs, "app") or \
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
             helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
-            isValidBundle and not hasFile
+            isvalidbundle and not hasfile
 
 
 class LightningNewStyleCommand(sublime_plugin.WindowCommand):
@@ -584,14 +633,14 @@ class LightningNewStyleCommand(sublime_plugin.WindowCommand):
         if len(dirs) == 0:
             return False
 
-        hasFile = helper.has_this_file(
+        hasfile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Style.css")
-        isValidBundle = helper.is_bundle_type(dirs, "app") or \
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
             helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
-            isValidBundle and not hasFile
+            isvalidbundle and not hasfile
 
 
 class LightningDeleteCommand(sublime_plugin.WindowCommand):
@@ -660,7 +709,6 @@ class LightningSave(sublime_plugin.EventListener):
                 {'cmd': ["force", "aura", command]})
         elif Helper.is_metadata(self, os.path.dirname(filename)):
             if Helper.is_static_resource(self, filename):
-                #comment
                 print("is static resource")
             else:
                 command = '-f=' + filename
