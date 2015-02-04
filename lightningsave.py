@@ -422,7 +422,7 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
-        isvalidbundle = helper.is_bundle_type(self, dirs, "app")
+        isvalidbundle = helper.is_bundle_type(dirs, "app")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
             isvalidbundle
@@ -446,11 +446,10 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
         if len(dirs) == 0:
             return False
         hasfile = helper.has_this_file(
-            self,
             dirs[0],
             os.path.basename(dirs[0]) + "Controller.js")
-        isvalidbundle = helper.is_bundle_type(self, dirs, "app") or \
-            helper.is_bundle_type(self, dirs, "cmp")
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
+            helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
             isvalidbundle and not hasfile
@@ -487,11 +486,10 @@ class LightningNewSvgCommand(sublime_plugin.WindowCommand):
         if len(dirs) == 0:
             return False
         hasfile = helper.has_this_file(
-            self,
             dirs[0],
             os.path.basename(dirs[0]) + ".svg")
-        isvalidbundle = helper.is_bundle_type(self, dirs, "app") or \
-            helper.is_bundle_type(self, dirs, "cmp")
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
+            helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
             isvalidbundle and not hasfile
@@ -513,10 +511,9 @@ class LightningNewDesignCommand(sublime_plugin.WindowCommand):
         if len(dirs) == 0:
             return False
         hasfile = helper.has_this_file(
-            self,
             dirs[0],
             os.path.basename(dirs[0]) + ".design")
-        isvalidbundle = helper.is_bundle_type(self, dirs, "cmp")
+        isvalidbundle = helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
             isvalidbundle and not hasfile
@@ -541,11 +538,10 @@ class LightningNewRendererCommand(sublime_plugin.WindowCommand):
         if len(dirs) == 0:
             return False
         hasfile = helper.has_this_file(
-            self,
             dirs[0],
             os.path.basename(dirs[0]) + "Renderer.js")
-        isvalidbundle = helper.is_bundle_type(self, dirs, "app") or \
-            helper.is_bundle_type(self, dirs, "cmp")
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
+            helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
             isvalidbundle and not hasfile
@@ -570,11 +566,10 @@ class LightningNewHelperCommand(sublime_plugin.WindowCommand):
             return False
 
         hasfile = helper.has_this_file(
-            self,
             dirs[0],
             os.path.basename(dirs[0]) + "Helper.js")
-        isvalidbundle = helper.is_bundle_type(self, dirs, "app") or \
-            helper.is_bundle_type(self, dirs, "cmp")
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
+            helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
             isvalidbundle and not hasfile
@@ -602,11 +597,10 @@ class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
             return False
 
         hasfile = helper.has_this_file(
-            self,
             dirs[0],
             os.path.basename(dirs[0]) + "Documentation.js")
-        isvalidbundle = helper.is_bundle_type(self, dirs, "app") or \
-            helper.is_bundle_type(self, dirs, "cmp")
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
+            helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
             isvalidbundle and not hasfile
@@ -640,11 +634,10 @@ class LightningNewStyleCommand(sublime_plugin.WindowCommand):
             return False
 
         hasfile = helper.has_this_file(
-            self,
             dirs[0],
             os.path.basename(dirs[0]) + "Style.css")
-        isvalidbundle = helper.is_bundle_type(self, dirs, "app") or \
-            helper.is_bundle_type(self, dirs, "cmp")
+        isvalidbundle = helper.is_bundle_type(dirs, "app") or \
+            helper.is_bundle_type(dirs, "cmp")
 
         return Helper(self.window).file_op_is_visible(dirs) and \
             isvalidbundle and not hasfile
