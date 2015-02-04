@@ -4,6 +4,8 @@
 		"cmp",
 		"evt",
 		"app",
-		"auradoc"
+		"auradoc",
+		"js",
+		"css"
 	]
 }
