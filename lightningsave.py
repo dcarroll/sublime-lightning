@@ -51,9 +51,14 @@ class Helper(sublime_plugin.WindowCommand):
         return os.path.exists(os.path.join(working_dir, filename))
 
     def do_login(self, username, password):
-        self.window.run_command(
-            'exec',
-            {'cmd': ["force", "login", "-u", username, "-p", password]})
+        if username == "interactive":
+            self.window.run_command(
+                'exec',
+                {'cmd': ["force", "login"]})
+        else:
+            self.window.run_command(
+                'exec',
+                {'cmd': ["force", "login", "-u", username, "-p", password]})
         return
 
     def do_aura_query(self):
@@ -286,13 +291,16 @@ class LoginCommand(sublime_plugin.WindowCommand):
         pass
 
     def get_password(self, username):
-        self.username = username
-        self.window.show_input_panel(
-            "Password: ",
-            "",
-            self.do_login,
-            None,
-            None)
+        if len(username) == 0:
+            Helper(self.window).do_login("interactive", "")
+        else:
+            self.username = username
+            self.window.show_input_panel(
+                "Password: ",
+                "",
+                self.do_login,
+                None,
+                None)
         pass
 
     def do_login(self, password):
