@@ -122,7 +122,7 @@ class Helper(sublime_plugin.WindowCommand):
         print("Item: " + item)
         self.window.run_command(
             'exec',
-            {'cmd': ["force", "fetch", "-t", self.type, "-n", item],
+            {'cmd': ["force", "fetch", "-t", self.type, "-n", item, "-unpack"],
              'working_dir': self.window.folders()[0]})
         return
 
