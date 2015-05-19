@@ -21,6 +21,7 @@
 			{ "caption": "Event", "command": "lightning_new_event", "args": {"dirs": []} },
 		]},
 			{ "caption": "Add", "children":
+		[
 			{ "caption": "Controller", "command": "lightning_new_controller", "args": {"dirs": []} },
 			{ "caption": "Helper", "command": "lightning_new_helper", "args": {"dirs": []} },
 			{ "caption": "Style", "command": "lightning_new_style", "args": {"dirs": []} },
