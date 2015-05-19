@@ -735,3 +735,38 @@ class LightningSave(sublime_plugin.EventListener):
                 {'cmd': ["force", "push", command, command2]})
 
         return
+
+
+class LightningSaveBundle(sublime_plugin.EventListener):
+
+    def on_post_save(self, view):
+        filename = view.file_name()
+        if Helper.dir_is_aura(self, os.path.dirname(filename)):
+            if os.path.isDir(filename):
+                # get files in current dir
+                try:
+                    names = os.listdir(filename)
+                except Exception as e:
+                    print(e)
+                    return
+
+                for name in names:
+                    command = 'push -f=' + os.path.join(filename, name)
+                    view.window().run_command(
+                        'exec',
+                        {'cmd': ["force", "aura", command]})
+
+        return
+
+    def is_visible(self, dirs):
+        for d in dirs:
+            p = os.path.dirname(d)
+            if os.path.basename(p) == "aura":
+                return 1 == 1
+            else:
+                p = os.path.dirname(p)
+                if os.path.basename(p) == "aura":
+                    return 1 == 1
+                else:
+                    return 1 == 2
+        return False
