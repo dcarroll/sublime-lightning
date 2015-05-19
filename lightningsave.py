@@ -737,7 +737,7 @@ class LightningSave(sublime_plugin.EventListener):
         return
 
 
-class LightningSaveBundle(sublime_plugin.EventListener):
+class LightningSaveBundleCommand(sublime_plugin.EventListener):
 
     def on_post_save(self, view):
         filename = view.file_name()
