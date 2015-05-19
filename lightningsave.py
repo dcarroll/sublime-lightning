@@ -9,6 +9,9 @@ class Helper(sublime_plugin.WindowCommand):
     def foo(self):
         return
 
+    def install_cli(self):
+        return
+
     def bundle_op_is_visible(self, dirs):
         if len(dirs) == 0:
             return False

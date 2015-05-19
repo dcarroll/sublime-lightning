@@ -3,21 +3,31 @@
 	{ "caption" : "Lighting", "children" :
 	[
 		{ "caption": "Salesforce Login", "command": "login", "args":{} },
-		{ "caption": "Fetch Lightning", "command": "fetch", "args": {} },
-		{ "caption": "Fetch Metadata", "command": "fetch_meta", "args": {} },
-		{ "caption": "Fetch Package", "command": "fetch_package", "args": {} },
-		{ "caption": "Delete Lightning Defintion", "command": "lightning_delete", "args": {"files": []} },
-		{ "caption": "Delete Lightning Bundle", "command": "lightning_delete_bundle", "args": {"dirs": []} },
-		{ "caption": "Create App", "command": "lightning_new_app", "args": {"dirs": []} },
-		{ "caption": "Create Component", "command": "lightning_new_component", "args": {"dirs": []} },
-		{ "caption": "Create Event", "command": "lightning_new_event", "args": {"dirs": []} },
-		{ "caption": "Add Controller", "command": "lightning_new_controller", "args": {"dirs": []} },
-		{ "caption": "Add Helper", "command": "lightning_new_helper", "args": {"dirs": []} },
-		{ "caption": "Add Style", "command": "lightning_new_style", "args": {"dirs": []} },
-		{ "caption": "Add Documenation", "command": "lightning_new_documentation", "args": {"dirs": []} },
-		{ "caption": "Add Renderer", "command": "lightning_new_renderer", "args": {"dirs": []} },
-		{ "caption": "Add Design Resource", "command": "lightning_new_design", "args": {"dirs": []} },
-		{ "caption": "Add SVG Resource", "command": "lightning_new_svg", "args": {"dirs": []} },
+		{ "caption": "Fetch", "children" :
+		[
+			{ "caption": "Lightning", "command": "fetch", "args": {} },
+			{ "caption": "Metadata", "command": "fetch_meta", "args": {} },
+			{ "caption": "Package", "command": "fetch_package", "args": {} },
+		]},
+		{ "caption": "Delete", "children" :
+		[
+			{ "caption": "Lightning Defintion", "command": "lightning_delete", "args": {"files": []} },
+			{ "caption": "Lightning Bundle", "command": "lightning_delete_bundle", "args": {"dirs": []} },
+		]},
+		{ "caption": "Create", "children":
+			{ "caption": "App", "command": "lightning_new_app", "args": {"dirs": []} },
+			{ "caption": "Component", "command": "lightning_new_component", "args": {"dirs": []} },
+			{ "caption": "Event", "command": "lightning_new_event", "args": {"dirs": []} },
+		]},
+			{ "caption": "Add", "children":
+			{ "caption": "Controller", "command": "lightning_new_controller", "args": {"dirs": []} },
+			{ "caption": "Helper", "command": "lightning_new_helper", "args": {"dirs": []} },
+			{ "caption": "Style", "command": "lightning_new_style", "args": {"dirs": []} },
+			{ "caption": "Documenation", "command": "lightning_new_documentation", "args": {"dirs": []} },
+			{ "caption": "Renderer", "command": "lightning_new_renderer", "args": {"dirs": []} },
+			{ "caption": "Design Resource", "command": "lightning_new_design", "args": {"dirs": []} },
+			{ "caption": "SVG Resource", "command": "lightning_new_svg", "args": {"dirs": []} },
+		]},
 		{ "caption": "Preview", "command": "lightning_preview", "args": {"dirs": []} }
 	]},
 	{ "caption": "-", "lightningend": "lightning_commands" }
