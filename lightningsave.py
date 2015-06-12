@@ -767,4 +767,4 @@ class LightningSaveBundleCommand(sublime_plugin.EventListener):
                     return 1 == 1
                 else:
                     return 1 == 2
-        return False
+        return True
