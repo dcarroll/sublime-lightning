@@ -760,6 +760,8 @@ class LightningSaveBundleCommand(sublime_plugin.EventListener):
 
     def is_visible(self, dirs):
         for d in dirs:
+            if Helper.dir_is_aura(self, d):
+                return 1 == 1
             p = os.path.dirname(d)
             if os.path.basename(p) == "aura":
                 return 1 == 1
