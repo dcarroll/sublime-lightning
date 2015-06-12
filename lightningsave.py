@@ -737,23 +737,14 @@ class LightningSave(sublime_plugin.EventListener):
         return
 
 
-class LightningSaveBundleCommand(sublime_plugin.EventListener):
+class LightningSaveBundleCommand(sublime_plugin.WindowCommand):
 
     def run(self, dirs):
-        for root, dirss, files in os.walk(dirs[0]):
-            for name in files:
-                if name.endswith(".app", ".cmp", ".evt"):
-                    command = 'push -f=' + os.path.join(dirss, name)
-                    self.window.run_command(
-                        'exec',
-                        {'cmd': ["force", "aura", command]})
-                    break
-            for name in files:
-                if not name.endswith(".manifest", ".app", ".cmp", ".evt"):
-                    command = 'push -f=' + os.path.join(dirss, name)
-                    self.window.run_command(
-                        'exec',
-                        {'cmd': ["force", "aura", command]})
+        print(dirs)
+        command = 'push -f=' + dirs[0]
+        self.window.run_command(
+            'exec',
+            {'cmd': ["force", "aura", command]})
         return
 
     def is_visible(self, dirs):
@@ -767,4 +758,4 @@ class LightningSaveBundleCommand(sublime_plugin.EventListener):
                     return 1 == 1
                 else:
                     return 1 == 2
-        return True
+        return False
