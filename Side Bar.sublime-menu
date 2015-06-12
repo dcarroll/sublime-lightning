@@ -3,7 +3,7 @@
 	{ "caption" : "Lighting", "children" :
 	[
 		{ "caption": "Salesforce Login", "command": "login", "args":{} },
-		{ "caption": "Save", "command": "lightning_save_bundle", "args":{"files":[]} },
+		{ "caption": "Save", "command": "lightning_save_bundle", "args":{"dirs":[]} },
 		{ "caption": "Fetch", "children" :
 		[
 			{ "caption": "Lightning", "command": "fetch", "args": {} },
