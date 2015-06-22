@@ -133,6 +133,7 @@ class Helper(sublime_plugin.WindowCommand):
         p = subprocess.Popen(["force", "version"], stdout=subprocess.PIPE)
         version = p.communicate()[0].decode("utf-8")
         print("You are running version " + version + " of the Force CLI.")
+        return version.replace("\n", "")
 
     def show_metadata_instance_list(self, metaname):
         self.type = metaname
@@ -291,7 +292,8 @@ class Helper(sublime_plugin.WindowCommand):
 
 class LoginCommand(sublime_plugin.WindowCommand):
     def run(self):
-        Helper(self.window).get_forcecli_version()
+        version = Helper(self.window).get_forcecli_version()
+        print("Running version " + version + " of Force CLI!")
         self.window.show_input_panel(
             "Username: ",
             "",
