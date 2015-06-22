@@ -19,7 +19,7 @@ def plugin_loaded():
                        u"requires version 0.22.26 or greater.\n\n" +
                        u"Please download the latest version from " +
                        u"force-cli.herokuapp.com")
-        sublime.error_message(message)
+            sublime.error_message(message)
     return
 
 
