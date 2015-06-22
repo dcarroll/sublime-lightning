@@ -129,6 +129,11 @@ class Helper(sublime_plugin.WindowCommand):
              'working_dir': self.window.folders()[0]})
         return
 
+    def get_forcecli_version(self):
+        p = subprocess.Popen(["force", "version"], stdout=subprocess.PIPE)
+        version = p.communicate()[0]
+        print("You are running version " + version + " of the Force CLI.")
+
     def show_metadata_instance_list(self, metaname):
         self.type = metaname
         self.messages = []
