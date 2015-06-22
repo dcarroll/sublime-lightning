@@ -12,7 +12,7 @@ def plugin_loaded():
     version = p.communicate()[0].decode("utf-8").replace("\n", "")
     if version != "dev":
         version = version[1:]
-        if semver.match(version, ">=0.22.26"):
+        if semver.match(version, "<0.22.26"):
             message = (u"Sublime Lightning\n\n" +
                        u"You are using version " + version + " of the " +
                        u"Force CLI.\n\nThis version of Sublime Lightning " +
