@@ -228,7 +228,8 @@ class Helper(sublime_plugin.WindowCommand):
     def make_bundle_file(self, file_name, extension, snippet, dirs):
         working_dir = dirs[0]
         os.chdir(working_dir)
-        if extension == "cmp" or extension == "app" or extension == "evt":
+        e = extension
+        if e == "cmp" or e == "app" or e == "intf" or e == "evt":
             fn, ex = os.path.splitext(file_name)
             os.mkdir(os.path.join(working_dir, file_name))
             os.chdir(fn)
@@ -413,7 +414,7 @@ class LightningNewInterfaceCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         self.dirs = dirs
         self.window.show_input_panel(
-            "Event Name:",
+            "Interface Name:",
             "",
             self.on_done,
             None,
