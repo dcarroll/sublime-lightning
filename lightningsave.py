@@ -5,6 +5,10 @@ import subprocess
 import json
 
 
+def plugin_loaded():
+    print("WE ARE TOTALLY LOADED!")
+
+
 class Helper(sublime_plugin.WindowCommand):
     def foo(self):
         return
