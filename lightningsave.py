@@ -291,6 +291,7 @@ class Helper(sublime_plugin.WindowCommand):
 
 class LoginCommand(sublime_plugin.WindowCommand):
     def run(self):
+        Helper(self.window).get_forcecli_version()
         self.window.show_input_panel(
             "Username: ",
             "",
