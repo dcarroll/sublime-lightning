@@ -334,13 +334,6 @@ class FetchPackageCommand(sublime_plugin.WindowCommand):
 
 class FetchCommand(sublime_plugin.WindowCommand):
     def run(self):
-        # self.window.show_input_panel(
-        #    "Bundle name: ",
-        #    "all",
-        #    self.do_fetch,
-        #    None,
-        #    None)
-        # pass
         Helper(self.window).show_bundle_list()
 
     def do_fetch(self, bundle):
@@ -409,6 +402,32 @@ class LightningNewEventCommand(sublime_plugin.WindowCommand):
             file_name,
             "evt",
             '<aura:event type="APPLICATION">\n\n</aura:event>',
+            self.dirs)
+        return
+
+    def is_visible(self, dirs):
+        return Helper(self.window).bundle_op_is_visible(dirs)
+
+
+class LightningNewInterfaceCommand(sublime_plugin.WindowCommand):
+    def run(self, dirs):
+        self.dirs = dirs
+        self.window.show_input_panel(
+            "Event Name:",
+            "",
+            self.on_done,
+            None,
+            None)
+        pass
+
+    def on_done(self, file_name):
+        Helper(self.window).make_bundle_file(
+            file_name,
+            "intf",
+            '<aura:interface description="Interface template">'
+            '\n\t<aura:attribute name="example" type="String" default="" '
+            'description="An example attribute."/>'
+            '\n</aura:interface>',
             self.dirs)
         return
 
