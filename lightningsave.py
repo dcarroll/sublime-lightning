@@ -9,17 +9,27 @@ from . import semver
 def plugin_loaded():
     print("WE ARE TOTALLY LOADED!")
     p = subprocess.Popen(["force", "version"], stdout=subprocess.PIPE)
-    version = p.communicate()[0].decode("utf-8").replace("\n", "")
-    if version != "dev":
-        version = version[1:]
-        if semver.match(version, "<0.22.26"):
-            message = (u"Sublime Lightning\n\n" +
-                       u"You are using version " + version + " of the " +
-                       u"Force CLI.\n\nThis version of Sublime Lightning " +
-                       u"requires version 0.22.26 or greater.\n\n" +
-                       u"Please download the latest version from " +
-                       u"force-cli.herokuapp.com")
-            sublime.error_message(message)
+    try:
+        version = p.communicate()[0].decode("utf-8").replace("\n", "")
+
+        if version != "dev":
+            version = version[1:]
+            if semver.match(version, "<0.22.26"):
+                message = (u"Sublime Lightning\n\n" +
+                           u"You are using version " + version + " of the " +
+                           u"Force CLI.\n\nThis version of Sublime Lightning" +
+                           u" requires version 0.22.26 or greater.\n\n" +
+                           u"Please download the latest version from " +
+                           u"force-cli.herokuapp.com")
+                sublime.error_message(message)
+    except:
+        sublime.error_message("Sublime Lightning Plugin requires the " +
+                              "Force.com CLI to functionn\n\nPlease " +
+                              "visit force-cli.herokuapp.com to install" +
+                              "the Force.com CLI.\n\nIf you have already" +
+                              " installed it, please make sure that you " +
+                              "have stored it or created a symlink to " +
+                              "it in Sublime's default path.")
     return
 
 
