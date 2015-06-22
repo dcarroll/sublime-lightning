@@ -3,20 +3,23 @@ import sublime_plugin
 import os
 import subprocess
 import json
+import semver
 
 
 def plugin_loaded():
     print("WE ARE TOTALLY LOADED!")
     p = subprocess.Popen(["force", "version"], stdout=subprocess.PIPE)
     version = p.communicate()[0].decode("utf-8").replace("\n", "")
-    if version != "dev" or version != "v0.22.26":
-        message = (u"Sublime Lightning\n\n" +
-                   u"You are using version " + version + " of the " +
-                   u"Force CLI.\n\nThis version of Sublime Lightning " +
-                   u"requires version v0.22.26 or greater.\n\n" +
-                   u"Please download the latest version from " +
-                   u"force-cli.herokuapp.com")
-    sublime.error_message(message)
+    if version != "dev":
+        version = version[1:]
+        if semver.match(version, ">=0.22.26"):
+            message = (u"Sublime Lightning\n\n" +
+                       u"You are using version " + version + " of the " +
+                       u"Force CLI.\n\nThis version of Sublime Lightning " +
+                       u"requires version 0.22.26 or greater.\n\n" +
+                       u"Please download the latest version from " +
+                       u"force-cli.herokuapp.com")
+        sublime.error_message(message)
     return
 
 
