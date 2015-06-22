@@ -9,7 +9,7 @@ def walk_up(bottom):
     """
     bottom = path.realpath(bottom)
 
-    #get files in current dir
+    # get files in current dir
     try:
         names = os.listdir(bottom)
     except Exception as e:
@@ -37,7 +37,7 @@ def walk_up(bottom):
 if __name__ == '__main__':
     # tests/demos
 
-    #print all files and directories
+    # print all files and directories
     # directly above the current one
     for i in walk_up(os.curdir):
         print(i)

@@ -3,7 +3,7 @@ import sublime_plugin
 import os
 import subprocess
 import json
-import semver
+from . import semver
 
 
 def plugin_loaded():
