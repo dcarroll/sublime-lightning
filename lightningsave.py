@@ -8,8 +8,8 @@ from . import semver
 
 def plugin_loaded():
     print("WE ARE TOTALLY LOADED!")
-    p = subprocess.Popen(["force", "version"], stdout=subprocess.PIPE)
     try:
+        p = subprocess.Popen(["force", "version"], stdout=subprocess.PIPE)
         version = p.communicate()[0].decode("utf-8").replace("\n", "")
 
         if version != "dev":
