@@ -87,7 +87,7 @@ class Helper(sublime_plugin.WindowCommand):
                 'exec',
                 {'cmd': ["force", "login"]})
         else:
-            if instance == '':
+            if instance == "":
                 self.window.run_command(
                     'exec',
                     {'cmd': ["force", "login", "-u", username, "-p", password]})
