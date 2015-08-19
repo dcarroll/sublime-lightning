@@ -347,12 +347,11 @@ class LoginCommand(sublime_plugin.WindowCommand):
                 None,
                 None)
         pass
-    def get_instance(self, username, password):
-        if (len(password) == 0) or (len(username) == 0):
+    def get_instance(self, password):
+        if (len(password) == 0) or (len(self.username) == 0):
             Helper(self.window).do_login("interactive", "")
         else:
             self.password = password
-            self.username = username
             self.window.show_input_panel(
                 "Instance Url: ",
                 "",
@@ -360,8 +359,8 @@ class LoginCommand(sublime_plugin.WindowCommand):
                 None,
                 None)
         pass
-    def do_login(self, username, password, instance):
-        Helper(self.window).do_login(self.username, password, instance)
+    def do_login(self, instance):
+        Helper(self.window).do_login(self.username, self.password, instance)
         return
 
     def is_visible(self):
