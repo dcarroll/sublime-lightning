@@ -337,19 +337,19 @@ class LoginCommand(sublime_plugin.WindowCommand):
 
     def get_password(self, username):
         if len(username) == 0:
-            Helper(self.window).do_login("interactive", "")
+            Helper(self.window).do_login("interactive", "", "")
         else:
             self.username = username
             self.window.show_input_panel(
                 "Password: ",
                 "",
                 self.get_instance,
-                None,
+                None, 
                 None)
         pass
     def get_instance(self, password):
         if (len(password) == 0) or (len(self.username) == 0):
-            Helper(self.window).do_login("interactive", "")
+            Helper(self.window).do_login("interactive", "", "")
         else:
             self.password = password
             self.window.show_input_panel(
