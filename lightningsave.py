@@ -327,6 +327,7 @@ class LoginCommand(sublime_plugin.WindowCommand):
     def run(self):
         version = Helper(self.window).get_forcecli_version()
         print("Running version " + version + " of Force CLI!")
+        print("Raja thinks this is the wrong binary.")
         self.window.show_input_panel(
             "Username: ",
             "",
@@ -336,7 +337,6 @@ class LoginCommand(sublime_plugin.WindowCommand):
         pass
 
     def get_password(self, username):
-        print("Raja thinks this is the wrong binary.")
         if len(username) == 0:
             Helper(self.window).do_login("interactive", "", "")
         else:
