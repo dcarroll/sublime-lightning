@@ -1,6 +1,6 @@
 [
 	{ "caption": "-", "lightningstart": "lightning_commands" },
-	{ "caption" : "Lighting", "children" :
+	{ "caption" : "Lightning", "children" :
 	[
 		{ "caption": "Salesforce Login", "command": "login", "args":{} },
 		{ "caption": "Save", "command": "lightning_save_bundle", "args": {"dirs":[]} },
