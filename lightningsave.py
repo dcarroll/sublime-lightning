@@ -291,6 +291,7 @@ class Helper(sublime_plugin.WindowCommand):
                 return
 
     def show_bundle_list(self):
+        print("In show_bundle_list")
         self.messages = []
         p = subprocess.Popen(["force", "query", "Select Id, DeveloperName, "
                               "MasterLabel, Description From "
@@ -301,6 +302,7 @@ class Helper(sublime_plugin.WindowCommand):
         if err:
             sublime.error_message(err.decode("utf-8"))
         else:
+            print("Process result...\n" + result.decode("utf-8"))
             try:
                 m = json.loads(result.decode("utf-8"))
                 self.messages.append(["All Bundles", "*", "Every Bundle",
