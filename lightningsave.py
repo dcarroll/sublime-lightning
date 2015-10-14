@@ -202,7 +202,7 @@ class Helper(sublime_plugin.WindowCommand):
                                   " installed it, please make sure that you " +
                                   "have stored it or created a symlink to " +
                                   "it in Sublime's default path.")
-        return
+        return ver.replace("\n", "")
         # p = subprocess.Popen(["force", "version"],
         #                      stdout=subprocess.PIPE,
         #                      stderr=subprocess.PIPE)
