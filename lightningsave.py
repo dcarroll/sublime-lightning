@@ -211,7 +211,11 @@ class Helper(sublime_plugin.WindowCommand):
                               "-j"],
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
-        result = p.communicate()[0]
+        result, err = p.communicate()[0]
+        if err:
+            print("Error: " + err)
+            return
+
         print("REsult: " + result.decode("utf-8"))
         try:
             m = json.loads(result.decode("utf-8"))
