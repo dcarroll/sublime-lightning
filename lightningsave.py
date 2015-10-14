@@ -203,17 +203,6 @@ class Helper(sublime_plugin.WindowCommand):
                                   "have stored it or created a symlink to " +
                                   "it in Sublime's default path.")
         return ver.replace("\n", "")
-        # p = subprocess.Popen(["force", "version"],
-        #                      stdout=subprocess.PIPE,
-        #                      stderr=subprocess.PIPE)
-
-        # version, err = p.communicate()
-        # if err:
-        #     sublime.error_message(err.decode("utf-8"))
-        # else:
-        #     print("You are running version " + version.decode("utf-8") /
-        #           + " of the Force CLI.")
-        #     return version.replace("\n", "")
 
     def show_metadata_instance_list(self, metaname):
         self.type = metaname
@@ -306,7 +295,7 @@ class Helper(sublime_plugin.WindowCommand):
         p = subprocess.Popen(["force", "query", "Select Id, DeveloperName, "
                               "MasterLabel, Description From "
                               "AuraDefinitionBundle",
-                              "--format:json"], stdout=subprocess.PIPE,
+                              "--format:json", "-t"], stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         result, err = p.communicate()
         if err:
