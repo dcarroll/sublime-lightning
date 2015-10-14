@@ -9,14 +9,20 @@ from . import semver
 def plugin_loaded():
     print("WE ARE TOTALLY LOADED!")
     try:
-        p = subprocess.Popen(["force", "version"], stdout=subprocess.PIPE)
-        version = p.communicate()[0].decode("utf-8").replace("\n", "")
+        p = subprocess.Popen(["force", "version"],
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+        version, err = p.communicate()
+        if err:
+            sublime.error_message(err.decode("utf-8"))
+        else:
+            ver = version.decode("utf-8").replace("\n", "")
 
-        if version != "dev":
-            version = version[1:]
-            if semver.match(version, "<0.22.26"):
+        if ver != "dev":
+            ver = ver[1:]
+            if semver.match(ver, "<0.22.26"):
                 message = (u"Sublime Lightning\n\n" +
-                           u"You are using version " + version + " of the " +
+                           u"You are using version " + ver + " of the " +
                            u"Force CLI.\n\nThis version of Sublime Lightning" +
                            u" requires version 0.22.26 or greater.\n\n" +
                            u"Please download the latest version from " +
@@ -167,37 +173,48 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def get_forcecli_version(self):
-        p = subprocess.Popen(["force", "version"], stdout=subprocess.PIPE)
-        version = p.communicate()[0].decode("utf-8")
-        print("You are running version " + version + " of the Force CLI.")
-        return version.replace("\n", "")
+        p = subprocess.Popen(["force", "version"],
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+
+        version, err = p.communicate()
+        if err:
+            sublime.error_message(err.decode("utf-8"))
+        else:
+            print("You are running version " + version.decode("utf-8") /
+                  + " of the Force CLI.")
+            return version.replace("\n", "")
 
     def show_metadata_instance_list(self, metaname):
         self.type = metaname
         self.messages = []
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
                               "-n", metaname, "-j"],
-                             stdout=subprocess.PIPE)
-        result = p.communicate()[0]
-        try:
-            m = json.loads(result.decode("utf-8"))
-            for mm in m:
-                x = [mm['FullName'], "Modified by: " +
-                     mm['LastModifiedByName'],
-                     "File name: " + mm['FileName'],
-                     "Id: " + mm['Id']]
-                self.messages.append(x)
-                print(x)
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+        result, err = p.communicate()
+        if err:
+            sublime.error_message(err.decode("utf-8"))
+        else:
+            try:
+                m = json.loads(result.decode("utf-8"))
+                for mm in m:
+                    x = [mm['FullName'], "Modified by: " +
+                         mm['LastModifiedByName'],
+                         "File name: " + mm['FileName'],
+                         "Id: " + mm['Id']]
+                    self.messages.append(x)
+                    print(x)
 
-            self.window = sublime.active_window()
-            sublime.set_timeout(
-                lambda:
-                self.window.show_quick_panel(
-                    self.messages,
-                    self.fetch_selected_metadata,
-                    sublime.MONOSPACE_FONT), 10)
-        except:
-            return
+                self.window = sublime.active_window()
+                sublime.set_timeout(
+                    lambda:
+                    self.window.show_quick_panel(
+                        self.messages,
+                        self.fetch_selected_metadata,
+                        sublime.MONOSPACE_FONT), 10)
+            except:
+                return
 
     def open_url(self, url):
         self.window.run_command(
@@ -215,7 +232,6 @@ class Helper(sublime_plugin.WindowCommand):
         if err:
             sublime.error_message(err.decode("utf-8"))
         else:
-            print("REsult: " + result.decode("utf-8"))
             try:
                 m = json.loads(result.decode("utf-8"))
                 for mm in m:
@@ -239,43 +255,49 @@ class Helper(sublime_plugin.WindowCommand):
         result, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
-        try:
-            m = json.loads(result.decode("utf-8"))
-            for mm in m:
-                x = [mm['XmlName'], "In folder: " + mm['DirectoryName'],
-                     "Suffix: " + mm['Suffix']]
-                self.messages.append(x)
+        else:
+            try:
+                m = json.loads(result.decode("utf-8"))
+                for mm in m:
+                    x = [mm['XmlName'], "In folder: " + mm['DirectoryName'],
+                         "Suffix: " + mm['Suffix']]
+                    self.messages.append(x)
 
-            self.window = sublime.active_window()
-            self.window.show_quick_panel(self.messages,
-                                         self.open_selected_metadata,
-                                         sublime.MONOSPACE_FONT)
+                self.window = sublime.active_window()
+                self.window.show_quick_panel(self.messages,
+                                             self.open_selected_metadata,
+                                             sublime.MONOSPACE_FONT)
 
-        except:
-            return
+            except:
+                return
 
     def show_bundle_list(self):
         self.messages = []
         p = subprocess.Popen(["force", "query", "Select Id, DeveloperName, "
                               "MasterLabel, Description From "
                               "AuraDefinitionBundle",
-                              "--format:json"], stdout=subprocess.PIPE)
-        result = p.communicate()[0]
-        try:
-            m = json.loads(result.decode("utf-8"))
-            self.messages.append(["All Bundles", "*", "Every Bundle",
-                                  "All the lightning bundles in your org!"])
-            for mm in m:
-                x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"],
-                     mm["Description"]]
-                self.messages.append(x)
+                              "--format:json"], stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+        result, err = p.communicate()
+        if err:
+            sublime.error_message(err.decode("utf-8"))
+        else:
+            try:
+                m = json.loads(result.decode("utf-8"))
+                self.messages.append(["All Bundles", "*", "Every Bundle",
+                                      "All the lightning bundles " /
+                                      "in your org!"])
+                for mm in m:
+                    x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"],
+                         mm["Description"]]
+                    self.messages.append(x)
 
-            self.window = sublime.active_window()
-            self.window.show_quick_panel(self.messages,
-                                         self.open_selected_bundle,
-                                         sublime.MONOSPACE_FONT)
-        except:
-            return
+                self.window = sublime.active_window()
+                self.window.show_quick_panel(self.messages,
+                                             self.open_selected_bundle,
+                                             sublime.MONOSPACE_FONT)
+            except:
+                return
 
     def make_bundle_file(self, file_name, extension, snippet, dirs):
         working_dir = dirs[0]
