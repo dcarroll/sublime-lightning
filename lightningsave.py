@@ -213,6 +213,7 @@ class Helper(sublime_plugin.WindowCommand):
                              stderr=subprocess.PIPE)
         result, err = p.communicate()
         if err:
+            sublime.error_message(err.decode("utf-8"))
             print("Error: " + err.decode("utf-8"))
             return
 
