@@ -302,12 +302,12 @@ class Helper(sublime_plugin.WindowCommand):
         if err:
             sublime.error_message(err.decode("utf-8"))
         else:
-            print("Process result...\n" + result.decode("utf-8"))
             try:
                 m = json.loads(result.decode("utf-8"))
                 self.messages.append(["All Bundles", "*", "Every Bundle",
                                       "All the lightning bundles " /
                                       "in your org!"])
+                print(len(m))
                 for mm in m:
                     x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"],
                          mm["Description"]]
