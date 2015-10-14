@@ -214,30 +214,31 @@ class Helper(sublime_plugin.WindowCommand):
         result, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
-            print("Error: " + err.decode("utf-8"))
-            return
+        else:
+            print("REsult: " + result.decode("utf-8"))
+            try:
+                m = json.loads(result.decode("utf-8"))
+                for mm in m:
+                    x = [mm['XmlName'], "In folder: " + mm['DirectoryName'],
+                         "Suffix: " + mm['Suffix']]
+                    self.messages.append(x)
 
-        print("REsult: " + result.decode("utf-8"))
-        try:
-            m = json.loads(result.decode("utf-8"))
-            for mm in m:
-                x = [mm['XmlName'], "In folder: " + mm['DirectoryName'],
-                     "Suffix: " + mm['Suffix']]
-                self.messages.append(x)
+                self.window = sublime.active_window()
+                self.window.show_quick_panel(self.messages,
+                                             self.open_selected_metadata,
+                                             sublime.MONOSPACE_FONT)
 
-            self.window = sublime.active_window()
-            self.window.show_quick_panel(self.messages,
-                                         self.open_selected_metadata,
-                                         sublime.MONOSPACE_FONT)
-
-        except:
-            return
+            except:
+                return
 
     def show_package_list(self):
         self.messages = []
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
-                              "-j"], stdout=subprocess.PIPE)
-        result = p.communicate()[0]
+                              "-j"], stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+        result, err = p.communicate()
+        if err:
+            sublime.error_message(err.decode("utf-8"))
         try:
             m = json.loads(result.decode("utf-8"))
             for mm in m:
