@@ -3,7 +3,6 @@ import sublime_plugin
 import os
 import subprocess
 import json
-import sys
 from . import semver
 
 
@@ -317,7 +316,7 @@ class Helper(sublime_plugin.WindowCommand):
                                              self.open_selected_bundle,
                                              sublime.MONOSPACE_FONT)
             except:
-                print "error: ", sys.exc_info()[0]
+                print("error: occurred")
                 return
 
     def make_bundle_file(self, file_name, extension, snippet, dirs):
