@@ -90,11 +90,15 @@ class Helper(sublime_plugin.WindowCommand):
             if instance == "":
                 self.window.run_command(
                     'exec',
-                    {'cmd': ["force", "login", "-u", username, "-p", password]})
+                    {'cmd': ["force",
+                             "login",
+                             "-u",
+                             username, "-p", password]})
             else:
                 self.window.run_command(
                     'exec',
-                    {'cmd': ["force", "login", "-u", username, "-p", password, "-i", instance]})
+                    {'cmd': ["force", "login", "-u", username, "-p", password,
+                             "-i", instance]})
         return
 
     def do_aura_query(self):
@@ -206,7 +210,7 @@ class Helper(sublime_plugin.WindowCommand):
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
                               "-j"], stdout=subprocess.PIPE)
         result = p.communicate()[0]
-        print(result)
+        print("REsult: " + result)
         try:
             m = json.loads(result.decode("utf-8"))
             for mm in m:
@@ -346,9 +350,10 @@ class LoginCommand(sublime_plugin.WindowCommand):
                 "Password: ",
                 "",
                 self.get_instance,
-                None, 
+                None,
                 None)
         pass
+
     def get_instance(self, password):
         if (len(password) == 0) or (len(self.username) == 0):
             Helper(self.window).do_login("interactive", "", "")
@@ -361,6 +366,7 @@ class LoginCommand(sublime_plugin.WindowCommand):
                 None,
                 None)
         pass
+
     def do_login(self, instance):
         Helper(self.window).do_login(self.username, self.password, instance)
         return
