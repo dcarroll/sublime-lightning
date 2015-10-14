@@ -306,7 +306,7 @@ class Helper(sublime_plugin.WindowCommand):
             try:
                 m = json.loads(result.decode("utf-8"))
                 self.messages.append(["All Bundles", "*", "Every Bundle",
-                                      "All the lightning bundles " /
+                                      "All the lightning bundles "
                                       "in your org!"])
                 print(len(m))
                 for mm in m:
