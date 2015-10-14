@@ -208,7 +208,9 @@ class Helper(sublime_plugin.WindowCommand):
     def show_metadata_type_list(self):
         self.messages = []
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
-                              "-j"], stdout=subprocess.PIPE)
+                              "-j"],
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
         result = p.communicate()[0]
         print("REsult: " + result.decode("utf-8"))
         try:
