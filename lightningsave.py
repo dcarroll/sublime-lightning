@@ -292,7 +292,6 @@ class Helper(sublime_plugin.WindowCommand):
                 return
 
     def show_bundle_list(self):
-        print("In show_bundle_list")
         self.messages = []
         p = subprocess.Popen(["force", "query", "Select Id, DeveloperName, "
                               "MasterLabel, Description From "
@@ -306,9 +305,8 @@ class Helper(sublime_plugin.WindowCommand):
             try:
                 m = json.loads(result.decode("utf-8"))
                 self.messages.append(["All Bundles", "*", "Every Bundle",
-                                      "All the lightning bundles "
+                                      "All the lightning bundles " /
                                       "in your org!"])
-                print(len(m))
                 for mm in m:
                     x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"],
                          mm["Description"]]
@@ -319,7 +317,7 @@ class Helper(sublime_plugin.WindowCommand):
                                              self.open_selected_bundle,
                                              sublime.MONOSPACE_FONT)
             except:
-                print("error: " + sys.exc_info()[0])
+                print "error: ", sys.exc_info()[0]
                 return
 
     def make_bundle_file(self, file_name, extension, snippet, dirs):
