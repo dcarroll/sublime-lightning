@@ -206,7 +206,7 @@ class Helper(sublime_plugin.WindowCommand):
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
                               "-j"], stdout=subprocess.PIPE)
         result = p.communicate()[0]
-        print result
+        print(result)
         try:
             m = json.loads(result.decode("utf-8"))
             for mm in m:
