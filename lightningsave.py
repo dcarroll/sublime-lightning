@@ -443,6 +443,7 @@ class FetchPackageCommand(sublime_plugin.WindowCommand):
 
 class FetchCommand(sublime_plugin.WindowCommand):
     def run(self):
+        print("Running FetchLightningCommand")
         Helper(self.window).show_bundle_list()
 
     # def do_fetch(self, bundle):
