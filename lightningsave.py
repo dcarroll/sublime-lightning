@@ -173,17 +173,47 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def get_forcecli_version(self):
-        p = subprocess.Popen(["force", "version"],
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+        try:
+            p = subprocess.Popen(["force", "version"],
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+            version, err = p.communicate()
+            if err:
+                sublime.error_message(err.decode("utf-8"))
+            else:
+                ver = version.decode("utf-8").replace("\n", "")
 
-        version, err = p.communicate()
-        if err:
-            sublime.error_message(err.decode("utf-8"))
-        else:
-            print("You are running version " + version.decode("utf-8") /
-                  + " of the Force CLI.")
-            return version.replace("\n", "")
+            if ver != "dev":
+                ver = ver[1:]
+                if semver.match(ver, "<0.22.26"):
+                    message = (u"Sublime Lightning\n\n" +
+                               u"You are using version " + ver + " of the " +
+                               u"Force CLI.\n\nThis version of Sublime " +
+                               u"Lightning" +
+                               u" requires version 0.22.26 or greater.\n\n" +
+                               u"Please download the latest version from " +
+                               u"force-cli.herokuapp.com")
+                    sublime.error_message(message)
+        except:
+            sublime.error_message("Sublime Lightning Plugin requires the " +
+                                  "Force.com CLI to functionn\n\nPlease " +
+                                  "visit force-cli.herokuapp.com to install" +
+                                  "the Force.com CLI.\n\nIf you have already" +
+                                  " installed it, please make sure that you " +
+                                  "have stored it or created a symlink to " +
+                                  "it in Sublime's default path.")
+        return
+        # p = subprocess.Popen(["force", "version"],
+        #                      stdout=subprocess.PIPE,
+        #                      stderr=subprocess.PIPE)
+
+        # version, err = p.communicate()
+        # if err:
+        #     sublime.error_message(err.decode("utf-8"))
+        # else:
+        #     print("You are running version " + version.decode("utf-8") /
+        #           + " of the Force CLI.")
+        #     return version.replace("\n", "")
 
     def show_metadata_instance_list(self, metaname):
         self.type = metaname
@@ -362,7 +392,6 @@ class LoginCommand(sublime_plugin.WindowCommand):
     def run(self):
         version = Helper(self.window).get_forcecli_version()
         print("Running version " + version + " of Force CLI!")
-        print("Raja thinks this is the wrong binary.")
         self.window.show_input_panel(
             "Username: ",
             "",
