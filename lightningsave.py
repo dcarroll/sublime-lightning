@@ -211,7 +211,7 @@ class Helper(sublime_plugin.WindowCommand):
                               "-j"],
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
-        result, err = p.communicate()[0]
+        result, err = p.communicate()
         if err:
             print("Error: " + err)
             return
