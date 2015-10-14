@@ -445,10 +445,10 @@ class FetchCommand(sublime_plugin.WindowCommand):
     def run(self):
         Helper(self.window).show_bundle_list()
 
-    def do_fetch(self, bundle):
-        self.dirs = self.window.folders()
-        Helper(self.window).show_bundle_list()
-        return
+    # def do_fetch(self, bundle):
+    #    self.dirs = self.window.folders()
+    #    Helper(self.window).show_bundle_list()
+    #    return
 
     def is_visible(self):
         return True
