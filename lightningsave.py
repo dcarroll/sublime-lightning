@@ -297,7 +297,7 @@ class Helper(sublime_plugin.WindowCommand):
 
     def show_bundle_list(self):
         self.messages = []
-        if Helper.meets_forcecli_version("0.22.36"):
+        if Helper.meets_forcecli_version(self.window, "0.22.36"):
             p = subprocess.Popen(["force", "query", "Select Id,DeveloperName, "
                                   "MasterLabel, Description From "
                                   "AuraDefinitionBundle",
