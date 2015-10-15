@@ -172,6 +172,11 @@ class Helper(sublime_plugin.WindowCommand):
              'working_dir': self.window.folders()[0]})
         return
 
+    def meets_forcecli_version(self, minversion):
+        version = Helper.get_forcecli_version()
+        version = version[1:]
+        return semver.match(version, ">=" + minversion)
+
     def get_forcecli_version(self):
         try:
             p = subprocess.Popen(["force", "version"],
@@ -292,11 +297,20 @@ class Helper(sublime_plugin.WindowCommand):
 
     def show_bundle_list(self):
         self.messages = []
-        p = subprocess.Popen(["force", "query", "Select Id, DeveloperName, "
-                              "MasterLabel, Description From "
-                              "AuraDefinitionBundle",
-                              "--format:json", "-t"], stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+        if Helper.meets_forcecli_version("0.22.36"):
+            p = subprocess.Popen(["force", "query", "Select Id,DeveloperName, "
+                                  "MasterLabel, Description From "
+                                  "AuraDefinitionBundle",
+                                  "--format:json", "-t"],
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        else:
+            p = subprocess.Popen(["force", "query", "Select Id,DeveloperName, "
+                                  "MasterLabel, Description From "
+                                  "AuraDefinitionBundle",
+                                  "--format:json", "-t"],
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
         result, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
