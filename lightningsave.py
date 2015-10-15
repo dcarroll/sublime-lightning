@@ -299,6 +299,7 @@ class Helper(sublime_plugin.WindowCommand):
     def show_bundle_list(self):
         self.messages = []
         if Helper.meets_forcecli_version(self, "0.22.36"):
+            print("Using -t")
             p = subprocess.Popen(["force", "query", "Select Id,DeveloperName, "
                                   "MasterLabel, Description From "
                                   "AuraDefinitionBundle",
@@ -306,6 +307,7 @@ class Helper(sublime_plugin.WindowCommand):
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
         else:
+            print("NOT using -t")
             p = subprocess.Popen(["force", "query", "Select Id,DeveloperName, "
                                   "MasterLabel, Description From "
                                   "AuraDefinitionBundle",
