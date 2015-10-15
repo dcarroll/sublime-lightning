@@ -174,7 +174,7 @@ class Helper(sublime_plugin.WindowCommand):
 
     def meets_forcecli_version(self, minversion):
         version = Helper.get_forcecli_version(self)
-        version = version[1:]
+        # version = version[1:]
         return semver.match(version, ">=" + minversion)
 
     def get_forcecli_version(self):
