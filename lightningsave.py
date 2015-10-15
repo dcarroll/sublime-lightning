@@ -309,7 +309,7 @@ class Helper(sublime_plugin.WindowCommand):
             p = subprocess.Popen(["force", "query", "Select Id,DeveloperName, "
                                   "MasterLabel, Description From "
                                   "AuraDefinitionBundle",
-                                  "--format:json", "-t"],
+                                  "--format:json"],
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
         result, err = p.communicate()
