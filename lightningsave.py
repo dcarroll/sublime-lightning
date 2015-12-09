@@ -176,6 +176,8 @@ class Helper(sublime_plugin.WindowCommand):
         version = Helper.get_forcecli_version(self)
         # version = version[1:]
         print("Version: " + version + ", min: " + minversion)
+        if version == "dev":
+            return version == "dev"
         return semver.match(version, ">=" + minversion)
 
     def get_forcecli_version(self):
