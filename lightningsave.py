@@ -233,6 +233,7 @@ class Helper(sublime_plugin.WindowCommand):
                                  self.window.folders()[0], "--file", filename],
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
+            print("Calling for results.")
             results, err = p.communicate()
             if err:
                 sublime.error_message(err.decode("utf-8"))
