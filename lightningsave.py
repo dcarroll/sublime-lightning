@@ -545,6 +545,7 @@ class SublimeView(object):
 class LoginCommand(sublime_plugin.WindowCommand):
     def run(self):
         version = Helper(self.window).get_forcecli_version()
+        print("Checking the aura dir...")
         Helper(self.window).get_aura_dir()
         print("Running version " + version + " of Force CLI!")
         self.window.show_input_panel(
