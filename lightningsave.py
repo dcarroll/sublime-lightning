@@ -229,7 +229,7 @@ class Helper(sublime_plugin.WindowCommand):
     def call_aura_cli(self, view, filename):
         """Sample doc string."""
         folders = view.window().folders()
-        print("Folders are " + folders)
+        print("Folders are " + folders[0])
         p = subprocess.Popen(["heroku", "aura:lint",
                              folders[0], "--file", filename],
                              stdout=subprocess.PIPE,
