@@ -1127,7 +1127,8 @@ class LightningSave(sublime_plugin.EventListener):
         print("Check to see if this an aura thingy.")
         if Helper.parent_dir_is_aura(self, os.path.dirname(filename)):
             print("Check to see if the file ends in .js. " + filename)
-            if os.path.splitext(filename) == ".js":
+            _, ext = os.path.splitext(filename)
+            if ext == ".js":
                 print("Calling the aura linter.")
                 Helper.call_aura_cli(view.filename)
             command = 'push -f=' + filename
