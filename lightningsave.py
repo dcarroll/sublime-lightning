@@ -16,6 +16,7 @@ ERRORS_IN_VIEWS = {}
 
 def plugin_loaded():
     print("WE ARE TOTALLY LOADED!")
+    Helper.get_aura_dir()
     try:
         p = subprocess.Popen(["force", "version"],
                              stdout=subprocess.PIPE,
@@ -430,7 +431,7 @@ class Helper(sublime_plugin.WindowCommand):
 
         return app
 
-    def get_aura_dif(self):
+    def get_aura_dir(self):
         self.folders = self.window.folders()
         print(self.folders)
 
