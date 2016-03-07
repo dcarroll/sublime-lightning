@@ -226,9 +226,9 @@ class Helper(sublime_plugin.WindowCommand):
             return version == "dev"
         return semver.match(version, ">=" + minversion)
 
-    def call_aura_cli(self, filename):
+    def call_aura_cli(self, view, filename):
         """Sample doc string."""
-        folders = self.window.folders()
+        folders = view.window().folders()
         print("Folders are " + folders)
         p = subprocess.Popen(["heroku", "aura:lint",
                              folders[0], "--file", filename],
@@ -1130,7 +1130,7 @@ class LightningSave(sublime_plugin.EventListener):
             _, ext = os.path.splitext(filename)
             if ext == ".js":
                 print("Calling the aura linter.")
-                Helper.call_aura_cli(self, filename)
+                Helper.call_aura_cli(self, view, filename)
             command = 'push -f=' + filename
             view.window().run_command(
                 'exec',
