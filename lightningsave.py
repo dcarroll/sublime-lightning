@@ -228,21 +228,18 @@ class Helper(sublime_plugin.WindowCommand):
 
     def call_aura_cli(self, filename):
         """Sample doc string."""
-        try:
-            folders = self.window.folders()
-            print("Folders are " + folders)
-            p = subprocess.Popen(["heroku", "aura:lint",
-                                 folders[0], "--file", filename],
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
-            print("Calling for results.")
-            results, err = p.communicate()
-            if err:
-                sublime.error_message(err.decode("utf-8"))
-            else:
-                print(results)
-        except:
-            print("Error")
+        folders = self.window.folders()
+        print("Folders are " + folders)
+        p = subprocess.Popen(["heroku", "aura:lint",
+                             folders[0], "--file", filename],
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+        print("Calling for results.")
+        results, err = p.communicate()
+        if err:
+            sublime.error_message(err.decode("utf-8"))
+        else:
+            print(results)
 
     def get_forcecli_version(self):
         """Sample doc string."""
