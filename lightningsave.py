@@ -1,3 +1,4 @@
+"""Example Google style docstrings."""
 import json
 import os
 import subprocess
@@ -15,6 +16,7 @@ ERRORS_IN_VIEWS = {}
 
 
 def plugin_loaded():
+    """Sample doc string."""
     print("WE ARE TOTALLY LOADED!")
     try:
         p = subprocess.Popen(["force", "version"],
@@ -49,6 +51,7 @@ def plugin_loaded():
 
 def log(msg, level=None):
     """Log to ST python console.
+
     If log level 'debug' (or None) print only if debug setting is enabled.
     """
     if level is None:
@@ -61,6 +64,8 @@ def log(msg, level=None):
 
 
 class Helper(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def __init__(self):
         """Initialize settings."""
         editor_settings = sublime.load_settings('Preferences.sublime-settings')
@@ -69,34 +74,42 @@ class Helper(sublime_plugin.WindowCommand):
         self.settings = sublime.load_settings('Flake8Lint.sublime-settings')
         self.settings.clear_on_change('reload')
         self.settings.add_on_change('reload', self.setup)
-
+        print("Calling setup...")
         self.setup()
 
     def foo(self):
+        """Sample doc string."""
         return
 
     def install_cli(self):
+        """Sample doc string."""
         return
 
     def bundle_op_is_visible(self, dirs):
+        """Sample doc string."""
         if len(dirs) == 0:
             return False
         else:
             return self.dir_is_aura(dirs[0])
 
     def file_op_is_visible(self, dirs):
+        """Sample doc string."""
         return self.parent_dir_is_aura(dirs[0])
 
     def dir_is_aura(self, working_dir):
+        """Sample doc string."""
         return os.path.basename(working_dir) == "aura"
 
     def parent_dir_is_aura(self, working_dir):
+        """Sample doc string."""
         return os.path.basename(os.path.dirname(working_dir)) == "aura"
 
     def is_metadata(self, working_dir):
+        """Sample doc string."""
         return os.path.basename(os.path.dirname(working_dir)) == "metadata"
 
     def is_static_resource(self, file):
+        """Sample doc string."""
         for root, dirs, files in Helper.walk_up(self, file):
             if "staticresources" in dirs:
                 return True
@@ -104,11 +117,13 @@ class Helper(sublime_plugin.WindowCommand):
         return False
 
     def get_resource_name(self, file):
+        """Sample doc string."""
         for root, dirs, files in Helper.walk_up(self, os.path.dirname(file)):
             if os.path.basename(os.path.dirname(root)) == "staticresources":
                 return os.path.basename(root)
 
     def is_bundle_type(self, working_dir, comp_type):
+        """Sample doc string."""
         files = os.listdir(working_dir[0])
         for filename in files:
             fname, fext = os.path.splitext(filename)
@@ -117,9 +132,11 @@ class Helper(sublime_plugin.WindowCommand):
         return False
 
     def has_this_file(self, working_dir, filename):
+        """Sample doc string."""
         return os.path.exists(os.path.join(working_dir, filename))
 
     def do_login(self, username, password, instance):
+        """Sample doc string."""
         if username == "interactive":
             self.window.run_command(
                 'exec',
@@ -140,9 +157,11 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def do_aura_query(self):
+        """Sample doc string."""
         return
 
     def do_fetch(self, bundle, adir):
+        """Sample doc string."""
         os.chdir(adir)
         if (bundle == 'all'):
             self.window.run_command(
@@ -158,6 +177,7 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def get_instance_url(self):
+        """Sample doc string."""
         p = subprocess.Popen(['force', 'active', '-j'],
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
@@ -166,6 +186,7 @@ class Helper(sublime_plugin.WindowCommand):
         return data["instanceUrl"]
 
     def get_namespace(self):
+        """Sample doc string."""
         p = subprocess.Popen(['force', 'active', '-j'],
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
@@ -174,10 +195,12 @@ class Helper(sublime_plugin.WindowCommand):
         return data["namespace"]
 
     def get_app_name(self, adir):
+        """Sample doc string."""
         os.chdir(adir)
         return os.path.basename(adir)
 
     def open_selected_bundle(self, index):
+        """Sample doc string."""
         if (index == -1):
             return
 
@@ -188,6 +211,7 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def open_selected_metadata(self, index):
+        """Sample doc string."""
         if (index == -1):
             return
 
@@ -195,6 +219,7 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def fetch_selected_metadata(self, index):
+        """Sample doc string."""
         item = self.messages[index][0]
         print("Type: " + self.type)
         print("Item: " + item)
@@ -205,6 +230,7 @@ class Helper(sublime_plugin.WindowCommand):
         return
 
     def meets_forcecli_version(self, minversion):
+        """Sample doc string."""
         version = Helper.get_forcecli_version(self)
         # version = version[1:]
         print("Version: " + version + ", min: " + minversion)
@@ -213,6 +239,7 @@ class Helper(sublime_plugin.WindowCommand):
         return semver.match(version, ">=" + minversion)
 
     def call_aura_cli(self):
+        """Sample doc string."""
         try:
             p = subprocess.Popen(["heroku", "aura:lint", ])
             p.communicate()
@@ -220,6 +247,7 @@ class Helper(sublime_plugin.WindowCommand):
             print("Error")
 
     def get_forcecli_version(self):
+        """Sample doc string."""
         try:
             p = subprocess.Popen(["force", "version"],
                                  stdout=subprocess.PIPE,
@@ -279,6 +307,7 @@ class Helper(sublime_plugin.WindowCommand):
         SublimeStatusBar.update(self.view)
 
     def show_metadata_instance_list(self, metaname):
+        """Sample doc string."""
         self.type = metaname
         self.messages = []
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
@@ -310,12 +339,14 @@ class Helper(sublime_plugin.WindowCommand):
                 return
 
     def open_url(self, url):
+        """Sample doc string."""
         self.window.run_command(
             'exec',
             {'cmd': ["open", url]}
         )
 
     def show_metadata_type_list(self):
+        """Sample doc string."""
         self.messages = []
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
                               "-j"],
@@ -341,6 +372,7 @@ class Helper(sublime_plugin.WindowCommand):
                 return
 
     def show_package_list(self):
+        """Sample doc string."""
         self.messages = []
         p = subprocess.Popen(["force", "describe", "-t", "metadata",
                               "-j"], stdout=subprocess.PIPE,
@@ -365,6 +397,7 @@ class Helper(sublime_plugin.WindowCommand):
                 return
 
     def show_bundle_list(self):
+        """Sample doc string."""
         self.messages = []
         if Helper.meets_forcecli_version(self, "0.22.36"):
             print("Using -t")
@@ -405,6 +438,7 @@ class Helper(sublime_plugin.WindowCommand):
                 return
 
     def make_bundle_file(self, file_name, extension, snippet, dirs):
+        """Sample doc string."""
         working_dir = dirs[0]
         os.chdir(working_dir)
         e = extension
@@ -431,12 +465,14 @@ class Helper(sublime_plugin.WindowCommand):
         return app
 
     def get_aura_dir(self):
+        """Sample doc string."""
         self.folders = self.window.folders()
         print(self.folders)
 
     def walk_up(self, bottom):
         """
-        mimic os.walk, but walk 'up'
+        Mimic os.walk, but walk 'up'.
+
         instead of down the directory tree
         """
         bottom = os.path.realpath(bottom)
@@ -469,6 +505,7 @@ class Helper(sublime_plugin.WindowCommand):
 
 class SublimeStatusBar(object):
     """Update Sublime statusbar functions.
+
     This is dummy class: simply group all statusbar methods together.
     """
 
@@ -505,6 +542,7 @@ class SublimeStatusBar(object):
 
 class SublimeView(object):
     """Sublime view functions.
+
     This is dummy class: simply group all view methods together.
     """
 
@@ -543,7 +581,10 @@ class SublimeView(object):
 
 
 class LoginCommand(sublime_plugin.WindowCommand):
+    """This is my docstring."""
+
     def run(self):
+        """Sample doc string."""
         version = Helper(self.window).get_forcecli_version()
         print("Checking the aura dir...")
         Helper(self.window).get_aura_dir()
@@ -557,6 +598,7 @@ class LoginCommand(sublime_plugin.WindowCommand):
         pass
 
     def get_password(self, username):
+        """Sample doc string."""
         if len(username) == 0:
             Helper(self.window).do_login("interactive", "", "")
         else:
@@ -570,6 +612,7 @@ class LoginCommand(sublime_plugin.WindowCommand):
         pass
 
     def get_instance(self, password):
+        """Sample doc string."""
         if (len(password) == 0) or (len(self.username) == 0):
             Helper(self.window).do_login("interactive", "", "")
         else:
@@ -583,33 +626,46 @@ class LoginCommand(sublime_plugin.WindowCommand):
         pass
 
     def do_login(self, instance):
+        """Sample doc string."""
         Helper(self.window).do_login(self.username, self.password, instance)
         return
 
     def is_visible(self):
+        """Sample doc string."""
         return True
 
 
 class FetchMetaCommand(sublime_plugin.WindowCommand):
+    """This is my docstring."""
+
     def run(self):
+        """Sample doc string."""
         print("Running FetchMetaCommand")
         Helper(self.window).show_metadata_type_list()
 
     def is_visible(self):
+        """Sample doc string."""
         return True
 
 
 class FetchPackageCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self):
+        """Sample doc string."""
         print("Running FetchPackageCommand")
         Helper(self.window).show_package_list()
 
     def is_visible(self):
+        """Sample doc string."""
         return True
 
 
 class FetchCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self):
+        """Sample doc string."""
         print("Running FetchLightningCommand")
         Helper(self.window).show_bundle_list()
 
@@ -619,16 +675,21 @@ class FetchCommand(sublime_plugin.WindowCommand):
     #    return
 
     def is_visible(self):
+        """Sample doc string."""
         return True
 
 
 class LightningNewAppCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         self.window.show_input_panel("App Name:", "", self.on_done, None, None)
         pass
 
     def on_done(self, file_name):
+        """Sample doc string."""
         Helper(self.window).make_bundle_file(
             file_name,
             "app",
@@ -637,11 +698,15 @@ class LightningNewAppCommand(sublime_plugin.WindowCommand):
         return
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         return Helper(self.window).bundle_op_is_visible(dirs)
 
 
 class LightningNewComponentCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         self.window.show_input_panel(
             "Component Name:",
@@ -652,6 +717,7 @@ class LightningNewComponentCommand(sublime_plugin.WindowCommand):
         pass
 
     def on_done(self, file_name):
+        """Sample doc string."""
         Helper(self.window).make_bundle_file(
             file_name,
             "cmp",
@@ -660,11 +726,15 @@ class LightningNewComponentCommand(sublime_plugin.WindowCommand):
         return
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         return Helper(self.window).bundle_op_is_visible(dirs)
 
 
 class LightningNewEventCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         self.window.show_input_panel(
             "Event Name:",
@@ -675,6 +745,7 @@ class LightningNewEventCommand(sublime_plugin.WindowCommand):
         pass
 
     def on_done(self, file_name):
+        """Sample doc string."""
         Helper(self.window).make_bundle_file(
             file_name,
             "evt",
@@ -683,11 +754,15 @@ class LightningNewEventCommand(sublime_plugin.WindowCommand):
         return
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         return Helper(self.window).bundle_op_is_visible(dirs)
 
 
 class LightningNewInterfaceCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         self.window.show_input_panel(
             "Interface Name:",
@@ -698,6 +773,7 @@ class LightningNewInterfaceCommand(sublime_plugin.WindowCommand):
         pass
 
     def on_done(self, file_name):
+        """Sample doc string."""
         Helper(self.window).make_bundle_file(
             file_name,
             "intf",
@@ -709,11 +785,15 @@ class LightningNewInterfaceCommand(sublime_plugin.WindowCommand):
         return
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         return Helper(self.window).bundle_op_is_visible(dirs)
 
 
 class LightningPreviewCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         appname = Helper.get_app_name(self, dirs[0])
         url = Helper.get_instance_url(self)
@@ -726,6 +806,7 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
         Helper.open_url(self, url)
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -736,7 +817,10 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
 
 
 class LightningNewControllerCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         name = os.path.basename(dirs[0]) + "Controller"
         Helper(self.window).make_bundle_file(
@@ -749,6 +833,7 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -763,7 +848,10 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
 
 
 class LightningNewSvgCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         name = os.path.basename(dirs[0])
         Helper(self.window).make_bundle_file(
@@ -789,6 +877,7 @@ class LightningNewSvgCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -803,7 +892,10 @@ class LightningNewSvgCommand(sublime_plugin.WindowCommand):
 
 
 class LightningNewDesignCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         name = os.path.basename(dirs[0])
         Helper(self.window).make_bundle_file(
@@ -814,6 +906,7 @@ class LightningNewDesignCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -827,7 +920,10 @@ class LightningNewDesignCommand(sublime_plugin.WindowCommand):
 
 
 class LightningNewRendererCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         name = os.path.basename(dirs[0]) + "Renderer"
         Helper(self.window).make_bundle_file(
@@ -841,6 +937,7 @@ class LightningNewRendererCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -855,7 +952,10 @@ class LightningNewRendererCommand(sublime_plugin.WindowCommand):
 
 
 class LightningNewHelperCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         name = os.path.basename(dirs[0]) + "Helper"
         Helper(self.window).make_bundle_file(
@@ -868,6 +968,7 @@ class LightningNewHelperCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -883,7 +984,10 @@ class LightningNewHelperCommand(sublime_plugin.WindowCommand):
 
 
 class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         name = os.path.basename(dirs[0]) + "Documentation"
         Helper(self.window).make_bundle_file(
@@ -899,6 +1003,7 @@ class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -914,7 +1019,10 @@ class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
 
 
 class LightningNewStyleCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         self.dirs = dirs
         name = os.path.basename(dirs[0]) + "Style"
         Helper(self.window).make_bundle_file(
@@ -936,6 +1044,7 @@ class LightningNewStyleCommand(sublime_plugin.WindowCommand):
             self.dirs)
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
@@ -951,7 +1060,10 @@ class LightningNewStyleCommand(sublime_plugin.WindowCommand):
 
 
 class LightningDeleteCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, files):
+        """Sample doc string."""
         for f in files:
             command = "delete -p=" + f
             self.window.run_command(
@@ -962,6 +1074,7 @@ class LightningDeleteCommand(sublime_plugin.WindowCommand):
         return
 
     def is_visible(self, files):
+        """Sample doc string."""
         for f in files:
             p = os.path.dirname(f)
             if os.path.basename(p) == "aura":
@@ -976,7 +1089,10 @@ class LightningDeleteCommand(sublime_plugin.WindowCommand):
 
 
 class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
     def run(self, dirs):
+        """Sample doc string."""
         # comment
         for d in dirs:
             command = 'delete -p=' + d
@@ -992,6 +1108,7 @@ class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
         return
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         for d in dirs:
             p = os.path.dirname(d)
             if os.path.basename(p) == "aura":
@@ -1006,8 +1123,10 @@ class LightningDeleteBundleCommand(sublime_plugin.WindowCommand):
 
 
 class LightningSave(sublime_plugin.EventListener):
+    """Sample doc string."""
 
     def on_post_save(self, view):
+        """Sample doc string."""
         filename = view.file_name()
         if Helper.parent_dir_is_aura(self, os.path.dirname(filename)):
             command = 'push -f=' + filename
@@ -1034,8 +1153,10 @@ class LightningSave(sublime_plugin.EventListener):
 
 
 class LightningSaveBundleCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
 
     def run(self, dirs):
+        """Sample doc string."""
         print(dirs)
         command = 'push -f=' + dirs[0]
         self.window.run_command(
@@ -1044,6 +1165,7 @@ class LightningSaveBundleCommand(sublime_plugin.WindowCommand):
         return
 
     def is_visible(self, dirs):
+        """Sample doc string."""
         for d in dirs:
             p = os.path.dirname(d)
             if os.path.basename(p) == "aura":
