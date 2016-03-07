@@ -226,11 +226,18 @@ class Helper(sublime_plugin.WindowCommand):
             return version == "dev"
         return semver.match(version, ">=" + minversion)
 
-    def call_aura_cli(self):
+    def call_aura_cli(self, filename):
         """Sample doc string."""
         try:
-            p = subprocess.Popen(["heroku", "aura:lint", ])
-            p.communicate()
+            p = subprocess.Popen(["heroku", "aura:lint",
+                                 self.window.folders()[0], "--file", filename],
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+            results, err = p.communicate()
+            if err:
+                sublime.error_message(err.decode("utf-8"))
+            else:
+                print(results)
         except:
             print("Error")
 
@@ -456,6 +463,7 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         self.folders = self.window.folders()
         print(self.folders)
+        return self.folders
 
     def walk_up(self, bottom):
         """
@@ -1117,6 +1125,8 @@ class LightningSave(sublime_plugin.EventListener):
         """Sample doc string."""
         filename = view.file_name()
         if Helper.parent_dir_is_aura(self, os.path.dirname(filename)):
+            if os.path.splitext(filename) == ".js":
+                Helper.call_aura_cli(view.filename)
             command = 'push -f=' + filename
             view.window().run_command(
                 'exec',
