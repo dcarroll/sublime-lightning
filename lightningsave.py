@@ -16,7 +16,6 @@ ERRORS_IN_VIEWS = {}
 
 def plugin_loaded():
     print("WE ARE TOTALLY LOADED!")
-    Helper.get_aura_dir()
     try:
         p = subprocess.Popen(["force", "version"],
                              stdout=subprocess.PIPE,
@@ -546,6 +545,7 @@ class SublimeView(object):
 class LoginCommand(sublime_plugin.WindowCommand):
     def run(self):
         version = Helper(self.window).get_forcecli_version()
+        Helper(self.window).get_aura_dir()
         print("Running version " + version + " of Force CLI!")
         self.window.show_input_panel(
             "Username: ",
