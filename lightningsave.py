@@ -1124,8 +1124,11 @@ class LightningSave(sublime_plugin.EventListener):
     def on_post_save(self, view):
         """Sample doc string."""
         filename = view.file_name()
+        print("Check to see if this an aura thingy.")
         if Helper.parent_dir_is_aura(self, os.path.dirname(filename)):
+            print("Check to see if the file ends in .js. " + filename)
             if os.path.splitext(filename) == ".js":
+                print("Calling the aura linter.")
                 Helper.call_aura_cli(view.filename)
             command = 'push -f=' + filename
             view.window().run_command(
