@@ -1130,7 +1130,7 @@ class LightningSave(sublime_plugin.EventListener):
             _, ext = os.path.splitext(filename)
             if ext == ".js":
                 print("Calling the aura linter.")
-                Helper.call_aura_cli(filename)
+                Helper.call_aura_cli(self, filename)
             command = 'push -f=' + filename
             view.window().run_command(
                 'exec',
