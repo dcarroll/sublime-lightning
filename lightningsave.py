@@ -1,9 +1,17 @@
-import sublime
-import sublime_plugin
+import json
 import os
 import subprocess
-import json
+
+import sublime
+
+import sublime_plugin
+
 from . import semver
+
+
+settings = None
+
+ERRORS_IN_VIEWS = {}
 
 
 def plugin_loaded():
@@ -39,7 +47,31 @@ def plugin_loaded():
     return
 
 
+def log(msg, level=None):
+    """Log to ST python console.
+    If log level 'debug' (or None) print only if debug setting is enabled.
+    """
+    if level is None:
+        level = 'debug'
+
+    if level == 'debug' and not settings.debug:
+        return
+
+    print("[Flake8Lint {0}] {1}".format(level.upper(), msg))
+
+
 class Helper(sublime_plugin.WindowCommand):
+    def __init__(self):
+        """Initialize settings."""
+        editor_settings = sublime.load_settings('Preferences.sublime-settings')
+        editor_settings.clear_on_change('flake8lint-color-scheme')
+
+        self.settings = sublime.load_settings('Flake8Lint.sublime-settings')
+        self.settings.clear_on_change('reload')
+        self.settings.add_on_change('reload', self.setup)
+
+        self.setup()
+
     def foo(self):
         return
 
@@ -180,6 +212,13 @@ class Helper(sublime_plugin.WindowCommand):
             return version == "dev"
         return semver.match(version, ">=" + minversion)
 
+    def call_aura_cli(self):
+        try:
+            p = subprocess.Popen(["heroku", "aura:lint", ])
+            p.communicate()
+        except:
+            print("Error")
+
     def get_forcecli_version(self):
         try:
             p = subprocess.Popen(["force", "version"],
@@ -211,6 +250,33 @@ class Helper(sublime_plugin.WindowCommand):
                                   "have stored it or created a symlink to " +
                                   "it in Sublime's default path.")
         return ver.replace("\n", "")
+
+    def error_selected(self, item_selected):
+        """Error was selected - go to error."""
+        if item_selected == -1:
+            log("close errors popup window")
+            return
+
+        log("error was selected from popup window: scroll to line")
+
+        # get error region
+        error = self.errors_list[item_selected]
+        region_begin = self.view.text_point(error[0] - 1, error[1])
+
+        # go to error
+        self.view.sel().clear()
+        self.view.sel().add(sublime.Region(region_begin, region_begin))
+
+        self.view.window().focus_view(self.view)
+        self.view.show_at_center(region_begin)
+
+        # work around sublime bug with caret position not refreshing
+        # see also: https://github.com/SublimeTextIssues/Core/issues/485
+        bug_key = 'selection_bug_demo_workaround_regions_key'
+        self.view.add_regions(bug_key, [], 'no_scope', '', sublime.HIDDEN)
+        self.view.erase_regions(bug_key)
+
+        SublimeStatusBar.update(self.view)
 
     def show_metadata_instance_list(self, metaname):
         self.type = metaname
@@ -364,6 +430,10 @@ class Helper(sublime_plugin.WindowCommand):
 
         return app
 
+    def get_aura_dif(self):
+        self.folders = self.window.folders()
+        print(self.folders)
+
     def walk_up(self, bottom):
         """
         mimic os.walk, but walk 'up'
@@ -395,6 +465,81 @@ class Helper(sublime_plugin.WindowCommand):
 
         for x in Helper.walk_up(self, new_path):
             yield x
+
+
+class SublimeStatusBar(object):
+    """Update Sublime statusbar functions.
+    This is dummy class: simply group all statusbar methods together.
+    """
+
+    @staticmethod
+    def update(view):
+        """Update status bar with error."""
+        # get view errors (exit if no errors found)
+        view_errors = ERRORS_IN_VIEWS.get(view.id())
+        if view_errors is None:
+            return
+
+        # get view selection (exit if no selection)
+        view_selection = view.sel()
+        if not view_selection:
+            return
+
+        current_line = SublimeView.get_current_line(view)
+        if current_line is None:
+            return
+
+        if current_line in view_errors:
+            # there is an error on current line
+            errors = view_errors[current_line]
+            view.set_status('flake8-tip', 'flake8: %s' % ' / '.join(errors))
+        else:
+            # no errors - clear statusbar
+            SublimeStatusBar.clear(view)
+
+    @staticmethod
+    def clear(view):
+        """Clear status bar flake8 error."""
+        view.erase_status('flake8-tip')
+
+
+class SublimeView(object):
+    """Sublime view functions.
+    This is dummy class: simply group all view methods together.
+    """
+
+    @staticmethod
+    def get_current_line(view):
+        """Get current line (line under cursor)."""
+        view_selection = view.sel()
+
+        if not view_selection:
+            return None
+
+        point = view_selection[0].end()
+        position = view.rowcol(point)
+
+        return position[0]
+
+    @staticmethod
+    def set_ruler_guide(view):
+        """Set view ruler guide."""
+        if not view.match_selector(0, 'source.python'):
+            return
+
+        log("set view ruler guide")
+
+        view_settings = SublimeView.view_settings(view)
+        max_line_length = view_settings.get('pep8_max_line_length', 79)
+
+        try:
+            max_line_length = int(max_line_length)
+        except (TypeError, ValueError):
+            log("can't parse 'pep8_max_line_length' setting", level='error')
+            max_line_length = 79
+
+        view.settings().set('rulers', [max_line_length])
+        log("view ruler guide is set to {0}".format(max_line_length))
 
 
 class LoginCommand(sublime_plugin.WindowCommand):
