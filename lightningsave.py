@@ -240,7 +240,7 @@ class Helper(sublime_plugin.WindowCommand):
             sublime.error_message(err.decode("utf-8"))
         else:
             r = str(results.decode("unicode_escape"))
-            print(r)
+            print("results: " + r)
 
     def get_forcecli_version(self):
         """Sample doc string."""
