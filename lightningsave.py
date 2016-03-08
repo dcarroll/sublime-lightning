@@ -231,7 +231,7 @@ class Helper(sublime_plugin.WindowCommand):
         folders = view.window().folders()
         print("Folders are " + folders[0])
         p = subprocess.Popen(["heroku", "aura:lint",
-                             folders[0], "--files", filename],
+                             folders[0], "--files", filename, "--json"],
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         print("Calling for results.")
