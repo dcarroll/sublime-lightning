@@ -66,17 +66,6 @@ def log(msg, level=None):
 class Helper(sublime_plugin.WindowCommand):
     """Sample doc string."""
 
-    def __init__(self):
-        """Initialize settings."""
-        editor_settings = sublime.load_settings('Preferences.sublime-settings')
-        editor_settings.clear_on_change('flake8lint-color-scheme')
-
-        self.settings = sublime.load_settings('Flake8Lint.sublime-settings')
-        self.settings.clear_on_change('reload')
-        self.settings.add_on_change('reload', self.setup)
-        print("Calling setup...")
-        self.setup()
-
     def foo(self):
         """Sample doc string."""
         return
