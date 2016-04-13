@@ -64,15 +64,17 @@ class LightningLintCommand(sublime_plugin.TextCommand):
 
         folders = self.view.window().folders()
         print("Folders are " + folders[0])
-        p = subprocess.Popen(["heroku", "aura:lint",
+        p = subprocess.Popen(["heroku", "lightning:lint",
                              folders[0], "--files", filename, "--json"],
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         print("Calling for results.")
         results, err = p.communicate()
         if err:
-            sublime.error_message(err.decode("utf-8"))
+            print("Error on lint...")
+            # sublime.error_message(err.decode("utf-8"))
         else:
+            print("No error on lint...")
             r = str(results.decode("utf-8"))
             r = r.replace("\\\"", "'")
             m = json.loads(r)
