@@ -27,7 +27,7 @@
 			{ "caption": "Controller", "command": "lightning_new_controller", "args": {"dirs": []} },
 			{ "caption": "Helper", "command": "lightning_new_helper", "args": {"dirs": []} },
 			{ "caption": "Style", "command": "lightning_new_style", "args": {"dirs": []} },
-			{ "caption": "Documenation", "command": "lightning_new_documentation", "args": {"dirs": []} },
+			{ "caption": "Documentation", "command": "lightning_new_documentation", "args": {"dirs": []} },
 			{ "caption": "Renderer", "command": "lightning_new_renderer", "args": {"dirs": []} },
 			{ "caption": "Design Resource", "command": "lightning_new_design", "args": {"dirs": []} },
 			{ "caption": "SVG Resource", "command": "lightning_new_svg", "args": {"dirs": []} },
