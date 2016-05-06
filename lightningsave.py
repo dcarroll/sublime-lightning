@@ -408,7 +408,7 @@ class Helper(sublime_plugin.WindowCommand):
         app.close()
         filename = os.path.join(working_dir, file_name + "." + extension)
         self.window.open_file(filename)
-        cmd = 'push -f=' + filename
+        cmd = 'push -f="' + filename + '"'
         self.window.run_command(
             'exec',
             {'cmd': ["force", "aura", cmd]})
@@ -1010,7 +1010,7 @@ class LightningSave(sublime_plugin.EventListener):
             _, ext = os.path.splitext(filename)
             if ext == ".js":
                 view.run_command('lightning_lint')
-            command = 'push -f=' + filename
+            command = 'push -f="' + filename + '"'
             view.window().run_command(
                 'exec',
                 {'cmd': ["force", "aura", command]})
@@ -1018,14 +1018,14 @@ class LightningSave(sublime_plugin.EventListener):
             if Helper.is_static_resource(self, filename):
                 print("is static resource")
             else:
-                command = '-f=' + filename
+                command = '-f="' + filename + '"'
                 view.window().run_command(
                     'exec',
                     {'cmd': ["force", "push", command]})
         elif Helper.is_static_resource(self, os.path.dirname(filename)):
             resource_name = Helper.get_resource_name(self, filename)
             command = '-t=StaticResource'
-            command2 = '-n=' + resource_name
+            command2 = '-n="' + resource_name + '"'
             view.window().run_command(
                 'exec',
                 {'cmd': ["force", "push", command, command2]})
@@ -1043,7 +1043,7 @@ class LightningSaveBundleCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         """Sample doc string."""
         print(dirs)
-        command = 'push -f=' + dirs[0]
+        command = 'push -f="' + dirs[0] + '"'
         self.window.run_command(
             'exec',
             {'cmd': ["force", "aura", command]})
