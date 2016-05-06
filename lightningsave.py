@@ -1010,7 +1010,7 @@ class LightningSave(sublime_plugin.EventListener):
             _, ext = os.path.splitext(filename)
             if ext == ".js":
                 view.run_command('lightning_lint')
-            command = 'push -f="' + filename + '"'
+            command = "push -f='" + filename + "'"
             view.window().run_command(
                 'exec',
                 {'cmd': ["force", "aura", command]})
