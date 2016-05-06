@@ -1013,7 +1013,7 @@ class LightningSave(sublime_plugin.EventListener):
             command = "push -f='" + filename + "'"
             view.window().run_command(
                 'exec',
-                {'cmd': ["force", "aura", command]})
+                {'cmd': ["force", "aura", "push", "-f", '"' + filename + '"']})
         elif Helper.is_metadata(self, os.path.dirname(filename)):
             if Helper.is_static_resource(self, filename):
                 print("is static resource")
