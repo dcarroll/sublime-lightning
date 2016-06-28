@@ -87,7 +87,7 @@ class Helper(sublime_plugin.WindowCommand):
 
     def is_metadata(self, working_dir):
         """Sample doc string."""
-        return os.path.basename(os.path.dirname(working_dir)) == "metadata"
+        return os.path.basename(os.path.dirname(working_dir)) in ["metadata", "src"]
 
     def is_static_resource(self, file):
         """Sample doc string."""
@@ -1018,10 +1018,15 @@ class LightningSave(sublime_plugin.EventListener):
             if Helper.is_static_resource(self, filename):
                 print("is static resource")
             else:
-                command = '-f="' + filename + '"'
                 view.window().run_command(
                     'exec',
-                    {'cmd': ["force", "push", command]})
+                    {
+                        'working_dir':
+                            os.path.dirname(
+                                os.path.dirname(
+                                    os.path.dirname(filename))),
+                        'cmd': ["force", "push", "-f", filename]
+                    })
         elif Helper.is_static_resource(self, os.path.dirname(filename)):
             resource_name = Helper.get_resource_name(self, filename)
             command = '-t=StaticResource'
