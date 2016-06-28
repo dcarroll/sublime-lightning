@@ -87,7 +87,7 @@ class Helper(sublime_plugin.WindowCommand):
 
     def is_metadata(self, working_dir):
         """Sample doc string."""
-        return os.path.basename(os.path.dirname(working_dir)) == "metadata"
+        return os.path.basename(os.path.dirname(working_dir)) in ["metadata", "src"]
 
     def is_static_resource(self, file):
         """Sample doc string."""
