@@ -35,12 +35,12 @@ def plugin_loaded():
                 sublime.error_message(message)
     except:
         sublime.error_message("Sublime Lightning Plugin requires the " +
-                              "Force.com CLI to function\n\nPlease " +
-                              "visit force-cli.herokuapp.com to install" +
-                              "the Force.com CLI.\n\nIf you have already" +
-                              " installed it, please make sure that you " +
-                              "have stored it or created a symlink to " +
-                              "it in Sublime's default path.")
+                              "Force.com CLI to function.\n\n" +
+                              "Please visit force-cli.herokuapp.com to " +
+                              "install the Force.com CLI.\n\n" +
+                              "If you’ve already installed it, make sure" +
+                              "that you saved it or created a " +
+                              "symlink to it in Sublime’s default path.")
     return
 
 
