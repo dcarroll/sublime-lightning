@@ -82,7 +82,10 @@ class LightningLintCommand(sublime_plugin.TextCommand):
             for mm in m:
                 data = mm['result']
                 for res in data:
-                    x = [mm['file'], res['ruleId'] + " " +
+                    rule_id = ''
+                    if res['ruleId'] != None:
+                        rule_id = res['ruleId'] + ' '
+                    x = [mm['file'], rule_id +
                          res['message'],
                          res['source'].strip(),
                          str(res['line']), str(res['column'])]
