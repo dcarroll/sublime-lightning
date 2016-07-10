@@ -6,6 +6,7 @@ Check Lightning JS files with
 """
 import json
 import os
+import shlex
 import subprocess
 
 import sublime
@@ -15,7 +16,7 @@ import sublime_plugin
 settings = sublime.load_settings("Lightning.sublime-settings")
 FLAKE_DIR = os.path.dirname(os.path.abspath(__file__))
 ERRORS_IN_VIEWS = {}
-
+IS_WINDOWS = os.name == 'nt'
 
 def update_statusbar(view):
     """Update status bar with error."""
@@ -64,10 +65,12 @@ class LightningLintCommand(sublime_plugin.TextCommand):
 
         folders = self.view.window().folders()
         print("Folders are " + folders[0])
+        quote = lambda x: shlex.quote(x) if IS_WINDOWS else x
         p = subprocess.Popen(["heroku", "lightning:lint",
-                             folders[0], "--files", filename, "--json"],
+                             quote(folders[0]), "--files", quote(filename), "--json"],
                              stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+                             stderr=subprocess.PIPE,
+                             shell=IS_WINDOWS)
         print("Calling for results.")
         results, err = p.communicate()
         if err:
