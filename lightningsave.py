@@ -2,6 +2,7 @@
 from . import auralint
 import json
 import os
+import shlex
 import subprocess
 
 import sublime
@@ -9,14 +10,13 @@ import sublime_plugin
 
 from . import semver
 
+IS_WINDOWS = os.name == 'nt'
 
 def plugin_loaded():
     """Make me put in a doc string."""
     print("WE ARE TOTALLY LOADED!")
     try:
-        p = subprocess.Popen(["force", "version"],
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+        p = popen_force_cli(["version"])
         version, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
@@ -54,6 +54,16 @@ def log(msg, level=None):
 
     print("[Flake8Lint {0}] {1}".format(level.upper(), msg))
 
+def quote(subprocess_arg):
+    return shlex.quote(subprocess_arg) if IS_WINDOWS else subprocess_arg
+
+def popen_force_cli(quoted_args):
+    args = ['force']
+    args.extend(quoted_args)
+    return subprocess.Popen(args, 
+                            stdout=subprocess.PIPE, 
+                            stderr=subprocess.PIPE,
+                            shell=IS_WINDOWS)
 
 class Helper(sublime_plugin.WindowCommand):
     """Sample doc string."""
@@ -159,18 +169,14 @@ class Helper(sublime_plugin.WindowCommand):
 
     def get_instance_url(self):
         """Sample doc string."""
-        p = subprocess.Popen(['force', 'active', '-j'],
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+        p = popen_force_cli(['active', '-j'])
         out = p.communicate()[0]
         data = json.loads(out.decode("utf-8"))
         return data["instanceUrl"]
 
     def get_namespace(self):
         """Sample doc string."""
-        p = subprocess.Popen(['force', 'active', '-j'],
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+        p = popen_force_cli(['active', '-j'])
         out = p.communicate()[0]
         data = json.loads(out.decode("utf-8"))
         return data["namespace"]
@@ -226,9 +232,7 @@ class Helper(sublime_plugin.WindowCommand):
     def get_forcecli_version(self):
         """Sample doc string."""
         try:
-            p = subprocess.Popen(["force", "version"],
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
+            p = popen_force_cli(["version"])
             version, err = p.communicate()
             if err:
                 sublime.error_message(err.decode("utf-8"))
@@ -260,10 +264,7 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         self.type = metaname
         self.messages = []
-        p = subprocess.Popen(["force", "describe", "-t", "metadata",
-                              "-n", metaname, "-j"],
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+        p = popen_force_cli(["describe", "-t", "metadata", "-n", quote(metaname), "-j"])
         result, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
@@ -299,10 +300,7 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         print(self)
         self.messages = []
-        p = subprocess.Popen(["force", "describe", "-t", "metadata",
-                              "-j"],
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+        p = popen_force_cli(["describe", "-t", "metadata", "-j"])
         result, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
@@ -325,9 +323,7 @@ class Helper(sublime_plugin.WindowCommand):
     def show_package_list(self):
         """Sample doc string."""
         self.messages = []
-        p = subprocess.Popen(["force", "describe", "-t", "metadata",
-                              "-j"], stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+        p = popen_force_cli(["describe", "-t", "metadata", "-j"])
         result, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
@@ -352,20 +348,16 @@ class Helper(sublime_plugin.WindowCommand):
         self.messages = []
         if Helper.meets_forcecli_version(self, "0.22.36"):
             print("Using -t")
-            p = subprocess.Popen(["force", "query", "Select Id,DeveloperName, "
+            p = popen_force_cli(["query", "Select Id,DeveloperName, "
                                   "MasterLabel, Description From "
                                   "AuraDefinitionBundle",
-                                  "--format:json", "-t"],
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
+                                  "--format:json", "-t"])
         else:
             print("NOT using -t")
-            p = subprocess.Popen(["force", "query", "Select Id,DeveloperName, "
+            p = popen_force_cli(["query", "Select Id,DeveloperName, "
                                   "MasterLabel, Description From "
                                   "AuraDefinitionBundle",
-                                  "--format:json"],
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
+                                  "--format:json"])
         result, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
