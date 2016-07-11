@@ -1,11 +1,11 @@
-sublime-lightning
-============
+Sublime Lightning
+=================
 
 Sublime Plugin for Lightning Component Development
 
 This plugin requires Sublime Text 3 and works in conjunction with the Force CLI. You can download the version of Force CLI for your OS here: https://force-cli.herokuapp.com
 
-Make sure that you have installed the Force CLI `force` binary into a folder on your path, and that it is marked as executable.
+Make sure that you have installed the Force CLI `force` binary into a folder on your path, and that it's marked as executable.
 
 To install the sublime-lightning plugin, first install Package Control. Installation instructions are here: https://sublime.wbond.net/installation. Once Package Control is installed, open the Command Palette from Tools > Command Palette, type 'install' and select 'Package Control: Install Package'. Search for 'lightning' and then install the package from the results.
 
@@ -26,7 +26,7 @@ Once you have a Lightning bundle locally in SublimeText, you can begin editing y
 
 To create a new Lightning bundle, right-click the "aura" folder and select the type of component that you want to create. You are prompted for a name at the bottom of the screen. Enter a name and hit enter. Once your bundle is created, you can right-click the bundle folder and add other artifacts to your bundle as appropriate for the bundle type.
 
-Deleting artifacts is accomplished by right-clicking the file and selecting "Delete Lightning Definition". This will only delete the selected file and remove that artifact from the bundle both locally and on Salesforce. If you want to delete the entire bundle, right-click the bundle folder and select "Delete Lightning Bundle". Deletes CANNOT be undone and there is no confirmation prompt in the current version of the plugin.  
+Deleting artifacts is accomplished by right-clicking the file and selecting "Delete Lightning Definition". This will only delete the selected file and remove that artifact from the bundle both locally and on Salesforce. If you want to delete the entire bundle, right-click the bundle folder and select "Delete Lightning Bundle". Deletes CANNOT be undone and there is no confirmation prompt in the current version of the plugin.
 
 You can safely right-click any file or folder and select the Sublime menu item for deleting file or folder, as what is saved locally is a copy of what is in Salesforce.  You can easily retrieve the Lightning bundle or artifact by re-fetching, right-click and select "Fetch Lightning".
 
@@ -40,7 +40,7 @@ You can safely right-click any file or folder and select the Sublime menu item f
 
 See "how to" video below.
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=A_sUTfeGKxw" 
+<a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=A_sUTfeGKxw"
     target="_blank"><img src="http://img.youtube.com/vi/A_sUTfeGKxw/0.jpg"
-    alt="Video: How to Use SublimeText to Edit Lightning Commponents" 
+    alt="Video: How to Use SublimeText to Edit Lightning Commponents"
     width="240" height="180" border="10" /></a>
