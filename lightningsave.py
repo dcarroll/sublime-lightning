@@ -34,11 +34,11 @@ def plugin_loaded():
                            u"force-cli.herokuapp.com")
                 sublime.error_message(message)
     except:
-        sublime.error_message("Sublime Lightning Plugin requires the " +
+        sublime.error_message("Sublime Lightning requires the " +
                               "Force.com CLI to function.\n\n" +
                               "Please visit force-cli.herokuapp.com to " +
                               "install the Force.com CLI.\n\n" +
-                              "If you’ve already installed it, make sure" +
+                              "If you’ve already installed it, make sure " +
                               "that you saved it or created a " +
                               "symlink to it in Sublime’s default path.")
     return
@@ -60,8 +60,8 @@ def quote(subprocess_arg):
 def popen_force_cli(quoted_args):
     args = ['force']
     args.extend(quoted_args)
-    return subprocess.Popen(args, 
-                            stdout=subprocess.PIPE, 
+    return subprocess.Popen(args,
+                            stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             shell=IS_WINDOWS)
 
@@ -251,13 +251,13 @@ class Helper(sublime_plugin.WindowCommand):
                                u"force-cli.herokuapp.com")
                     sublime.error_message(message)
         except:
-            sublime.error_message("Sublime Lightning Plugin requires the " +
-                                  "Force.com CLI to function\n\nPlease " +
-                                  "visit force-cli.herokuapp.com to install" +
-                                  "the Force.com CLI.\n\nIf you have already" +
-                                  " installed it, please make sure that you " +
-                                  "have stored it or created a symlink to " +
-                                  "it in Sublime's default path.")
+            sublime.error_message("Sublime Lightning requires the " +
+                                  "Force.com CLI to function.\n\n" +
+                                  "Please visit force-cli.herokuapp.com to " +
+                                  "install the Force.com CLI.\n\n" +
+                                  "If you’ve already installed it, make sure " +
+                                  "that you saved it or created a " +
+                                  "symlink to it in Sublime’s default path.")
         return ver.replace("\n", "")
 
     def show_metadata_instance_list(self, metaname):

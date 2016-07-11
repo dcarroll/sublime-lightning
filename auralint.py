@@ -187,7 +187,7 @@ class LightningLintCommand(sublime_plugin.TextCommand):
 
 
 class LightningLintBackground(sublime_plugin.EventListener):
-    """Listen to Siblime Text 2 events."""
+    """Listen to Sublime Text 2 events."""
 
     def on_post_save(self, view):
         """Do lint on file save if not denied in settings."""
