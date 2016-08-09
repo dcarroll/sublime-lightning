@@ -13,7 +13,7 @@ import sublime
 import sublime_plugin
 
 
-settings = sublime.load_settings("Lightning.sublime-settings")
+settings = sublime.load_settings("Preferences.sublime-settings")
 FLAKE_DIR = os.path.dirname(os.path.abspath(__file__))
 ERRORS_IN_VIEWS = {}
 IS_WINDOWS = os.name == 'nt'
