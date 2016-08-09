@@ -47,7 +47,8 @@ class LightningLintCommand(sublime_plugin.TextCommand):
     """Do flake8 lint on current file."""
 
     def run(self, edit):
-        if not setting.runlinter:
+        shouldLint = settings.get("runlinter", True)
+        if !shouldLint:
             return
             
         """Leave me alone."""
