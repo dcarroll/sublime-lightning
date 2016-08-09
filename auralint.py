@@ -48,7 +48,7 @@ class LightningLintCommand(sublime_plugin.TextCommand):
 
     def run(self, edit):
         shouldLint = settings.get("runlinter", True)
-        if !shouldLint:
+        if not shouldLint:
             return
             
         """Leave me alone."""
