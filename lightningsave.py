@@ -667,6 +667,7 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
         self.dirs = dirs
         print("Here")
         appname = Helper.get_app_name(self, dirs[0])
+        print("Where")
         url = Helper.get_instance_url(self)
         print("There")
         namespace = Helper.get_namespace(self)
