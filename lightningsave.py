@@ -665,14 +665,16 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         """Sample doc string."""
         self.dirs = dirs
+        print("Here")
         appname = Helper.get_app_name(self, dirs[0])
         url = Helper.get_instance_url(self)
+        print("There")
         namespace = Helper.get_namespace(self)
         if len(namespace) == 0:
             url = url + "/c/" + appname + ".app"
         else:
             url = url + "/" + namespace + "/" + appname + ".app"
-
+        print("Everywhere")
         Helper.open_url(self, url)
 
     def is_visible(self, dirs):
