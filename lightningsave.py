@@ -666,7 +666,6 @@ class LightningPreviewCommand(sublime_plugin.WindowCommand):
         """Sample doc string."""
         self.dirs = dirs
         appname = Helper.get_app_name(self, dirs[0])
-        print("Where")
         url = Helper.get_instance_url(self)
         namespace = Helper.get_namespace(self)
         if len(namespace) == 0:
