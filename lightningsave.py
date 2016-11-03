@@ -318,6 +318,7 @@ class Helper(sublime_plugin.WindowCommand):
                                              sublime.MONOSPACE_FONT)
 
             except:
+                print("There was some kind of error...")
                 return
 
     def show_package_list(self):
