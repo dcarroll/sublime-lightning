@@ -105,7 +105,7 @@ class Helper(sublime_plugin.WindowCommand):
         return os.path.basename(os.path.dirname(working_dir)) == "aura"
 
     def get_metatdata_child_directory_path(self):
-        for dirname in self.get_immediate_subdirectories(os.getcwd()):
+        for dirname in self.get_immediate_subdirectories():
             if dirname in ["metadata", "src"]:
                 return os.path.join(os.getcwd(), dirname)
         return ""
