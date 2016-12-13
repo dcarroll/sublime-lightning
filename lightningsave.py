@@ -106,6 +106,7 @@ class Helper(sublime_plugin.WindowCommand):
 
     def get_metatdata_child_directory_path(self):
         for dirname in self.get_immediate_subdirectories():
+            print("Dir name: " + dirname)
             if dirname in ["metadata", "src"]:
                 return os.path.join(os.getcwd(), dirname)
         return ""
