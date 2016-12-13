@@ -13,6 +13,7 @@ from . import semver
 IS_WINDOWS = os.name == 'nt'
 PROJECT_DIRECTORY = os.getcwd()
 
+
 def plugin_loaded():
     """Make me put in a doc string."""
     print("WE ARE TOTALLY LOADED!")
@@ -55,8 +56,10 @@ def log(msg, level=None):
 
     print("[Flake8Lint {0}] {1}".format(level.upper(), msg))
 
+
 def quote(subprocess_arg):
     return shlex.quote(subprocess_arg) if IS_WINDOWS else subprocess_arg
+
 
 def popen_force_cli(quoted_args):
     args = ['force']
@@ -65,6 +68,7 @@ def popen_force_cli(quoted_args):
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             shell=IS_WINDOWS)
+
 
 class Helper(sublime_plugin.WindowCommand):
     """Sample doc string."""
@@ -79,7 +83,7 @@ class Helper(sublime_plugin.WindowCommand):
 
     def get_immediate_subdirectories(self):
         return [name for name in os.listdir(os.getcwd())
-            if os.path.isdir(os.path.join(os.getcwd(), name))]
+                if os.path.isdir(os.path.join(os.getcwd(), name))]
 
     def bundle_op_is_visible(self, dirs):
         """Sample doc string."""
@@ -108,7 +112,8 @@ class Helper(sublime_plugin.WindowCommand):
 
     def is_metadata(self, working_dir):
         """Sample doc string."""
-        return os.path.basename(os.path.dirname(working_dir)) in ["metadata", "src"]
+        wd = os.path.dirname(working_dir)
+        return os.path.basename(wd) in ["metadata", "src"]
 
     def is_static_resource(self, file):
         """Sample doc string."""
@@ -266,7 +271,7 @@ class Helper(sublime_plugin.WindowCommand):
                                   "Force.com CLI to function.\n\n" +
                                   "Please visit force-cli.herokuapp.com to " +
                                   "install the Force.com CLI.\n\n" +
-                                  "If you’ve already installed it, make sure " +
+                                  "If you’ve already installed, make sure " +
                                   "that you saved it or created a " +
                                   "symlink to it in Sublime’s default path.")
         return ver.replace("\n", "")
@@ -275,7 +280,8 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         self.type = metaname
         self.messages = []
-        p = popen_force_cli(["describe", "-t", "metadata", "-n", quote(metaname), "-j"])
+        p = popen_force_cli(["describe", "-t", "metadata", "-n",
+                            quote(metaname), "-j"])
         result, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
@@ -361,15 +367,15 @@ class Helper(sublime_plugin.WindowCommand):
         if Helper.meets_forcecli_version(self, "0.22.36"):
             print("Using -t")
             p = popen_force_cli(["query", "Select Id,DeveloperName, "
-                                  "MasterLabel, Description From "
-                                  "AuraDefinitionBundle",
-                                  "--format:json", "-t"])
+                                 "MasterLabel, Description From "
+                                 "AuraDefinitionBundle",
+                                 "--format:json", "-t"])
         else:
             print("NOT using -t")
             p = popen_force_cli(["query", "Select Id,DeveloperName, "
-                                  "MasterLabel, Description From "
-                                  "AuraDefinitionBundle",
-                                  "--format:json"])
+                                 "MasterLabel, Description From "
+                                 "AuraDefinitionBundle",
+                                 "--format:json"])
         result, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
@@ -581,10 +587,10 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
 
     def is_visible(self, dirs):
         """Sample doc string."""
-        print 
+        print
         if Helper(self.window).get_metatdata_child_directory_path() != "":
             return True
-            
+
         return Helper(self.window).bundle_op_is_visible(dirs)
 
 
@@ -1047,7 +1053,8 @@ class LightningSave(sublime_plugin.EventListener):
             command = "push -f='" + filename + "'"
             view.window().run_command(
                 'exec',
-                {'cmd': ["force", "aura", "push", "-f", '\'' + filename + '\'']})
+                {'cmd': ["force", "aura", "push", "-f",
+                         '\'' + filename + '\'']})
         elif Helper.is_metadata(self, os.path.dirname(filename)):
             if Helper.is_static_resource(self, filename):
                 print("is static resource")
