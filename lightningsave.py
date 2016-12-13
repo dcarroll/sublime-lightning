@@ -590,9 +590,8 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
     def is_visible(self, dirs):
         """Sample doc string."""
         cdPath = Helper(self.window).get_md_child_name(dirs[0])
-        print(cdPath)
-        if (Helper(self.window).get_md_child_name(dirs[0]) != "" or
-           Helper(self.window).is_metadata(dirs[0])):
+        isMetdata = Helper(self.window).is_metadata(dirs[0])
+        if (cdPath != "") or isMetdata:
             return True
 
         return Helper(self.window).bundle_op_is_visible(dirs)
