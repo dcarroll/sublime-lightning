@@ -11,6 +11,7 @@ import sublime_plugin
 from . import semver
 
 IS_WINDOWS = os.name == 'nt'
+PROJECT_DIRECTORY = os.getcwd()
 
 def plugin_loaded():
     """Make me put in a doc string."""
@@ -76,6 +77,10 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         return
 
+    def get_immediate_subdirectories(a_dir):
+        return [name for name in os.listdir(a_dir)
+            if os.path.isdir(os.path.join(a_dir, name))]
+
     def bundle_op_is_visible(self, dirs):
         """Sample doc string."""
         if len(dirs) == 0:
@@ -94,6 +99,12 @@ class Helper(sublime_plugin.WindowCommand):
     def parent_dir_is_aura(self, working_dir):
         """Sample doc string."""
         return os.path.basename(os.path.dirname(working_dir)) == "aura"
+
+    def get_metatdata_child_directory_path(self):
+        for dirname in get_immediate_subdirectories(os.getcwd()):
+            if dirname in ["metadata", "src"]:
+                return os.path.join(os.getcwd(), dirname)
+        return ""
 
     def is_metadata(self, working_dir):
         """Sample doc string."""
@@ -548,6 +559,32 @@ class FetchCommand(sublime_plugin.WindowCommand):
     def is_visible(self):
         """Sample doc string."""
         return True
+
+
+class ApexNewClassCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
+    def run(self, dirs):
+        """Sample doc string."""
+        self.dirs = dirs
+        self.window.show_input_panel("App Name:", "", self.on_done, None, None)
+        pass
+
+    def on_done(self, file_name):
+        """Sample doc string."""
+        Helper(self.window).make_bundle_file(
+            file_name,
+            "app",
+            "<aura:application>\n\n</aura:application>",
+            self.dirs)
+        return
+
+    def is_visible(self, dirs):
+        """Sample doc string."""
+        if (Helper.self.window).get_metatdata_child_directory_path() != "":
+            return True
+            
+        return Helper(self.window).bundle_op_is_visible(dirs)
 
 
 class LightningNewAppCommand(sublime_plugin.WindowCommand):
