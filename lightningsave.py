@@ -77,9 +77,9 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         return
 
-    def get_immediate_subdirectories(a_dir):
-        return [name for name in os.listdir(a_dir)
-            if os.path.isdir(os.path.join(a_dir, name))]
+    def get_immediate_subdirectories(self):
+        return [name for name in os.listdir(os.getcwd())
+            if os.path.isdir(os.path.join(os.getcwd(), name))]
 
     def bundle_op_is_visible(self, dirs):
         """Sample doc string."""
