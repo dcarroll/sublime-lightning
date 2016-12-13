@@ -81,9 +81,9 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         return
 
-    def get_immediate_subdirectories(self):
-        return [name for name in os.listdir(os.getcwd())
-                if os.path.isdir(os.path.join(os.getcwd(), name))]
+    def get_immediate_subdirectories(self, dir):
+        return [name for name in os.listdir(dir)
+                if os.path.isdir(os.path.join(dir, name))]
 
     def bundle_op_is_visible(self, dirs):
         """Sample doc string."""
@@ -104,11 +104,11 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         return os.path.basename(os.path.dirname(working_dir)) == "aura"
 
-    def get_metatdata_child_directory_path(self):
-        for dirname in self.get_immediate_subdirectories():
+    def get_metatdata_child_directory_path(self, dir):
+        for dirname in self.get_immediate_subdirectories(dir):
             print("Dir name: " + dirname)
             if dirname in ["metadata", "src"]:
-                return os.path.join(os.getcwd(), dirname)
+                return os.path.join(dir, dirname)
         return ""
 
     def is_metadata(self, working_dir):
@@ -588,9 +588,10 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
 
     def is_visible(self, dirs):
         """Sample doc string."""
-        cdPath = Helper(self.window).get_metatdata_child_directory_path()
+        x = dirs[0]
+        cdPath = Helper(self.window).get_metatdata_child_directory_path(x)
         print(cdPath)
-        if Helper(self.window).get_metatdata_child_directory_path() != "":
+        if Helper(self.window).get_metatdata_child_directory_path(x) != "":
             return True
 
         return Helper(self.window).bundle_op_is_visible(dirs)
