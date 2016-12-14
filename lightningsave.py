@@ -708,8 +708,8 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
         isMetadata = os.path.basename(dirs[0]) in ["metadata", "src"]
         isClasses = os.path.basename(dirs[0]) == "classes"
         print("cdPath: " + cdPath)
-        print("isMetadata: " + isMetadata)
-        print("isClasses: " + isClasses)
+        print("isMetadata: " + str(isMetadata))
+        print("isClasses: " + str(isClasses))
         if (cdPath != "") or isMetadata or isClasses:
             return True
 
