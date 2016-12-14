@@ -2,14 +2,11 @@
 	{ "caption": "-", "lightningstart": "lightning_commands" },
 	{ "caption" : "Lightning", "children" :
 	[
+		{ "caption": "-", "loginstart": "login_command" },
 		{ "caption": "Salesforce Login", "command": "login", "args":{} },
+		{ "caption": "_", "loginend": "login_command" },
 		{ "caption": "Save", "command": "lightning_save_bundle", "args": {"dirs":[]} },
-		{ "caption": "Fetch", "children" :
-		[
-			{ "caption": "Lightning", "command": "fetch", "args": {} },
-			{ "caption": "Metadata", "command": "fetch_meta", "args": {"dirs":[]} },
-			{ "caption": "Package", "command": "fetch_package", "args": {} },
-		]},
+		{ "caption": "Fetch", "command": "fetch", "args": {} },
 		{ "caption": "Delete", "children" :
 		[
 			{ "caption": "Lightning Defintion", "command": "lightning_delete", "args": {"files": []} },
@@ -17,10 +14,6 @@
 		]},
 		{ "caption": "Create", "children":
 		[
-			{ "caption": "-", "metadatastart": "metadata_commands" },
-			{ "caption": "Apex Class", "command": "apex_new_class", "args": {"dirs": []} },
-			{ "caption": "Visualforce Page", "command": "visualforce_new_page", "args": {"dirs": []} },
-			{ "caption": "-", "metadataend": "metadata_commands" },
 			{ "caption": "App", "command": "lightning_new_app", "args": {"dirs": []} },
 			{ "caption": "Component", "command": "lightning_new_component", "args": {"dirs": []} },
 			{ "caption": "Event", "command": "lightning_new_event", "args": {"dirs": []} },
@@ -38,5 +31,24 @@
 		]},
 		{ "caption": "Preview", "command": "lightning_preview", "args": {"dirs": []} }
 	]},
+	{ "caption" : "Metadata", "children" :
+		[
+			{ "caption": "-", "loginstart": "login_command" },
+			{ "caption": "Salesforce Login", "command": "login", "args":{} },
+			{ "caption": "-", "loginend": "login_command" },
+			{ "caption": "Create", "children": 
+				[
+					{ "caption": "Apex Class", "command": "apex_new_class", "args": {"dirs": []} },
+					{ "caption": "Visualforce Page", "command": "visualforce_new_page", "args": {"dirs": []} },
+				]
+			},
+			{ "caption": "Fetch", "children":
+				[
+					{ "caption": "Metadata", "command": "fetch_meta", "args": {"dirs":[]} },
+					{ "caption": "Package", "command": "fetch_package", "args": {} }
+				]
+			}
+		]
+	},
 	{ "caption": "-", "lightningend": "lightning_commands" }
 ]
