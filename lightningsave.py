@@ -442,7 +442,7 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         working_dir = self.get_md_child_name(dirs[0])
         print("Metadata dir: " + working_dir)
-        classes_dir = os.path.join(working_dir + "classes")
+        classes_dir = os.path.join(working_dir, "classes")
         if not os.path.isdir(classes_dir):
             os.mkdir(classes_dir)
 
