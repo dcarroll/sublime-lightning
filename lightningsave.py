@@ -448,7 +448,8 @@ class Helper(sublime_plugin.WindowCommand):
 
         cls_file_path = os.path.join(classes_dir, file_name + ".cls")
         xml_file_path = cls_file_path + "-meta.xml"
-
+        print("cls_file_path: " + cls_file_path)
+        print("xml_file_path: " + xml_file_path)
         if os.path.exists(cls_file_path):
             sublime.error_message("The class " +
                                   file_name +
