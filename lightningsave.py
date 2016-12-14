@@ -448,7 +448,8 @@ class Helper(sublime_plugin.WindowCommand):
                   "looking up now...")
             for root, dirss, files in Helper.walk_up(self, dirs[0]):
                 if "metadata" in dirss:
-                    print("Found metadata above: " + root)
+                    working_dir = os.path.join(root, dirss[0])
+                    print("Found metadata above: " + working_dir)
 
             return
 
