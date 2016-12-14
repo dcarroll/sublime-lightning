@@ -125,6 +125,15 @@ class Helper(sublime_plugin.WindowCommand):
         working_dir = self.get_md_child_name(dir)
         if working_dir == "":
             working_dir = Helper.find_upstram_md(self, dir)
+        if working_dir == "not found":
+            if sublime.ok_cancel_dialog(
+                    "Could not locate a src or metadata directory. "
+                    "Create a metadata directory at " + dir + "?",
+                    "Create Metadata",
+                    "Cancel"):
+                working_dir = os.path.join(dir, "metadata")
+                os.mkdir(working_dir)
+
         return working_dir
 
     def is_metadata(self, working_dir):
@@ -425,6 +434,8 @@ class Helper(sublime_plugin.WindowCommand):
     def make_bundle_file(self, file_name, extension, snippet, dirs):
         """Sample doc string."""
         metadata_dir = self.get_md_dir(dirs[0])
+        if metadata_dir == "not found":
+            return
         aura_dir = os.path.join(metadata_dir, "aura")
         if not os.path.isdir(aura_dir):
             os.mkdir(aura_dir)
@@ -470,7 +481,8 @@ class Helper(sublime_plugin.WindowCommand):
     def make_class_file(self, file_name, dirs):
         """Sample doc string."""
         metadata_dir = self.get_md_dir(dirs[0])
-
+        if metadata_dir == "not found":
+            return
         classes_dir = os.path.join(metadata_dir, "classes")
         if not os.path.isdir(classes_dir):
             os.mkdir(classes_dir)
