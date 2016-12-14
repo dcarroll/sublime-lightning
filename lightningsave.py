@@ -440,18 +440,28 @@ class Helper(sublime_plugin.WindowCommand):
 
         return app
 
+    def find_upstram_md(self, start_dir):
+        for root, dirss, files in Helper.walk_up(self, start_dir):
+            print("Root: " + root)
+            if "metadata" in dirss:
+                working_dir = os.path.join(root, "metadata")
+                print("Found metadata above: " + working_dir)
+                return
+            elif "src" in dirss:
+                working_dir = os.path.join(root, "src")
+                print("Found src above: " + working_dir)
+                return
+            else:
+                self.find_upstram_md(os.path.dirname(root))
+
     def make_class_file(self, file_name, dirs):
         """Sample doc string."""
         working_dir = self.get_md_child_name(dirs[0])
         if working_dir == "":
             print("Could not find metadata or source directory below " +
                   "looking up now...")
-            for root, dirss, files in Helper.walk_up(self, dirs[0]):
-                if "metadata" in dirss:
-                    working_dir = os.path.join(root, "metadata")
-                    print("Found metadata above: " + working_dir)
-                elif "src" in dirss:
-                    working_dir = os.path.join(root, "src")
+            mydir = Helper.find_upstram_md(dirs[0])
+
             return
 
         print("Metadata dir: " + working_dir)
