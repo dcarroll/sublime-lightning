@@ -443,6 +443,15 @@ class Helper(sublime_plugin.WindowCommand):
     def make_class_file(self, file_name, dirs):
         """Sample doc string."""
         working_dir = self.get_md_child_name(dirs[0])
+        if working_dir == "":
+            print("Could not find metadata or source directory below " +
+                  "looking up now...")
+            for root, dirss, files in Helper.walk_up(self, dirs[0]):
+                if "metadata" in dirss:
+                    print("Found metadata above: " + root)
+
+            return
+
         print("Metadata dir: " + working_dir)
         classes_dir = os.path.join(working_dir, "classes")
         if not os.path.isdir(classes_dir):
