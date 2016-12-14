@@ -95,10 +95,13 @@ class Helper(sublime_plugin.WindowCommand):
 
     def bundle_op_is_visible(self, dirs):
         """Sample doc string."""
-        if len(dirs) == 0:
-            return False
-        else:
-            return self.dir_is_aura(dirs[0])
+        cdPath = Helper(self.window).get_md_child_name(dirs[0])
+        isMetadata = os.path.basename(dirs[0]) in ["metadata", "src"]
+        isClasses = os.path.basename(dirs[0]) == "classes"
+        if cdPath == "":
+            cdPath = Helper(self.window).find_upstram_md(dirs[0])
+        if (cdPath != "") or isMetadata or isClasses:
+            return True
 
     def file_op_is_visible(self, dirs):
         """Sample doc string."""
@@ -700,18 +703,6 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
 
     def is_visible(self, dirs):
         """Sample doc string."""
-        cdPath = Helper(self.window).get_md_child_name(dirs[0])
-        isMetadata = os.path.basename(dirs[0]) in ["metadata", "src"]
-        isClasses = os.path.basename(dirs[0]) == "classes"
-        if cdPath == "":
-            cdPath = Helper(self.window).find_upstram_md(dirs[0])
-
-        print("cdPath: " + cdPath)
-        print("isMetadata: " + str(isMetadata))
-        print("isClasses: " + str(isClasses))
-        if (cdPath != "") or isMetadata or isClasses:
-            return True
-
         return Helper(self.window).bundle_op_is_visible(dirs)
 
 
