@@ -426,6 +426,9 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         metadata_dir = self.get_md_dir(dirs[0])
         aura_dir = os.path.join(metadata_dir, "aura")
+        if not os.path.isdir(aura_dir):
+            os.mkdir(aura_dir)
+
         bundle_dir = os.path.join(aura_dir, file_name)
         e = extension
         if e == "cmp" or e == "app" or e == "intf" or e == "evt":
