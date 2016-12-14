@@ -430,6 +430,35 @@ class Helper(sublime_plugin.WindowCommand):
 
         return app
 
+    def make_class_file(self, file_name, dirs):
+        """Sample doc string."""
+        working_dir = self.get_md_child_name(dirs)
+        print("Metadata dir: " + working_dir)
+        """
+        os.chdir(working_dir)
+
+            fn, ex = os.path.splitext(file_name)
+            os.mkdir(os.path.join(working_dir, file_name))
+            os.chdir(fn)
+            working_dir = os.getcwd()
+
+        app = open(file_name + "." + extension, "wb")
+        if int(sublime.version()) >= 3000:
+            app.write(bytes(snippet, 'UTF-8'))
+        else:  # To support Sublime Text 2
+            app.write(bytes(snippet))
+
+        app.close()
+        filename = os.path.join(working_dir, file_name + "." + extension)
+        self.window.open_file(filename)
+        cmd = 'push -f="' + filename + '"'
+        self.window.run_command(
+            'exec',
+            {'cmd': ["force", "aura", cmd]})
+
+        return app
+        """
+
     def get_aura_dir(self):
         """Sample doc string."""
         self.folders = self.window.folders()
@@ -575,16 +604,20 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         """Sample doc string."""
         self.dirs = dirs
-        self.window.show_input_panel("App Name:", "", self.on_done, None, None)
+        self.window.show_input_panel("Class Name:", "", self.on_done, None, None)
         pass
 
     def on_done(self, file_name):
         """Sample doc string."""
+        Helper(self.window).make_class_file(file_name, self.dirs)
+
+        """
         Helper(self.window).make_bundle_file(
             file_name,
             "app",
             "<aura:application>\n\n</aura:application>",
             self.dirs)
+        """
         return
 
     def is_visible(self, dirs):
