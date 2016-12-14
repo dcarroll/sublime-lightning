@@ -443,7 +443,7 @@ class Helper(sublime_plugin.WindowCommand):
         working_dir = self.get_md_child_name(dirs[0])
         print("Metadata dir: " + working_dir)
         classes_dir = os.path.join(working_dir + "classes")
-        if not os.isdir(classes_dir):
+        if not os.path.isdir(classes_dir):
             os.mkdir(classes_dir)
 
         cls_file_path = os.path.join(classes_dir, file_name + ".cls")
