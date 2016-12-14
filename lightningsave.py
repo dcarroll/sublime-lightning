@@ -432,8 +432,8 @@ class Helper(sublime_plugin.WindowCommand):
 
     def make_class_file(self, file_name, dirs):
         """Sample doc string."""
-        print("Dirs: " + dirs)
-        working_dir = self.get_md_child_name(dirs)
+        print("Dirs: " + dirs[0])
+        working_dir = self.get_md_child_name(dirs[0])
         print("Metadata dir: " + working_dir)
         """
         os.chdir(working_dir)
