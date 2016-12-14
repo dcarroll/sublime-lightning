@@ -96,7 +96,7 @@ class Helper(sublime_plugin.WindowCommand):
             + '\t<availableInTouch>false</availableInTouch>\n' \
             + '\t<confirmationTokenRequired>false' \
             + '</confirmationTokenRequired>\n' \
-            + '\t<label>' + page_name + '</label>' \
+            + '\t<label>' + page_name + '</label>\n' \
             + '</ApexPage>'
 
     def get_immediate_subdirectories(self, dir):
