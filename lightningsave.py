@@ -446,11 +446,11 @@ class Helper(sublime_plugin.WindowCommand):
             if "metadata" in dirss:
                 working_dir = os.path.join(root, "metadata")
                 print("Found metadata above: " + working_dir)
-                return
+                return working_dir
             elif "src" in dirss:
                 working_dir = os.path.join(root, "src")
                 print("Found src above: " + working_dir)
-                return
+                return working_dir
             else:
                 self.find_upstram_md(os.path.dirname(root))
 
@@ -706,7 +706,8 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
         """Sample doc string."""
         cdPath = Helper(self.window).get_md_child_name(dirs[0])
         isMetdata = os.path.basename(dirs[0]) in ["metadata", "src"]
-        if (cdPath != "") or isMetdata:
+        isClasses = os.path.basename(dirs[0]) == "classes"
+        if (cdPath != "") or isMetdata or isClasses:
             return True
 
         return Helper(self.window).bundle_op_is_visible(dirs)
