@@ -458,11 +458,7 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         working_dir = self.get_md_child_name(dirs[0])
         if working_dir == "":
-            print("Could not find metadata or source directory below " +
-                  "looking up now...")
-            mydir = Helper.find_upstram_md(self, dirs[0])
-
-            return
+            working_dir = Helper.find_upstram_md(self, dirs[0])
 
         print("Metadata dir: " + working_dir)
         classes_dir = os.path.join(working_dir, "classes")
@@ -707,6 +703,9 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
         cdPath = Helper(self.window).get_md_child_name(dirs[0])
         isMetadata = os.path.basename(dirs[0]) in ["metadata", "src"]
         isClasses = os.path.basename(dirs[0]) == "classes"
+        if cdPath == "":
+            cdPath = Helper(self.window).find_upstram_md(dirs[0])
+
         print("cdPath: " + cdPath)
         print("isMetadata: " + str(isMetadata))
         print("isClasses: " + str(isClasses))
