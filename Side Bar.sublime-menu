@@ -7,7 +7,7 @@
 		{ "caption": "Fetch", "children" :
 		[
 			{ "caption": "Lightning", "command": "fetch", "args": {} },
-			{ "caption": "Metadata", "command": "fetch_meta", "args": {} },
+			{ "caption": "Metadata", "command": "fetch_meta", "args": {"dirs":[]} },
 			{ "caption": "Package", "command": "fetch_package", "args": {} },
 		]},
 		{ "caption": "Delete", "children" :

@@ -228,7 +228,7 @@ class Helper(sublime_plugin.WindowCommand):
         if (index == -1):
             return
 
-        self.show_metadata_instance_list(self.messages[index][0])
+        self.show_metadata_instance_list(self.messages[index][0], self.dirs)
         return
 
     def fetch_selected_metadata(self, index):
@@ -239,7 +239,7 @@ class Helper(sublime_plugin.WindowCommand):
         self.window.run_command(
             'exec',
             {'cmd': ["force", "fetch", "-t", self.type, "-n", item, "-unpack"],
-             'working_dir': self.window.folders()[0]})
+             'working_dir': self.dirs[0]})
         return
 
     def meets_forcecli_version(self, minversion):
@@ -286,9 +286,10 @@ class Helper(sublime_plugin.WindowCommand):
                                   "symlink to it in Sublime’s default path.")
         return ver.replace("\n", "")
 
-    def show_metadata_instance_list(self, metaname):
+    def show_metadata_instance_list(self, metaname, dirs):
         """Sample doc string."""
         self.type = metaname
+        self.dirs = dirs
         self.messages = []
         p = popen_force_cli(["describe", "-t", "metadata", "-n",
                             quote(metaname), "-j"])
@@ -323,9 +324,10 @@ class Helper(sublime_plugin.WindowCommand):
             {'cmd': ["open", url]}
         )
 
-    def show_metadata_type_list(self):
+    def show_metadata_type_list(self, dirs):
         """Sample doc string."""
         print(self)
+        self.dirs = dirs
         self.messages = []
         p = popen_force_cli(["describe", "-t", "metadata", "-j"])
         result, err = p.communicate()
@@ -481,6 +483,49 @@ class Helper(sublime_plugin.WindowCommand):
 
         return cls
 
+    def make_vf_file(self, file_name, dirs):
+        """Sample doc string."""
+        working_dir = self.get_md_child_name(dirs[0])
+        print("Metadata dir: " + working_dir)
+        classes_dir = os.path.join(working_dir, "pages")
+        if not os.path.isdir(classes_dir):
+            os.mkdir(classes_dir)
+
+        cls_file_path = os.path.join(classes_dir, file_name + ".page")
+        xml_file_path = cls_file_path + "-meta.xml"
+        print("cls_file_path: " + cls_file_path)
+        print("xml_file_path: " + xml_file_path)
+        if os.path.exists(cls_file_path):
+            sublime.error_message("The class " +
+                                  file_name +
+                                  "already exists.")
+            return
+
+        cls = open(cls_file_path, "wb")
+        cls_snippet = "public with sharing class " + file_name + " {"
+        cls_snippet = cls_snippet + "\n\n}"
+        if int(sublime.version()) >= 3000:
+            cls.write(bytes(cls_snippet, 'UTF-8'))
+        else:  # To support Sublime Text 2
+            cls.write(bytes(cls_snippet))
+
+        xml = open(xml_file_path, "wb")
+        xml_snippet = self.get_xml_snippet("ApexClass")
+        if int(sublime.version()) >= 3000:
+            xml.write(bytes(xml_snippet, 'UTF-8'))
+        else:  # To support Sublime Text 2
+            xml.write(bytes(xml_snippet))
+
+        xml.close()
+        cls.close()
+
+        self.window.open_file(cls_file_path)
+        self.window.run_command(
+            'exec',
+            {'cmd': ["force", "push", "-f", cls_file_path]})
+
+        return cls
+
     def get_aura_dir(self):
         """Sample doc string."""
         self.folders = self.window.folders()
@@ -579,10 +624,10 @@ class LoginCommand(sublime_plugin.WindowCommand):
 class FetchMetaCommand(sublime_plugin.WindowCommand):
     """This is my docstring."""
 
-    def run(self):
+    def run(self, dirs):
         """Sample doc string."""
         print("Running FetchMetaCommand")
-        Helper(self.window).show_metadata_type_list()
+        Helper(self.window).show_metadata_type_list(dirs)
 
     def is_visible(self):
         """Sample doc string."""
