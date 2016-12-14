@@ -536,7 +536,7 @@ class Helper(sublime_plugin.WindowCommand):
         metadata_dir = self.get_md_dir(dirs[0])
         if metadata_dir == "not found":
             return
-        pages_dir = os.path.join(metadata_dir, "classes")
+        pages_dir = os.path.join(metadata_dir, "pages")
         if not os.path.isdir(pages_dir):
             os.mkdir(pages_dir)
 
