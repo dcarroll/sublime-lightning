@@ -460,7 +460,7 @@ class Helper(sublime_plugin.WindowCommand):
         if working_dir == "":
             print("Could not find metadata or source directory below " +
                   "looking up now...")
-            mydir = Helper.find_upstram_md(dirs[0])
+            mydir = Helper.find_upstram_md(self, dirs[0])
 
             return
 
