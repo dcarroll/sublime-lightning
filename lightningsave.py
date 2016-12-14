@@ -464,7 +464,7 @@ class Helper(sublime_plugin.WindowCommand):
         else:  # To support Sublime Text 2
             cls.write(bytes(cls_snippet))
 
-        xml = open(xml_file_path)
+        xml = open(xml_file_path, "wb")
         xml_snippet = self.get_xml_snippet("ApexClass")
         if int(sublime.version()) >= 3000:
             xml.write(bytes(xml_snippet, 'UTF-8'))
