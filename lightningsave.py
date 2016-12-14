@@ -457,7 +457,7 @@ class Helper(sublime_plugin.WindowCommand):
             return
 
         cls = open(cls_file_path, "wb")
-        cls_snippet = "public class with sharing " + file_name + " {"
+        cls_snippet = "public with sharing class " + file_name + " {"
         cls_snippet = cls_snippet + "\n\n}"
         if int(sublime.version()) >= 3000:
             cls.write(bytes(cls_snippet, 'UTF-8'))
@@ -475,7 +475,7 @@ class Helper(sublime_plugin.WindowCommand):
         cls.close()
 
         self.window.open_file(cls_file_path)
-        cmd = 'push -f="' + cls_file_path + '"'
+        cmd = 'push -f ' + cls_file_path
         self.window.run_command(
             'exec',
             {'cmd': ["force", cmd]})
