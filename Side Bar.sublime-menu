@@ -17,7 +17,10 @@
 		]},
 		{ "caption": "Create", "children":
 		[
+			{ "caption": "-", "metadatastart": "metadata_commands" },
 			{ "caption": "Apex Class", "command": "apex_new_class", "args": {"dirs": []} },
+			{ "caption": "Visualforce Page", "command": "visualforce_new_page", "args": {"dirs": []} },
+			{ "caption": "-", "metadataend": "metadata_commands" },
 			{ "caption": "App", "command": "lightning_new_app", "args": {"dirs": []} },
 			{ "caption": "Component", "command": "lightning_new_component", "args": {"dirs": []} },
 			{ "caption": "Event", "command": "lightning_new_event", "args": {"dirs": []} },

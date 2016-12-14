@@ -724,6 +724,27 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
         return Helper(self.window).bundle_op_is_visible(dirs)
 
 
+class VisualforceNewPageCommand(sublime_plugin.WindowCommand):
+    """Sample doc string."""
+
+    def run(self, dirs):
+        """Sample doc string."""
+        self.dirs = dirs
+        self.window.show_input_panel("Page Name:",
+                                     "", self.on_done, None, None)
+        pass
+
+    def on_done(self, file_name):
+        """Sample doc string."""
+        Helper(self.window).make_class_file(file_name, self.dirs)
+
+        return
+
+    def is_visible(self, dirs):
+        """Sample doc string."""
+        return Helper(self.window).bundle_op_is_visible(dirs)
+
+
 class LightningNewAppCommand(sublime_plugin.WindowCommand):
     """Sample doc string."""
 
