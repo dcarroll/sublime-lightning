@@ -129,8 +129,7 @@ class Helper(sublime_plugin.WindowCommand):
             if sublime.ok_cancel_dialog(
                     "Could not locate a src or metadata directory. "
                     "Create a metadata directory at " + dir + "?",
-                    "Create Metadata",
-                    "Cancel"):
+                    "Create Metadata"):
                 working_dir = os.path.join(dir, "metadata")
                 os.mkdir(working_dir)
 
