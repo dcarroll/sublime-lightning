@@ -2,9 +2,9 @@
 	{ "caption": "-", "lightningstart": "lightning_commands" },
 	{ "caption" : "Lightning", "children" :
 	[
-		{ "caption": "-", "loginstart": "login_command" },
+		{ "caption": "-", "login1start": "login1_command" },
 		{ "caption": "Salesforce Login", "command": "login", "args":{} },
-		{ "caption": "_", "loginend": "login_command" },
+		{ "caption": "_", "login1end": "login1_command" },
 		{ "caption": "Save", "command": "lightning_save_bundle", "args": {"dirs":[]} },
 		{ "caption": "Fetch", "command": "fetch", "args": {} },
 		{ "caption": "Delete", "children" :

@@ -89,6 +89,16 @@ class Helper(sublime_plugin.WindowCommand):
             + '<status>Active</status>\n' \
             + '</' + md_type + '>'
 
+    def get_page_xml_snippet(self, page_name):
+        return '<?xml version="1.0" encoding="UTF-8"?>\n' \
+            + '<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">\n' \
+            + '\t<apiVersion>36.0</apiVersion>\n' \
+            + '\t<availableInTouch>false</availableInTouch>\n' \
+            + '\t<confirmationTokenRequired>false' \
+            + '</confirmationTokenRequired>\n' \
+            + '\t<label>' + page_name + '</label>' \
+            + '</ApexPage>'
+
     def get_immediate_subdirectories(self, dir):
         return [name for name in os.listdir(dir)
                 if os.path.isdir(os.path.join(dir, name))]
@@ -521,6 +531,47 @@ class Helper(sublime_plugin.WindowCommand):
 
         return cls
 
+    def make_page_file(self, file_name, dirs):
+        """Sample doc string."""
+        metadata_dir = self.get_md_dir(dirs[0])
+        if metadata_dir == "not found":
+            return
+        pages_dir = os.path.join(metadata_dir, "classes")
+        if not os.path.isdir(pages_dir):
+            os.mkdir(pages_dir)
+
+        page_file_path = os.path.join(pages_dir, file_name + ".cls")
+        xml_file_path = page_file_path + "-meta.xml"
+        if os.path.exists(page_file_path):
+            sublime.error_message("The class " +
+                                  file_name +
+                                  "already exists.")
+            return
+
+        page = open(page_file_path, "wb")
+        page_snippet = "<apex:page>\n\n</apex:page>"
+        if int(sublime.version()) >= 3000:
+            page.write(bytes(page_snippet, 'UTF-8'))
+        else:  # To support Sublime Text 2
+            page.write(bytes(page_snippet))
+
+        xml = open(xml_file_path, "wb")
+        xml_snippet = self.get_xml_snippet("ApexPage")
+        if int(sublime.version()) >= 3000:
+            xml.write(bytes(xml_snippet, 'UTF-8'))
+        else:  # To support Sublime Text 2
+            xml.write(bytes(xml_snippet))
+
+        xml.close()
+        page.close()
+
+        self.window.open_file(page_file_path)
+        self.window.run_command(
+            'exec',
+            {'cmd': ["force", "push", "-f", page_file_path]})
+
+        return page
+
     def make_vf_file(self, file_name, dirs):
         """Sample doc string."""
         working_dir = self.get_md_child_name(dirs[0])
@@ -736,7 +787,7 @@ class VisualforceNewPageCommand(sublime_plugin.WindowCommand):
 
     def on_done(self, file_name):
         """Sample doc string."""
-        Helper(self.window).make_class_file(file_name, self.dirs)
+        Helper(self.window).make_page_file(file_name, self.dirs)
 
         return
 
