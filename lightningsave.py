@@ -84,7 +84,7 @@ class Helper(sublime_plugin.WindowCommand):
     def get_xml_snippet(self, md_type):
         return '<?xml version="1.0" encoding="UTF-8"?>\n' \
             + '<' + md_type \
-            + 'xmlns="http://soap.sforce.com/2006/04/metadata">\n' \
+            + ' xmlns="http://soap.sforce.com/2006/04/metadata">\n' \
             + '<apiVersion>38.0</apiVersion>\n' \
             + '<status>Active</status>\n' \
             + '</' + md_type + '>'
@@ -457,7 +457,7 @@ class Helper(sublime_plugin.WindowCommand):
             return
 
         cls = open(cls_file_path, "wb")
-        cls_snippet = "public class with sharing " + file_name + "{"
+        cls_snippet = "public class with sharing " + file_name + " {"
         cls_snippet = cls_snippet + "\n\n}"
         if int(sublime.version()) >= 3000:
             cls.write(bytes(cls_snippet, 'UTF-8'))
