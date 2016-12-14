@@ -462,6 +462,8 @@ class Helper(sublime_plugin.WindowCommand):
                 working_dir = os.path.join(root, "src")
                 print("Found src above: " + working_dir)
                 return working_dir
+            elif root == start_dir:
+                return "not found"
             else:
                 self.find_upstram_md(os.path.dirname(root))
 
