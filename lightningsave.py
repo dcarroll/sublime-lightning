@@ -250,6 +250,8 @@ class Helper(sublime_plugin.WindowCommand):
 
     def fetch_selected_metadata(self, index):
         """Sample doc string."""
+        if index == -1:
+            return
         item = self.messages[index][0]
         print("Type: " + self.type)
         print("Item: " + item)
