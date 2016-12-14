@@ -81,6 +81,14 @@ class Helper(sublime_plugin.WindowCommand):
         """Sample doc string."""
         return
 
+    def get_xml_snippet(self, md_type):
+        return '<?xml version="1.0" encoding="UTF-8"?>\n' \
+            + '<' + md_type \
+            + 'xmlns="http://soap.sforce.com/2006/04/metadata">\n' \
+            + '<apiVersion>38.0</apiVersion>\n' \
+            + '<status>Active</status>\n' \
+            + '</' + md_type + '>'
+
     def get_immediate_subdirectories(self, dir):
         return [name for name in os.listdir(dir)
                 if os.path.isdir(os.path.join(dir, name))]
@@ -432,33 +440,46 @@ class Helper(sublime_plugin.WindowCommand):
 
     def make_class_file(self, file_name, dirs):
         """Sample doc string."""
-        print("Dirs: " + dirs[0])
         working_dir = self.get_md_child_name(dirs[0])
         print("Metadata dir: " + working_dir)
-        """
-        os.chdir(working_dir)
+        classes_dir = os.path.join(working_dir + "classes")
+        if not os.isdir(classes_dir):
+            os.mkdir(classes_dir)
 
-            fn, ex = os.path.splitext(file_name)
-            os.mkdir(os.path.join(working_dir, file_name))
-            os.chdir(fn)
-            working_dir = os.getcwd()
+        cls_file_path = os.path.join(classes_dir, file_name + ".cls")
+        xml_file_path = cls_file_path + "-meta.xml"
 
-        app = open(file_name + "." + extension, "wb")
+        if os.path.exists(cls_file_path):
+            sublime.error_message("The class " +
+                                  file_name +
+                                  "already exists.")
+            return
+
+        cls = open(cls_file_path, "wb")
+        cls_snippet = "public class with sharing " + file_name + "{"
+        cls_snippet = cls_snippet + "\n\n}"
         if int(sublime.version()) >= 3000:
-            app.write(bytes(snippet, 'UTF-8'))
+            cls.write(bytes(cls_snippet, 'UTF-8'))
         else:  # To support Sublime Text 2
-            app.write(bytes(snippet))
+            cls.write(bytes(cls_snippet))
 
-        app.close()
-        filename = os.path.join(working_dir, file_name + "." + extension)
-        self.window.open_file(filename)
-        cmd = 'push -f="' + filename + '"'
+        xml = open(xml_file_path)
+        xml_snippet = self.get_xml_snippet("ApexClass")
+        if int(sublime.version()) >= 3000:
+            xml.write(bytes(xml_snippet, 'UTF-8'))
+        else:  # To support Sublime Text 2
+            xml.write(bytes(xml_snippet))
+
+        xml.close()
+        cls.close()
+
+        self.window.open_file(cls_file_path)
+        cmd = 'push -f="' + cls_file_path + '"'
         self.window.run_command(
             'exec',
-            {'cmd': ["force", "aura", cmd]})
+            {'cmd': ["force", cmd]})
 
-        return app
-        """
+        return cls
 
     def get_aura_dir(self):
         """Sample doc string."""
@@ -605,20 +626,14 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         """Sample doc string."""
         self.dirs = dirs
-        self.window.show_input_panel("Class Name:", "", self.on_done, None, None)
+        self.window.show_input_panel("Class Name:",
+                                     "", self.on_done, None, None)
         pass
 
     def on_done(self, file_name):
         """Sample doc string."""
         Helper(self.window).make_class_file(file_name, self.dirs)
 
-        """
-        Helper(self.window).make_bundle_file(
-            file_name,
-            "app",
-            "<aura:application>\n\n</aura:application>",
-            self.dirs)
-        """
         return
 
     def is_visible(self, dirs):
