@@ -118,6 +118,12 @@ class Helper(sublime_plugin.WindowCommand):
                 return os.path.join(dir, dirname)
         return ""
 
+    def get_md_dir(self, dir):
+        working_dir = self.get_md_child_name(dir)
+        if working_dir == "":
+            working_dir = Helper.find_upstram_md(self, dir)
+        return working_dir
+
     def is_metadata(self, working_dir):
         """Sample doc string."""
         wd = os.path.dirname(working_dir)
@@ -415,25 +421,24 @@ class Helper(sublime_plugin.WindowCommand):
 
     def make_bundle_file(self, file_name, extension, snippet, dirs):
         """Sample doc string."""
-        working_dir = dirs[0]
-        os.chdir(working_dir)
+        metadata_dir = self.get_md_dir(dirs[0])
+        aura_dir = os.path.join(metadata_dir, "aura")
+        bundle_dir = os.path.join(aura_dir, file_name)
         e = extension
         if e == "cmp" or e == "app" or e == "intf" or e == "evt":
             fn, ex = os.path.splitext(file_name)
-            os.mkdir(os.path.join(working_dir, file_name))
-            os.chdir(fn)
-            working_dir = os.getcwd()
+            os.mkdir(os.path.join(bundle_dir))
 
-        app = open(file_name + "." + extension, "wb")
+        file_path = os.path.join(bundle_dir, file_name + "." + extension)
+        app = open(file_path, "wb")
         if int(sublime.version()) >= 3000:
             app.write(bytes(snippet, 'UTF-8'))
         else:  # To support Sublime Text 2
             app.write(bytes(snippet))
 
         app.close()
-        filename = os.path.join(working_dir, file_name + "." + extension)
-        self.window.open_file(filename)
-        cmd = 'push -f="' + filename + '"'
+        self.window.open_file(file_path)
+        cmd = 'push -f="' + file_path + '"'
         self.window.run_command(
             'exec',
             {'cmd': ["force", "aura", cmd]})
@@ -456,19 +461,14 @@ class Helper(sublime_plugin.WindowCommand):
 
     def make_class_file(self, file_name, dirs):
         """Sample doc string."""
-        working_dir = self.get_md_child_name(dirs[0])
-        if working_dir == "":
-            working_dir = Helper.find_upstram_md(self, dirs[0])
+        metadata_dir = self.get_md_dir(dirs[0])
 
-        print("Metadata dir: " + working_dir)
-        classes_dir = os.path.join(working_dir, "classes")
+        classes_dir = os.path.join(metadata_dir, "classes")
         if not os.path.isdir(classes_dir):
             os.mkdir(classes_dir)
 
         cls_file_path = os.path.join(classes_dir, file_name + ".cls")
         xml_file_path = cls_file_path + "-meta.xml"
-        print("cls_file_path: " + cls_file_path)
-        print("xml_file_path: " + xml_file_path)
         if os.path.exists(cls_file_path):
             sublime.error_message("The class " +
                                   file_name +
