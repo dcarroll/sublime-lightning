@@ -556,7 +556,7 @@ class Helper(sublime_plugin.WindowCommand):
             page.write(bytes(page_snippet))
 
         xml = open(xml_file_path, "wb")
-        xml_snippet = self.get_page_xml_snippet("file_name")
+        xml_snippet = self.get_page_xml_snippet(file_name)
         if int(sublime.version()) >= 3000:
             xml.write(bytes(xml_snippet, 'UTF-8'))
         else:  # To support Sublime Text 2
