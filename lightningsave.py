@@ -475,10 +475,9 @@ class Helper(sublime_plugin.WindowCommand):
         cls.close()
 
         self.window.open_file(cls_file_path)
-        cmd = 'push -f ' + cls_file_path
         self.window.run_command(
             'exec',
-            {'cmd': ["force", cmd]})
+            {'cmd': ["force", "push", "-f", cls_file_path]})
 
         return cls
 
