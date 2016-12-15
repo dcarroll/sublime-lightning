@@ -521,13 +521,25 @@ class Helper(sublime_plugin.WindowCommand):
             os.mkdir(classes_dir)
 
         cls_file_path = os.path.join(classes_dir, file_name + ".cls")
-        xml_file_path = cls_file_path + "-meta.xml"
+        # xml_file_path = cls_file_path + "-meta.xml"
         if os.path.exists(cls_file_path):
             sublime.error_message("The class " +
                                   file_name +
                                   "already exists.")
             return
 
+        self.window.run_command(
+            'exec',
+            {'cmd': ["force",
+             "create", "-w", "apexcode", "-n", file_name]})
+
+        self.window.run_command(
+            'exec',
+            {'cmd': ["force", "fetch", "-t",
+                     "ApexCode", "-n", file_name, "-unpack"],
+             'working_dir': metadata_dir})
+
+        """
         cls = open(cls_file_path, "wb")
         cls_snippet = "public with sharing class " + file_name + " {"
         cls_snippet = cls_snippet + "\n\n}"
@@ -552,6 +564,7 @@ class Helper(sublime_plugin.WindowCommand):
             {'cmd': ["force", "push", "-f", cls_file_path]})
 
         return cls
+        """
 
     def make_page_file(self, file_name, dirs):
         """Sample doc string."""
