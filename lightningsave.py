@@ -332,7 +332,7 @@ class Helper(sublime_plugin.WindowCommand):
                 if str(m) == "None":
                     sublime.message_dialog(
                         "There are no instances of " + metaname
-                        + "in this org.")
+                        + " in this org.")
                     return
 
                 for mm in m:
