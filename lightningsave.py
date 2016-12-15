@@ -516,6 +516,22 @@ class Helper(sublime_plugin.WindowCommand):
             else:
                 self.find_upstram_md(os.path.dirname(root))
 
+    def do_quick_create(self, file_name, type, title_case_type, metadata_dir):
+        res, err = Popen(['force', 'create',
+                          '-w', type,
+                          '-n', file_name],
+                         stdout=PIPE,
+                         stderr=PIPE).communicate()
+        if len(err) != 0:
+            sublime.error_message(str(err))
+
+        else:
+            self.window.run_command('exec',
+                                    {'cmd': ["force", "fetch",
+                                             "-t", title_case_type,
+                                             "-n", file_name, "-unpack"],
+                                     'working_dir': metadata_dir})
+
     def make_class_file(self, file_name, dirs):
         """Sample doc string."""
         metadata_dir = self.get_md_dir(dirs[0])
@@ -533,11 +549,12 @@ class Helper(sublime_plugin.WindowCommand):
                                   "already exists.")
             return
 
-        sts = subprocess.call("force create -w apexclass -n " + file_name,
-                              shell=True)
-        if sts == 0:
-            sts = subprocess.call("force fetch -t ApexClass -n " + file_name,
-                                  shell=True)
+        self.do_quick_create(
+            self,
+            file_name,
+            "apexclass",
+            "ApexClass",
+            metadata_dir)
 
     def make_page_file(self, file_name, dirs):
         """Sample doc string."""
@@ -556,23 +573,12 @@ class Helper(sublime_plugin.WindowCommand):
                                   "already exists.")
             return
 
-        res, err = Popen(['force', 'create',
-                          '-w', 'visualforce',
-                          '-n', file_name],
-                         stdout=PIPE,
-                         stderr=PIPE).communicate()
-        if len(err) != 0:
-            sublime.error_message(str(err))
-
-        else:
-            self.window.run_command('exec',
-                                    {'cmd': ["force", "fetch",
-                                             "-t", "ApexPage",
-                                             "-n", file_name, "-unpack"],
-                                     'working_dir': metadata_dir})
-
-        # sts = subprocess.call("force fetch -t ApexPage -n " + file_name,
-        # shell=True)
+        self.do_quick_create(
+            self,
+            file_name,
+            "visualforce",
+            "ApexPage",
+            metadata_dir)
 
     def make_vf_file(self, file_name, dirs):
         """Sample doc string."""
