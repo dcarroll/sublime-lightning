@@ -565,11 +565,11 @@ class Helper(sublime_plugin.WindowCommand):
             sublime.error_message(str(err))
 
         else:
-            res, err = Popen(['force', 'fetch',
-                              '-t', 'ApexPage',
-                              '-n', file_name],
-                             stdout=PIPE,
-                             stderr=PIPE).communicate()
+            self.window.run_command('exec',
+                                    {'cmd': ["force", "fetch",
+                                             "-t", self.type,
+                                             "-n", file_name, "-unpack"],
+                                     'working_dir': metadata_dir})
 
         # sts = subprocess.call("force fetch -t ApexPage -n " + file_name,
         # shell=True)
