@@ -560,8 +560,9 @@ class Helper(sublime_plugin.WindowCommand):
                                      '-w',
                                      'visualforce',
                                      '-n',
-                                     file_name]).communicate()
-
+                                     'testing'],
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE).communicate()
         print("res: " + str(res) + " try to fetch?")
         print("err: " + str(err))
         # if sts == 0:
