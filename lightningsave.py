@@ -765,7 +765,7 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
 
     def run(self, dirs):
         """Sample doc string."""
-        if (Helper(self.window).meets_forcecli_version(self, "0.22.62")):
+        if (Helper(self.window).meets_forcecli_version("0.22.62")):
             self.dirs = dirs
             self.window.show_input_panel("Class Name:",
                                          "", self.on_done, None, None)
@@ -790,7 +790,7 @@ class VisualforceNewPageCommand(sublime_plugin.WindowCommand):
 
     def run(self, dirs):
         """Sample doc string."""
-        if (Helper(self.window).meets_forcecli_version(self, "0.22.62")):
+        if (Helper(self.window).meets_forcecli_version("0.22.62")):
             self.dirs = dirs
             self.window.show_input_panel("Page Name:",
                                          "", self.on_done, None, None)
