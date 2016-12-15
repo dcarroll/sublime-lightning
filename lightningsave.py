@@ -562,7 +562,7 @@ class Helper(sublime_plugin.WindowCommand):
                          stdout=PIPE,
                          stderr=PIPE).communicate()
         if err != "None":
-            sublime.error_message(err)
+            sublime.error_message(str(err))
         else:
             res, err = Popen(['force', 'fetch',
                               '-t', 'ApexPage',
