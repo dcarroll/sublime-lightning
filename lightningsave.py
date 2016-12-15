@@ -550,7 +550,6 @@ class Helper(sublime_plugin.WindowCommand):
             return
 
         self.do_quick_create(
-            self,
             file_name,
             "apexclass",
             "ApexClass",
@@ -574,7 +573,6 @@ class Helper(sublime_plugin.WindowCommand):
             return
 
         self.do_quick_create(
-            self,
             file_name,
             "visualforce",
             "ApexPage",
