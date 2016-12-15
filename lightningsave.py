@@ -329,8 +329,7 @@ class Helper(sublime_plugin.WindowCommand):
         else:
             try:
                 m = json.loads(result.decode("utf-8"))
-                print("M: " + str(m))
-                if len(m) == 0:
+                if str(m) == "None":
                     sublime.message_dialog(
                         "There are no instances of " + metaname
                         + "in this org.")
