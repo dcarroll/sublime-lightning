@@ -405,6 +405,11 @@ class Helper(sublime_plugin.WindowCommand):
     def show_bundle_list(self, activeDir):
         """Sample doc string."""
         self.messages = []
+        working_dir = self.get_md_dir(activeDir)
+        if working_dir == "not found":
+            self.open_selected_bundle(-1)
+            return
+
         self.activeDir = activeDir
         if Helper.meets_forcecli_version(self, "0.22.36"):
             print("Using -t")
