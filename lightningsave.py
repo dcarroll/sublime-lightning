@@ -496,8 +496,10 @@ class Helper(sublime_plugin.WindowCommand):
         return app
 
     def find_upstram_md(self, start_dir):
+        print("start_dir: " + start_dir)
         for root, dirss, files in Helper.walk_up(self, start_dir):
             print("Root: " + root)
+            print("Dirname for root: " + os.path.dirname(root))
             print(str(dirss))
             if "metadata" in dirss:
                 working_dir = os.path.join(root, "metadata")
