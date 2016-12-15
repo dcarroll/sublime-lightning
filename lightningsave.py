@@ -509,7 +509,7 @@ class Helper(sublime_plugin.WindowCommand):
                 working_dir = os.path.join(root, "src")
                 print("Found src above: " + working_dir)
                 return working_dir
-            elif root == start_dir:
+            elif os.path.dirname(root) == start_dir:
                 print("Not found root and start_dir are the same.")
                 return "not found"
             else:
