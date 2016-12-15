@@ -512,7 +512,7 @@ class Helper(sublime_plugin.WindowCommand):
             elif root == start_dir:
                 return "not found"
             else:
-                self.find_upstram_md(os.path.dirname(root))
+                self.find_upstram_md(root)
 
     def make_class_file(self, file_name, dirs):
         """Sample doc string."""
