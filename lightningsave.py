@@ -510,9 +510,10 @@ class Helper(sublime_plugin.WindowCommand):
                 print("Found src above: " + working_dir)
                 return working_dir
             elif root == start_dir:
+                print("Not found root and start_dir are the same.")
                 return "not found"
             else:
-                self.find_upstram_md(root)
+                self.find_upstram_md(os.path.dirname(root))
 
     def make_class_file(self, file_name, dirs):
         """Sample doc string."""
@@ -631,7 +632,7 @@ class Helper(sublime_plugin.WindowCommand):
             else:
                 nondirs.append(name)
 
-        yield os.path.dirname(bottom), dirs, nondirs
+        yield bottom, dirs, nondirs
 
         new_path = os.path.realpath(os.path.join(bottom, '..'))
 
