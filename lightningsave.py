@@ -567,7 +567,7 @@ class Helper(sublime_plugin.WindowCommand):
         else:
             self.window.run_command('exec',
                                     {'cmd': ["force", "fetch",
-                                             "-t", self.type,
+                                             "-t", "ApexPage",
                                              "-n", file_name, "-unpack"],
                                      'working_dir': metadata_dir})
 
