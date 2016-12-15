@@ -529,18 +529,6 @@ class Helper(sublime_plugin.WindowCommand):
             return
 
         sts = subprocess.call("force create -w apexclass -n " + file_name, shell=True)
-
-        """self.window.run_command(
-            'exec',
-            {'cmd': ["force",
-             "create", "-w", "apexclass", "-n", file_name]})
-
-        self.window.run_command(
-            'exec',
-            {'cmd': ["force", "fetch", "-t",
-                     "ApexClass", "-n", file_name, "-unpack"],
-             'working_dir': metadata_dir})
-        """
         if sts == 0:
             sts = subprocess.call("force fetch -t ApexClass -n " + file_name, shell=True)
 
@@ -581,13 +569,19 @@ class Helper(sublime_plugin.WindowCommand):
             os.mkdir(pages_dir)
 
         page_file_path = os.path.join(pages_dir, file_name + ".cls")
-        xml_file_path = page_file_path + "-meta.xml"
+        # xml_file_path = page_file_path + "-meta.xml"
         if os.path.exists(page_file_path):
             sublime.error_message("The class " +
                                   file_name +
                                   "already exists.")
             return
 
+        sts = subprocess.call("force create -w visualforce -n " + file_name, shell=True)
+        if sts == 0:
+            sts = subprocess.call("force fetch -t ApexPage -n " + file_name, shell=True)
+
+
+        """
         page = open(page_file_path, "wb")
         page_snippet = "<apex:page>\n\n</apex:page>"
         if int(sublime.version()) >= 3000:
@@ -611,6 +605,7 @@ class Helper(sublime_plugin.WindowCommand):
             {'cmd': ["force", "push", "-f", page_file_path]})
 
         return page
+        """
 
     def make_vf_file(self, file_name, dirs):
         """Sample doc string."""
