@@ -1,5 +1,6 @@
 """Example Google style docstrings."""
 from . import auralint
+from subprocess import PIPE, Popen
 import json
 import os
 import shlex
@@ -555,17 +556,20 @@ class Helper(sublime_plugin.WindowCommand):
                                   "already exists.")
             return
 
-        res, err = subprocess.Popen(['force',
-                                     'create',
-                                     '-w',
-                                     'visualforce',
-                                     '-n',
-                                     'testing'],
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE).communicate()
-        print("res: " + str(res) + " try to fetch?")
-        print("err: " + str(err))
-        # if sts == 0:
+        res, err = Popen(['force', 'create',
+                          '-w', 'visualforce',
+                          '-n', file_name],
+                         stdout=PIPE,
+                         stderr=PIPE).communicate()
+        if err != "None":
+            sublime.error_message(err)
+        else:
+            res, err = Popen(['force', 'fetch',
+                              '-t', 'ApexPage',
+                              '-n', file_name],
+                             stdout=PIPE,
+                             stderr=PIPE).communicate()
+
         # sts = subprocess.call("force fetch -t ApexPage -n " + file_name,
         # shell=True)
 
