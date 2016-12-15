@@ -772,7 +772,7 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
             pass
         else:
             sublime.message_dialog("This feature requires at least version"
-                                   "62 of the Force")
+                                   " 62 of the Force")
 
     def on_done(self, file_name):
         """Sample doc string."""
@@ -797,7 +797,7 @@ class VisualforceNewPageCommand(sublime_plugin.WindowCommand):
             pass
         else:
             sublime.message_dialog("This feature requires at least version"
-                                   "62 of the Force")
+                                   " 62 of the Force")
 
     def on_done(self, file_name):
         """Sample doc string."""
