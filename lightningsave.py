@@ -536,7 +536,7 @@ class Helper(sublime_plugin.WindowCommand):
         self.window.run_command(
             'exec',
             {'cmd': ["force", "fetch", "-t",
-                     "ApexCode", "-n", file_name, "-unpack"],
+                     "ApexClass", "-n", file_name, "-unpack"],
              'working_dir': metadata_dir})
 
         """
