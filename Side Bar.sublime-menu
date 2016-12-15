@@ -6,7 +6,7 @@
 		{ "caption": "Salesforce Login", "command": "login", "args":{} },
 		{ "caption": "_", "login1end": "login1_command" },
 		{ "caption": "Save", "command": "lightning_save_bundle", "args": {"dirs":[]} },
-		{ "caption": "Fetch", "command": "fetch", "args": {} },
+		{ "caption": "Fetch", "command": "fetch", "args": {"dirs":[]} },
 		{ "caption": "Delete", "children" :
 		[
 			{ "caption": "Lightning Defintion", "command": "lightning_delete", "args": {"files": []} },

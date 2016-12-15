@@ -245,9 +245,9 @@ class Helper(sublime_plugin.WindowCommand):
             return
 
         if (index == 0):
-            self.do_fetch("all", self.window.folders()[0])
+            self.do_fetch("all", self.activeDir)
         else:
-            self.do_fetch(self.messages[index][2], self.window.folders()[0])
+            self.do_fetch(self.messages[index][2], self.activeDir)
         return
 
     def open_selected_metadata(self, index):
@@ -402,9 +402,10 @@ class Helper(sublime_plugin.WindowCommand):
             except:
                 return
 
-    def show_bundle_list(self):
+    def show_bundle_list(self, activeDir):
         """Sample doc string."""
         self.messages = []
+        self.activeDir = activeDir
         if Helper.meets_forcecli_version(self, "0.22.36"):
             print("Using -t")
             p = popen_force_cli(["query", "Select Id,DeveloperName, "
@@ -739,10 +740,10 @@ class FetchPackageCommand(sublime_plugin.WindowCommand):
 class FetchCommand(sublime_plugin.WindowCommand):
     """Sample doc string."""
 
-    def run(self):
+    def run(self, dirs):
         """Sample doc string."""
         print("Running FetchLightningCommand")
-        Helper(self.window).show_bundle_list()
+        Helper(self.window).show_bundle_list(dirs[0])
 
     # def do_fetch(self, bundle):
     #    self.dirs = self.window.folders()
