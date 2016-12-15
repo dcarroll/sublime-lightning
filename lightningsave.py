@@ -562,9 +562,8 @@ class Helper(sublime_plugin.WindowCommand):
                                      '-n',
                                      file_name]).communicate()
 
-        # sts = subprocess.call("force create -w visualforce -n " + file_name,
-        # shell=True)
         print("res: " + str(res) + " try to fetch?")
+        print("err: " + str(err))
         # if sts == 0:
         # sts = subprocess.call("force fetch -t ApexPage -n " + file_name,
         # shell=True)
