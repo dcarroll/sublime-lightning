@@ -531,7 +531,7 @@ class Helper(sublime_plugin.WindowCommand):
         self.window.run_command(
             'exec',
             {'cmd': ["force",
-             "create", "-w", "apexcode", "-n", file_name]})
+             "create", "-w", "apexclass", "-n", file_name]})
 
         self.window.run_command(
             'exec',
