@@ -555,12 +555,19 @@ class Helper(sublime_plugin.WindowCommand):
                                   "already exists.")
             return
 
-        sts = subprocess.call("force create -w visualforce -n " + file_name,
-                              shell=True)
-        print("sts: " + str(sts) + " try to fetch?")
-        if sts == 0:
-            sts = subprocess.call("force fetch -t ApexPage -n " + file_name,
-                                  shell=True)
+        res, err = subprocess.Popen(['force',
+                                     'create',
+                                     '-w',
+                                     'visualforce',
+                                     '-n',
+                                     file_name]).communicate()
+
+        # sts = subprocess.call("force create -w visualforce -n " + file_name,
+        # shell=True)
+        print("res: " + str(res) + " try to fetch?")
+        # if sts == 0:
+        # sts = subprocess.call("force fetch -t ApexPage -n " + file_name,
+        # shell=True)
 
     def make_vf_file(self, file_name, dirs):
         """Sample doc string."""
