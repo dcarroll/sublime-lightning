@@ -528,7 +528,9 @@ class Helper(sublime_plugin.WindowCommand):
                                   "already exists.")
             return
 
-        self.window.run_command(
+        sts = subprocess.call("force create -w apexclass -n " + file_name)
+
+        """self.window.run_command(
             'exec',
             {'cmd': ["force",
              "create", "-w", "apexclass", "-n", file_name]})
@@ -538,6 +540,9 @@ class Helper(sublime_plugin.WindowCommand):
             {'cmd': ["force", "fetch", "-t",
                      "ApexClass", "-n", file_name, "-unpack"],
              'working_dir': metadata_dir})
+        """
+        if sts == 0:
+            sts = subprocess.call("force fetch -t ApexClass -n " + file_name)
 
         """
         cls = open(cls_file_path, "wb")
