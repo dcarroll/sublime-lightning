@@ -255,7 +255,8 @@ class Helper(sublime_plugin.WindowCommand):
         if (index == -1):
             return
 
-        self.show_metadata_instance_list(self.messages[index][0], self.dirs)
+        self.show_metadata_instance_list(self.messages[index][0],
+                                         self.activeDir)
         return
 
     def fetch_selected_metadata(self, index):
@@ -268,7 +269,7 @@ class Helper(sublime_plugin.WindowCommand):
         self.window.run_command(
             'exec',
             {'cmd': ["force", "fetch", "-t", self.type, "-n", item, "-unpack"],
-             'working_dir': self.dirs[0]})
+             'working_dir': self.activeDir})
         return
 
     def meets_forcecli_version(self, minversion):
@@ -315,10 +316,10 @@ class Helper(sublime_plugin.WindowCommand):
                                   "symlink to it in Sublime’s default path.")
         return ver.replace("\n", "")
 
-    def show_metadata_instance_list(self, metaname, dirs):
+    def show_metadata_instance_list(self, metaname, activeDir):
         """Sample doc string."""
         self.type = metaname
-        self.dirs = dirs
+        self.activeDir = activeDir
         self.messages = []
         p = popen_force_cli(["describe", "-t", "metadata", "-n",
                             quote(metaname), "-j"])
@@ -353,10 +354,14 @@ class Helper(sublime_plugin.WindowCommand):
             {'cmd': ["open", url]}
         )
 
-    def show_metadata_type_list(self, dirs):
+    def show_metadata_type_list(self, activeDir):
         """Sample doc string."""
-        print(self)
-        self.dirs = dirs
+        working_dir = self.get_md_dir(activeDir)
+        if working_dir == "not found":
+            self.open_selected_bundle(-1)
+            return
+
+        self.activeDir = activeDir
         self.messages = []
         p = popen_force_cli(["describe", "-t", "metadata", "-j"])
         result, err = p.communicate()
@@ -722,7 +727,7 @@ class FetchMetaCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         """Sample doc string."""
         print("Running FetchMetaCommand")
-        Helper(self.window).show_metadata_type_list(dirs)
+        Helper(self.window).show_metadata_type_list(dirs[0])
 
     def is_visible(self):
         """Sample doc string."""
