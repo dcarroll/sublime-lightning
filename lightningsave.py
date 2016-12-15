@@ -765,10 +765,14 @@ class ApexNewClassCommand(sublime_plugin.WindowCommand):
 
     def run(self, dirs):
         """Sample doc string."""
-        self.dirs = dirs
-        self.window.show_input_panel("Class Name:",
-                                     "", self.on_done, None, None)
-        pass
+        if (Helper(self.window).meets_forcecli_version(self, "0.22.62")):
+            self.dirs = dirs
+            self.window.show_input_panel("Class Name:",
+                                         "", self.on_done, None, None)
+            pass
+        else:
+            sublime.message_dialog("This feature requires at least version"
+                                   "62 of the Force")
 
     def on_done(self, file_name):
         """Sample doc string."""
@@ -786,10 +790,14 @@ class VisualforceNewPageCommand(sublime_plugin.WindowCommand):
 
     def run(self, dirs):
         """Sample doc string."""
-        self.dirs = dirs
-        self.window.show_input_panel("Page Name:",
-                                     "", self.on_done, None, None)
-        pass
+        if (Helper(self.window).meets_forcecli_version(self, "0.22.62")):
+            self.dirs = dirs
+            self.window.show_input_panel("Page Name:",
+                                         "", self.on_done, None, None)
+            pass
+        else:
+            sublime.message_dialog("This feature requires at least version"
+                                   "62 of the Force")
 
     def on_done(self, file_name):
         """Sample doc string."""
@@ -799,9 +807,7 @@ class VisualforceNewPageCommand(sublime_plugin.WindowCommand):
 
     def is_visible(self, dirs):
         """Sample doc string."""
-        ver = Helper(self.window).meets_forcecli_version(self, "0.22.62")
-
-        return (Helper(self.window).bundle_op_is_visible(dirs) and ver)
+        return Helper(self.window).bundle_op_is_visible(dirs)
 
 
 class LightningNewAppCommand(sublime_plugin.WindowCommand):
