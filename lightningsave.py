@@ -440,6 +440,12 @@ class Helper(sublime_plugin.WindowCommand):
         else:
             try:
                 m = json.loads(result.decode("utf-8"))
+                if len(m) == 0:
+                    sublime.message_dialog(
+                        "There aren't any lightning components "
+                        " in this org.")
+                    return
+
                 print("m: " + str(m))
                 self.messages.append(["All Bundles", "*", "Every Bundle",
                                       "All the lightning bundles "
