@@ -799,7 +799,9 @@ class VisualforceNewPageCommand(sublime_plugin.WindowCommand):
 
     def is_visible(self, dirs):
         """Sample doc string."""
-        return Helper(self.window).bundle_op_is_visible(dirs)
+        ver = Helper(self.window).meets_forcecli_version(self, "0.22.62")
+
+        return (Helper(self.window).bundle_op_is_visible(dirs) and ver)
 
 
 class LightningNewAppCommand(sublime_plugin.WindowCommand):
