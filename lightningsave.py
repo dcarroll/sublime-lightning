@@ -498,6 +498,7 @@ class Helper(sublime_plugin.WindowCommand):
     def find_upstram_md(self, start_dir):
         for root, dirss, files in Helper.walk_up(self, start_dir):
             print("Root: " + root)
+            print(str(dirss))
             if "metadata" in dirss:
                 working_dir = os.path.join(root, "metadata")
                 print("Found metadata above: " + working_dir)
@@ -528,36 +529,11 @@ class Helper(sublime_plugin.WindowCommand):
                                   "already exists.")
             return
 
-        sts = subprocess.call("force create -w apexclass -n " + file_name, shell=True)
+        sts = subprocess.call("force create -w apexclass -n " + file_name,
+                              shell=True)
         if sts == 0:
-            sts = subprocess.call("force fetch -t ApexClass -n " + file_name, shell=True)
-
-        """
-        cls = open(cls_file_path, "wb")
-        cls_snippet = "public with sharing class " + file_name + " {"
-        cls_snippet = cls_snippet + "\n\n}"
-        if int(sublime.version()) >= 3000:
-            cls.write(bytes(cls_snippet, 'UTF-8'))
-        else:  # To support Sublime Text 2
-            cls.write(bytes(cls_snippet))
-
-        xml = open(xml_file_path, "wb")
-        xml_snippet = self.get_xml_snippet("ApexClass")
-        if int(sublime.version()) >= 3000:
-            xml.write(bytes(xml_snippet, 'UTF-8'))
-        else:  # To support Sublime Text 2
-            xml.write(bytes(xml_snippet))
-
-        xml.close()
-        cls.close()
-
-        self.window.open_file(cls_file_path)
-        self.window.run_command(
-            'exec',
-            {'cmd': ["force", "push", "-f", cls_file_path]})
-
-        return cls
-        """
+            sts = subprocess.call("force fetch -t ApexClass -n " + file_name,
+                                  shell=True)
 
     def make_page_file(self, file_name, dirs):
         """Sample doc string."""
@@ -576,36 +552,11 @@ class Helper(sublime_plugin.WindowCommand):
                                   "already exists.")
             return
 
-        sts = subprocess.call("force create -w visualforce -n " + file_name, shell=True)
+        sts = subprocess.call("force create -w visualforce -n " + file_name,
+                              shell=True)
         if sts == 0:
-            sts = subprocess.call("force fetch -t ApexPage -n " + file_name, shell=True)
-
-
-        """
-        page = open(page_file_path, "wb")
-        page_snippet = "<apex:page>\n\n</apex:page>"
-        if int(sublime.version()) >= 3000:
-            page.write(bytes(page_snippet, 'UTF-8'))
-        else:  # To support Sublime Text 2
-            page.write(bytes(page_snippet))
-
-        xml = open(xml_file_path, "wb")
-        xml_snippet = self.get_page_xml_snippet(file_name)
-        if int(sublime.version()) >= 3000:
-            xml.write(bytes(xml_snippet, 'UTF-8'))
-        else:  # To support Sublime Text 2
-            xml.write(bytes(xml_snippet))
-
-        xml.close()
-        page.close()
-
-        self.window.open_file(page_file_path)
-        self.window.run_command(
-            'exec',
-            {'cmd': ["force", "push", "-f", page_file_path]})
-
-        return page
-        """
+            sts = subprocess.call("force fetch -t ApexPage -n " + file_name,
+                                  shell=True)
 
     def make_vf_file(self, file_name, dirs):
         """Sample doc string."""
