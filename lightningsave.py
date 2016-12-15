@@ -631,7 +631,7 @@ class Helper(sublime_plugin.WindowCommand):
             else:
                 nondirs.append(name)
 
-        yield bottom, dirs, nondirs
+        yield os.path.dirname(bottom), dirs, nondirs
 
         new_path = os.path.realpath(os.path.join(bottom, '..'))
 
