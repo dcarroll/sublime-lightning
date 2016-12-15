@@ -329,6 +329,12 @@ class Helper(sublime_plugin.WindowCommand):
         else:
             try:
                 m = json.loads(result.decode("utf-8"))
+                if len(m) == 0:
+                    sublime.message_dialog(
+                        "There are no instances of " + metaname
+                        + "in this org.")
+                    return
+
                 for mm in m:
                     x = [mm['FullName'], "Modified by: " +
                          mm['LastModifiedByName'],
