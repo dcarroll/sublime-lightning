@@ -36,18 +36,13 @@
 			{ "caption": "-", "loginstart": "login_command" },
 			{ "caption": "Salesforce Login", "command": "login", "args":{} },
 			{ "caption": "-", "loginend": "login_command" },
+			{ "caption": "Fetch", "command": "fetch_meta", "args": {"dirs":[]} },
 			{ "caption": "Create", "children": 
 				[
 					{ "caption": "Apex Class", "command": "apex_new_class", "args": {"dirs": []} },
 					{ "caption": "Visualforce Page", "command": "visualforce_new_page", "args": {"dirs": []} },
 				]
 			},
-			{ "caption": "Fetch", "children":
-				[
-					{ "caption": "Metadata", "command": "fetch_meta", "args": {"dirs":[]} },
-					{ "caption": "Package", "command": "fetch_package", "args": {} }
-				]
-			}
 		]
 	},
 	{ "caption": "-", "lightningend": "lightning_commands" }
