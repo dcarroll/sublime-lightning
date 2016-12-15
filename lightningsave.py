@@ -439,9 +439,8 @@ class Helper(sublime_plugin.WindowCommand):
             sublime.error_message(err.decode("utf-8"))
         else:
             try:
-                print("Here")
                 m = json.loads(result.decode("utf-8"))
-                print("Then Here")
+                print("m: " + str(m))
                 self.messages.append(["All Bundles", "*", "Every Bundle",
                                       "All the lightning bundles "
                                       "in your org!"])
