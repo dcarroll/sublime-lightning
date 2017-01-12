@@ -1154,7 +1154,7 @@ class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
 
         hasfile = helper.has_this_file(
             dirs[0],
-            os.path.basename(dirs[0]) + "Documentation.js")
+            os.path.basename(dirs[0]) + "Documentation.auradoc")
         isvalidbundle = helper.is_bundle_type(dirs, "app") or \
             helper.is_bundle_type(dirs, "cmp")
 
