@@ -465,7 +465,8 @@ class Helper(sublime_plugin.WindowCommand):
                 print("error: occurred")
                 return
 
-    def make_bundle_file(self, file_name, extension, snippet, dirs):
+    def make_bundle_file(self, file_name,
+                         bundle_type, extension, snippet, dirs):
         """Sample doc string."""
         metadata_dir = self.get_md_dir(dirs[0])
         if metadata_dir == "not found":
@@ -480,7 +481,8 @@ class Helper(sublime_plugin.WindowCommand):
             fn, ex = os.path.splitext(file_name)
             os.mkdir(os.path.join(bundle_dir))
 
-        file_path = os.path.join(bundle_dir, file_name + "." + extension)
+        file_path = os.path.join(bundle_dir,
+                                 file_name + bundle_type + "." + extension)
         app = open(file_path, "w")
         print("Writing " + snippet + " \nto: " + file_path)
         if int(sublime.version()) >= 3000:
@@ -824,6 +826,7 @@ class LightningNewAppCommand(sublime_plugin.WindowCommand):
         """Sample doc string."""
         Helper(self.window).make_bundle_file(
             file_name,
+            "",
             "app",
             "<aura:application>\n\n</aura:application>",
             self.dirs)
@@ -852,6 +855,7 @@ class LightningNewComponentCommand(sublime_plugin.WindowCommand):
         """Sample doc string."""
         Helper(self.window).make_bundle_file(
             file_name,
+            "",
             "cmp",
             "<aura:component>\n\n</aura:component>",
             self.dirs)
@@ -880,6 +884,7 @@ class LightningNewEventCommand(sublime_plugin.WindowCommand):
         """Sample doc string."""
         Helper(self.window).make_bundle_file(
             file_name,
+            "",
             "evt",
             '<aura:event type="APPLICATION">\n\n</aura:event>',
             self.dirs)
@@ -908,6 +913,7 @@ class LightningNewInterfaceCommand(sublime_plugin.WindowCommand):
         """Sample doc string."""
         Helper(self.window).make_bundle_file(
             file_name,
+            "",
             "intf",
             '<aura:interface description="Interface template">'
             '\n\t<aura:attribute name="example" type="String" default="" '
@@ -954,9 +960,10 @@ class LightningNewControllerCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         """Sample doc string."""
         self.dirs = dirs
-        name = os.path.basename(dirs[0]) + "Controller"
+        name = os.path.basename(dirs[0])
         Helper(self.window).make_bundle_file(
             name,
+            "Controller",
             "js",
             "({\n"
             "\tmyAction: function(component, event, helper) {\n"
@@ -988,6 +995,7 @@ class LightningNewSvgCommand(sublime_plugin.WindowCommand):
         name = os.path.basename(dirs[0])
         Helper(self.window).make_bundle_file(
             name,
+            "",
             "svg",
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n'
             '<svg width="120px" height="120px" viewBox="0 0 120 120" '
@@ -1032,6 +1040,7 @@ class LightningNewDesignCommand(sublime_plugin.WindowCommand):
         name = os.path.basename(dirs[0])
         Helper(self.window).make_bundle_file(
             name,
+            "",
             "design",
             '<design:component>\n'
             '</design:component>',
@@ -1057,9 +1066,10 @@ class LightningNewRendererCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         """Sample doc string."""
         self.dirs = dirs
-        name = os.path.basename(dirs[0]) + "Renderer"
+        name = os.path.basename(dirs[0])
         Helper(self.window).make_bundle_file(
             name,
+            "Renderer",
             "js",
             "({\n"
             "\trender: function(component, helper) {\n"
@@ -1089,9 +1099,10 @@ class LightningNewHelperCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         """Sample doc string."""
         self.dirs = dirs
-        name = os.path.basename(dirs[0]) + "Helper"
+        name = os.path.basename(dirs[0])
         Helper(self.window).make_bundle_file(
             name,
+            "Helper",
             "js",
             "({\n"
             "\thelperMethod: function() {\n"
@@ -1121,9 +1132,10 @@ class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         """Sample doc string."""
         self.dirs = dirs
-        name = os.path.basename(dirs[0]) + "Documentation"
+        name = os.path.basename(dirs[0])
         Helper(self.window).make_bundle_file(
             name,
+            "Documentation",
             "auradoc",
             '<aura:documentation>\n'
             '\t<aura:description>Documentation</aura:description>\n'
@@ -1156,9 +1168,10 @@ class LightningNewStyleCommand(sublime_plugin.WindowCommand):
     def run(self, dirs):
         """Sample doc string."""
         self.dirs = dirs
-        name = os.path.basename(dirs[0]) + "Style"
+        name = os.path.basename(dirs[0])
         Helper(self.window).make_bundle_file(
             name,
+            "Style",
             "css",
             '.THIS.container {'
             '\twidth: 100%;\n'
