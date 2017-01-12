@@ -1151,7 +1151,7 @@ class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
-
+        print("looking for " + os.path.basename(dirs[0]) + "Documentation.auradoc")
         hasfile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Documentation.auradoc")
