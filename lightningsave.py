@@ -483,7 +483,7 @@ class Helper(sublime_plugin.WindowCommand):
 
         file_path = os.path.join(bundle_dir,
                                  file_name + bundle_type + "." + extension)
-        app = open(file_path, "w")
+        app = open(file_path, "wb")
         print("Writing " + snippet + " \nto: " + file_path)
         if int(sublime.version()) >= 3000:
             app.write(bytes(snippet, 'UTF-8'))
