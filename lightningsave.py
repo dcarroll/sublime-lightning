@@ -424,7 +424,7 @@ class Helper(sublime_plugin.WindowCommand):
 
         self.activeDir = activeDir
         if Helper.meets_forcecli_version(self, "0.22.36"):
-            print("Using --tooling")
+            print("Using --tooling and show list")
             p = popen_force_cli(["query", "Select Id,DeveloperName, "
                                  "MasterLabel, Description From "
                                  "AuraDefinitionBundle",
