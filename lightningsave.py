@@ -441,13 +441,13 @@ class Helper(sublime_plugin.WindowCommand):
                                  "AuraDefinitionBundle",
                                  "--format:json", "--tooling"])
         result, err = p.communicate()
-        if err:
-            errmessage = err.decode("utf-8")
-            if "Deprecated" in errmessage:
-                self.show_list(result.decode("utf-8"))
-            else:
-                sublime.error_message(err.decode("utf-8"))
-        else:
+        ## if err:
+           ## errmessage = err.decode("utf-8")
+            ## if "Deprecated" in errmessage:
+               ##  self.show_list(result.decode("utf-8"))
+            ## else:
+               ## sublime.error_message(err.decode("utf-8"))
+        ## else:
             m = result.decode("utf-8")
             self.show_list(m)
 
