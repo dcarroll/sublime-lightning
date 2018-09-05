@@ -434,7 +434,7 @@ class Helper(sublime_plugin.WindowCommand):
             p = popen_force_cli(["query", "Select Id,DeveloperName, "
                                  "MasterLabel, Description From "
                                  "AuraDefinitionBundle",
-                                 "--format:json"])
+                                 "--format:json", "--tooling"])
         result, err = p.communicate()
         if err:
             sublime.error_message(err.decode("utf-8"))
