@@ -428,7 +428,7 @@ class Helper(sublime_plugin.WindowCommand):
             p = popen_force_cli(["query", "Select Id,DeveloperName, "
                                  "MasterLabel, Description From "
                                  "AuraDefinitionBundle",
-                                 "--format:json", "--tooling"])
+                                 "--format:json"])
         else:
             print("NOT using -t")
             p = popen_force_cli(["query", "Select Id,DeveloperName, "
