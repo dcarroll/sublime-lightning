@@ -444,12 +444,12 @@ class Helper(sublime_plugin.WindowCommand):
         if err:
             errmessage = err.decode("utf-8")
             if "Deprecated" in errmessage:
-                self.show_list(self, result.decode("utf-8"))
+                self.show_list(result.decode("utf-8"))
             else:
                 sublime.error_message(err.decode("utf-8"))
         else:
-            m = json.loads(result.decode("utf-8"))
-            self.show_list(self, m)
+            m = result.decode("utf-8")
+            self.show_list(m)
 
     def show_list(self, data):
         try:
