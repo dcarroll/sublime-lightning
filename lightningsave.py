@@ -453,7 +453,6 @@ class Helper(sublime_plugin.WindowCommand):
         self.show_list(m)
 
     def show_list(self, data):
-        try:
             data = json.loads(data)
             if len(data) == 0:
                 sublime.message_dialog(
@@ -475,9 +474,6 @@ class Helper(sublime_plugin.WindowCommand):
             self.window.show_quick_panel(self.messages,
                                          self.open_selected_bundle,
                                          sublime.MONOSPACE_FONT)
-        except:
-            print("error: occurred")
-            return
 
     def make_bundle_file(self, file_name,
                          bundle_type, extension, snippet, dirs):
