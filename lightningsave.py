@@ -453,19 +453,19 @@ class Helper(sublime_plugin.WindowCommand):
         self.show_list(m)
 
     def show_list(self, data):
-            data = json.loads(data)
-            if len(data) == 0:
+            m = json.loads(data)
+            if len(m) == 0:
                 sublime.message_dialog(
                     "There aren't any lightning components "
                     " in this org.")
                 return
 
-            print("data: " + str(data))
+            print("data: " + str(m))
             self.messages.append(["All Bundles", "*", "Every Bundle",
                                   "All the lightning bundles "
                                   "in your org!"])
             print("And now here")
-            for mm in data:
+            for mm in m:
                 x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"],
                      mm["Description"]]
                 self.messages.append(x)
