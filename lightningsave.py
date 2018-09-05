@@ -251,9 +251,9 @@ class Helper(sublime_plugin.WindowCommand):
             return
 
         if (index == 0):
-            self.do_fetch("all", self.activeDir)
+            self.do_fetch("all", self.activedir)
         else:
-            self.do_fetch(self.messages[index][2], self.activeDir)
+            self.do_fetch(self.messages[index][2], self.activedir)
         return
 
     def open_selected_metadata(self, index):
@@ -262,7 +262,7 @@ class Helper(sublime_plugin.WindowCommand):
             return
 
         self.show_metadata_instance_list(self.messages[index][0],
-                                         self.activeDir)
+                                         self.activedir)
         return
 
     def fetch_selected_metadata(self, index):
@@ -275,7 +275,7 @@ class Helper(sublime_plugin.WindowCommand):
         self.window.run_command(
             'exec',
             {'cmd': ["force", "fetch", "-t", self.type, "-n", item, "-unpack"],
-             'working_dir': self.activeDir})
+             'working_dir': self.activedir})
         return
 
     def meets_forcecli_version(self, minversion):
@@ -449,6 +449,7 @@ class Helper(sublime_plugin.WindowCommand):
         # sublime.error_message(err.decode("utf-8"))
         # else:
         m = result.decode("utf-8")
+        print("Data " + m)
         self.show_list(m)
 
     def show_list(self, data):
