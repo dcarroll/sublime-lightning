@@ -1,13 +1,18 @@
 """Example Google style docstrings."""
-from . import auralint
-from subprocess import PIPE, Popen
+
 import json
 import os
 import shlex
 import subprocess
 
+from subprocess import PIPE, Popen
+
 import sublime
+
 import sublime_plugin
+
+from . import auralint
+
 
 from . import semver
 
@@ -106,12 +111,12 @@ class Helper(sublime_plugin.WindowCommand):
 
     def bundle_op_is_visible(self, dirs):
         """Sample doc string."""
-        cdPath = Helper(self.window).get_md_child_name(dirs[0])
-        isMetadata = os.path.basename(dirs[0]) in ["metadata", "src"]
-        isClasses = os.path.basename(dirs[0]) == "classes"
-        if cdPath == "":
-            cdPath = Helper(self.window).find_upstram_md(dirs[0])
-        if (cdPath != "") or isMetadata or isClasses:
+        cdpath = Helper(self.window).get_md_child_name(dirs[0])
+        ismetadata = os.path.basename(dirs[0]) in ["metadata", "src"]
+        isclasses = os.path.basename(dirs[0]) == "classes"
+        if cdpath == "":
+            cdpath = Helper(self.window).find_upstram_md(dirs[0])
+        if (cdpath != "") or ismetadata or isclasses:
             return True
 
     def file_op_is_visible(self, dirs):
@@ -317,10 +322,10 @@ class Helper(sublime_plugin.WindowCommand):
                                   "symlink to it in Sublime’s default path.")
         return ver.replace("\n", "")
 
-    def show_metadata_instance_list(self, metaname, activeDir):
+    def show_metadata_instance_list(self, metaname, activedir):
         """Sample doc string."""
         self.type = metaname
-        self.activeDir = activeDir
+        self.activedir = activedir
         self.messages = []
         p = popen_force_cli(["describe", "-t", "metadata", "-n",
                             quote(metaname), "-j"])
@@ -332,8 +337,8 @@ class Helper(sublime_plugin.WindowCommand):
                 m = json.loads(result.decode("utf-8"))
                 if str(m) == "None":
                     sublime.message_dialog(
-                        "There are no instances of " + metaname
-                        + " in this org.")
+                        "There are no instances of " + metaname +
+                        " in this org.")
                     return
 
                 for mm in m:
@@ -361,14 +366,14 @@ class Helper(sublime_plugin.WindowCommand):
             {'cmd': ["open", url]}
         )
 
-    def show_metadata_type_list(self, activeDir):
+    def show_metadata_type_list(self, activedir):
         """Sample doc string."""
-        working_dir = self.get_md_dir(activeDir)
+        working_dir = self.get_md_dir(activedir)
         if working_dir == "not found":
             self.open_selected_bundle(-1)
             return
 
-        self.activeDir = activeDir
+        self.activedir = activedir
         self.messages = []
         p = popen_force_cli(["describe", "-t", "metadata", "-j"])
         result, err = p.communicate()
@@ -414,15 +419,15 @@ class Helper(sublime_plugin.WindowCommand):
             except:
                 return
 
-    def show_bundle_list(self, activeDir):
+    def show_bundle_list(self, activedir):
         """Sample doc string."""
         self.messages = []
-        working_dir = self.get_md_dir(activeDir)
+        working_dir = self.get_md_dir(activedir)
         if working_dir == "not found":
             self.open_selected_bundle(-1)
             return
 
-        self.activeDir = activeDir
+        self.activedir = activedir
         if Helper.meets_forcecli_version(self, "0.22.36"):
             print("Using --tooling and show list")
             p = popen_force_cli(["query", "Select Id,DeveloperName, "
@@ -439,20 +444,19 @@ class Helper(sublime_plugin.WindowCommand):
         if err:
             errmessage = err.decode("utf-8")
             if "Deprecated" in errmessage:
-                show_list(self, result.decode("utf-8"))
+                self.show_list(self, result.decode("utf-8"))
             else:
                 sublime.error_message(err.decode("utf-8"))
         else:
             m = json.loads(result.decode("utf-8"))
-            show_list(self, m)
-
+            self.show_list(self, m)
 
     def show_list(self, data):
         try:
-            data = json.loads(result.decode("utf-8"))
+            data = json.loads(data)
             if len(data) == 0:
                 sublime.message_dialog(
-                "There aren't any lightning components "
+                    "There aren't any lightning components "
                     " in this org.")
                 return
 
@@ -473,7 +477,6 @@ class Helper(sublime_plugin.WindowCommand):
         except:
             print("error: occurred")
             return
-
 
     def make_bundle_file(self, file_name,
                          bundle_type, extension, snippet, dirs):
@@ -1161,7 +1164,8 @@ class LightningNewDocumentationCommand(sublime_plugin.WindowCommand):
         helper = Helper(self.window)
         if len(dirs) == 0:
             return False
-        print("looking for " + os.path.basename(dirs[0]) + "Documentation.auradoc")
+        print("looking for " + os.path.basename(dirs[0]) +
+              "Documentation.auradoc")
         hasfile = helper.has_this_file(
             dirs[0],
             os.path.basename(dirs[0]) + "Documentation.auradoc")
