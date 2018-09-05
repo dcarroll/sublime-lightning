@@ -67,7 +67,7 @@ def popen_force_cli(quoted_args):
     args.extend(quoted_args)
     return subprocess.Popen(args,
                             stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
+                            stderr=open(os.devnull, 'w'),
                             shell=IS_WINDOWS)
 
 
