@@ -437,33 +437,40 @@ class Helper(sublime_plugin.WindowCommand):
                                  "--format:json", "--tooling"])
         result, err = p.communicate()
         if err:
+            errmessage = err.decode("utf-8")
+            if "Deprecated" in errmessage:
             sublime.error_message(err.decode("utf-8"))
         else:
-            try:
-                m = json.loads(result.decode("utf-8"))
-                if len(m) == 0:
-                    sublime.message_dialog(
-                        "There aren't any lightning components "
-                        " in this org.")
-                    return
+            m = json.loads(result.decode("utf-8"))
 
-                print("m: " + str(m))
-                self.messages.append(["All Bundles", "*", "Every Bundle",
-                                      "All the lightning bundles "
-                                      "in your org!"])
-                print("And now here")
-                for mm in m:
-                    x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"],
-                         mm["Description"]]
-                    self.messages.append(x)
 
-                self.window = sublime.active_window()
-                self.window.show_quick_panel(self.messages,
-                                             self.open_selected_bundle,
-                                             sublime.MONOSPACE_FONT)
-            except:
-                print("error: occurred")
+    def show_list(self, data):
+        try:
+            data = json.loads(result.decode("utf-8"))
+            if len(data) == 0:
+                sublime.message_dialog(
+                "There aren't any lightning components "
+                    " in this org.")
                 return
+
+            print("data: " + str(data))
+            self.messages.append(["All Bundles", "*", "Every Bundle",
+                                  "All the lightning bundles "
+                                  "in your org!"])
+            print("And now here")
+            for mm in data:
+                x = [mm['MasterLabel'], mm['Id'], mm["DeveloperName"],
+                     mm["Description"]]
+                self.messages.append(x)
+
+            self.window = sublime.active_window()
+            self.window.show_quick_panel(self.messages,
+                                         self.open_selected_bundle,
+                                         sublime.MONOSPACE_FONT)
+        except:
+            print("error: occurred")
+            return
+
 
     def make_bundle_file(self, file_name,
                          bundle_type, extension, snippet, dirs):
